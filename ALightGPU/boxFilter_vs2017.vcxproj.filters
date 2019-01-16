@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="boxFilter_kernel.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="boxFilter.cpp" />
+    <ClCompile Include="boxFilter_cpu.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{ee85bdac-fa85-4443-b54d-dcf6f31f5b7a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header\Camera.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\GLWindow.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Hitable.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\hitable_list.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\ray.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\root.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\Sphere.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="header\vec3.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
