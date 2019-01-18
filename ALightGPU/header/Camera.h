@@ -4,27 +4,7 @@
 #include "root.h"
 #include <curand_kernel.h>
 
-// inline Vec3 RandomInUnitDisk() {
-// 	Vec3 p;
-// 	do {
-// 		p = 2.0*Vec3(drand48(), drand48(), 0) - Vec3(1, 1, 0);
-// 	} while (dot(p, p) >= 1.0);
-// 	return p;
-// }
-__device__ inline Vec3 RandomInUnitSphere(unsigned long long *s) {
-	Vec3 p;
-	do {
-		p = 2.0*Vec3(drand(s), drand(s), drand(s)) - Vec3(1, 1, 1);
-	} while (p.squared_length() >= 1.0);
-	return p;
-}
-__device__ inline Vec3 RandomInUnitSphere(curandState* state) {
-	Vec3 p;
-	do {
-		p = 2.0*Vec3(drand(), drand(), drand()) - Vec3(1, 1, 1);
-	} while (p.squared_length() >= 1.0);
-	return p;
-}
+
 class Camera
 {
 public:

@@ -5,14 +5,9 @@
 #include "vec3.h"
 
 
-// #ifdef __CUDACC__
-// #define CUDA_CALLABLE_MEMBER __host__ __device__
-// #else
-// #define CUDA_CALLABLE_MEMBER
-// #endif 
 
 const int  ImageWidth = 512,ImageHeight = 512;
-const int SPP = 1024;
+const int SPP = 1024,MAX_SCATTER_TIME = 8;
 GLint    PixelLength;
 GLbyte* PixelData;
 const GLint SamplingRate = 1000;

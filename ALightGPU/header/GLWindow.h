@@ -20,7 +20,7 @@ inline void WindowsUpdate()
 inline void TimerProc(int id)
 {
 	glutPostRedisplay();
-	glutTimerFunc(1, TimerProc, 1);//需要在函数中再调用一次，才能保证循环  
+	glutTimerFunc(1, TimerProc, 1);
 }
 
 inline void InitWindow(int argc, char** argv, unsigned int mode, int x_position, int y_position, int width, int heigth, const char * title)
@@ -40,15 +40,6 @@ inline void InitWindow(int argc, char** argv, unsigned int mode, int x_position,
 	glutMainLoop();
 }
 
-// inline void SetPixel(const int x, const int y, Vec3* c)
-// {
-// 	const auto i = ImageWidth * 4 * y + x * 4;
-// 	//Changes[width * y + x]++;
-// 	PixelData[i] = c->r() * 255;
-// 	PixelData[i + 1] = c->g() * 255;
-// 	PixelData[i + 2] = c->b() * 255;
-// 	PixelData[i + 3] = static_cast<GLbyte>(255);
-// }
 
 inline void Savepic()
 {
@@ -66,11 +57,5 @@ inline void Savepic()
 	}
 	outf.close();
 	std::cout << "finished" << std::endl;
-}
-
-inline void ShowProgress(int num, int sum)
-{
-	system("cls");
-	std::cout << (sum - num) * 100 / sum << "%" << std::endl;
 }
 
