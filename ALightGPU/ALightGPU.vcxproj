@@ -117,6 +117,7 @@
     <ClInclude Include="header\ray.h" />
     <ClInclude Include="header\root.h" />
     <ClInclude Include="header\vec3.h" />
+    <ClInclude Include="Material.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

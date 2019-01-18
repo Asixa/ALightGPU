@@ -5,7 +5,8 @@
 
 void Render();
 
-inline void Resize(int width, int height) {
+inline void Resize(int width, int height)
+{
 	glutReshapeWindow(ImageWidth, ImageHeight);
 }
 
@@ -34,9 +35,9 @@ inline void InitWindow(int argc, char** argv, unsigned int mode, int x_position,
 	glMatrixMode(GL_PROJECTION);
 	gluOrtho2D(0.0, 200.0, 0.0, 150.0);
 
-	glutDisplayFunc(WindowsUpdate);
-	glutTimerFunc(1, TimerProc, 1);
 	glutReshapeFunc(Resize);
+	glutTimerFunc(1, TimerProc, 1);
+	glutDisplayFunc(WindowsUpdate); 
 	glutMainLoop();
 }
 

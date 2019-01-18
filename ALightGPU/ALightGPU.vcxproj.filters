@@ -22,6 +22,9 @@
     <ClInclude Include="header\Camera.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

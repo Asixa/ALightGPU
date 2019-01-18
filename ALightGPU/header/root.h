@@ -5,12 +5,11 @@
 #include "vec3.h"
 
 
-
+#define M_PI 3.1415926
 const int  ImageWidth = 512,ImageHeight = 512;
 const int SPP = 1024,MAX_SCATTER_TIME = 8;
 GLint    PixelLength;
 GLbyte* PixelData;
-const GLint SamplingRate = 1000;
 const GLint rgbwidth = ImageWidth * 4;
 const int BlockSize=16;
 Vec3* col;
