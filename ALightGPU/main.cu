@@ -39,12 +39,12 @@ __global__
 void Sampler(int d_width, int d_height, int worldsize, GPUHitable* d_world, byte * d_pixeldata, Camera* d_camera, curandState *const rngStates)
 {
 	// Determine thread ID
-	const unsigned int tid = blockIdx.x * blockDim.x + threadIdx.x;
-	const unsigned int tid2 = blockIdx.y * blockDim.y + threadIdx.y;
+	const auto tid = blockIdx.x * blockDim.x + threadIdx.x;
+	const auto tid2 = blockIdx.y * blockDim.y + threadIdx.y;
 	// Initialise the RNG
-	unsigned int seed = 1234;
-	curandState random = rngStates[tid];
-	curand_init(seed, tid, tid2, &rngStates[tid]);
+	const unsigned int seed = 1234;
+	//***	curandState random = rngStates[tid];
+	curand_init(seed, tid, tid2, &rngStates[tid]);			//初始化随机数
 	Vec3 color(0, 0, 0);
 
 
@@ -56,7 +56,8 @@ void Sampler(int d_width, int d_height, int worldsize, GPUHitable* d_world, byte
 	const int x = blockIdx.x * 16 + threadIdx.x,y = blockIdx.y * 16 + threadIdx.y;
 
 	for (auto j = 0; j < SPP; j++) {
-		const auto u = float(x + curand_uniform(&rngStates[tid])) / float(512),v = float(y + curand_uniform(&rngStates[tid])) / float(512);
+		const auto u = float(x + curand_uniform(&rngStates[tid])) / float(512),
+		v = float(y + curand_uniform(&rngStates[tid])) / float(512);
 		Ray ray(Vec3(0, 0, 0), Vec3(-2.0, -2.0, -1.0) + u * Vec3(4, 0, 0) + v * Vec3(0, 4, 0));
 		Vec3 c(0, 0, 0);
 		float factor = 1;
@@ -73,6 +74,8 @@ void Sampler(int d_width, int d_height, int worldsize, GPUHitable* d_world, byte
 				factor /= 2;
 				auto target = rec.p + rec.normal + random_in_unit_sphere;
 				ray = Ray(rec.p, target - rec.p);
+
+				//****** 超过最大反射次数，返回黑色 ******
 				if (i == MAX_SCATTER_TIME-1)
 				{
 					c = Vec3(0, 0, 0);
@@ -102,29 +105,29 @@ cudaError_t GPURender()
 {
 	const auto begin = clock();
 
+	//****** 创建GPU显存指针 ******
 	Camera * d_camera;
 	int * d_Width = 0;
 	int * d_Height = 0;
 	byte * d_pixeldata;
 	GPUHitable * d_world_gpu;
-
 	const auto h_pixeldata = new byte[ImageWidth*ImageHeight * 4];
-	for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)h_pixeldata[i]=byte(0);
+	for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)h_pixeldata[i]=byte(0);		//设置像素缓冲初始值
 
-	//***** scene
+	//***** Init Scene Data ******
 	float p1[4] = { 0,0,-1,0.5 };
 	float p2[4] = { 0,-100.5,-1,100 };
 	GPUHitable w[2] = { GPUHitable(p1),GPUHitable(p2) };
-	//****
+	//****************************
 
 	cout << "准备开始渲染" << endl;
-	const auto cuda_status = cudaSetDevice(0);
+	const auto cuda_status = cudaSetDevice(0);											// Cuda Status for checking error
 
 	curandState *d_rng_states = nullptr; //随机数
-	dim3 grid(512 / BlockSize, 512 / BlockSize), block(BlockSize, BlockSize);
+	dim3 grid(512 / BlockSize, 512 / BlockSize), block(BlockSize, BlockSize);			// Split area, 32*32/block
 	//dim3 grid(1),block(1);  this line for debuging specific pixel
 
-	//分配地址
+	//******  分配地址 ****** 
 	cudaMalloc(reinterpret_cast<void**>(&d_Width), sizeof(int));
 	cudaMalloc(reinterpret_cast<void**>(&d_Height), sizeof(int));
 	cudaMalloc(reinterpret_cast<void**>(&d_world_gpu), 24*2);
@@ -132,19 +135,20 @@ cudaError_t GPURender()
 	cudaMalloc(reinterpret_cast<void**>(&d_camera), sizeof(cam));
 	cudaMalloc(reinterpret_cast<void **>(&d_rng_states), grid.x * block.x * sizeof(curandState));
 
-	//内存复制 host->Device
+	//****** 内存复制 host->Device ******
 	cudaMemcpy(d_Width, &ImageWidth, sizeof(int), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_Height, &ImageHeight, sizeof(int), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_world_gpu, &w, 24*2, cudaMemcpyHostToDevice);
 	cudaMemcpy(d_camera, &cam, sizeof(Camera), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_pixeldata, h_pixeldata, 512 * 512 * 4 * sizeof(byte), cudaMemcpyHostToDevice);
 
-	//分配线程
+	//******分配线程 ******
 	Sampler <<<grid,block>>>(512,512,2,d_world_gpu,d_pixeldata,d_camera, d_rng_states);
 
-	//复制内存 Device->host
+	//****** 复制内存 Device->host ******
 	cudaMemcpy(h_pixeldata, d_pixeldata, 512 * 512 * 4 * sizeof(byte), cudaMemcpyDeviceToHost);
 
+	//****** 转换缓冲数据 ****** TODO 可以优化
 	for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)PixelData[i] = h_pixeldata[i];
 	
 	printf("渲染完成，总消耗时间: %lf秒", double(clock() - begin) / CLOCKS_PER_SEC);
