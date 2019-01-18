@@ -40,15 +40,15 @@ inline void InitWindow(int argc, char** argv, unsigned int mode, int x_position,
 	glutMainLoop();
 }
 
-inline void SetPixel(const int x, const int y, Vec3* c)
-{
-	const auto i = ImageWidth * 4 * y + x * 4;
-	//Changes[width * y + x]++;
-	PixelData[i] = c->r() * 255;
-	PixelData[i + 1] = c->g() * 255;
-	PixelData[i + 2] = c->b() * 255;
-	PixelData[i + 3] = static_cast<GLbyte>(255);
-}
+// inline void SetPixel(const int x, const int y, Vec3* c)
+// {
+// 	const auto i = ImageWidth * 4 * y + x * 4;
+// 	//Changes[width * y + x]++;
+// 	PixelData[i] = c->r() * 255;
+// 	PixelData[i + 1] = c->g() * 255;
+// 	PixelData[i + 2] = c->b() * 255;
+// 	PixelData[i + 3] = static_cast<GLbyte>(255);
+// }
 
 inline void Savepic()
 {

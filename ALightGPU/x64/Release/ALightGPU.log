@@ -1,0 +1,60 @@
+﻿  Compiling CUDA source file main.cu...
+  
+  D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALightGPU>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_37,code=\"sm_37,compute_37\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_60,code=\"sm_60,compute_60\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" -gencode=arch=compute_70,code=\"sm_70,compute_70\" -gencode=arch=compute_75,code=\"sm_75,compute_75\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x64" -x cu  -I./ -I../common/inc -I./ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include" -I../common/inc -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include"     --keep-dir x64\Release -maxrregcount=0  --machine 64 --compile -cudart static -Xcompiler "/wd 4819"    -DWIN32 -DWIN32 -D_MBCS -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /Fdx64/Release/vc141.pdb /FS /Zi  /MT " -o x64/Release/main.cu.obj "D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALightGPU\main.cu" 
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(34): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(51): warning : missing return statement at end of non-void function "shadeNormal"
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(196): warning : variable "random" was declared but never referenced
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(219): warning : variable "_seed" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(30): warning : a __device__ variable "seed" cannot be directly read in a host function
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(30): warning : a __device__ variable "seed" cannot be directly written in a host function
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(31): warning : a __device__ variable "seed" cannot be directly read in a host function
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
+  main.cu
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(31): warning C4244: “初始化”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(31): warning C4244: “初始化”: 从“unsigned __int64”转换到“const unsigned int”，可能丢失数据
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/hitable_list.h(18): warning C4244: “参数”: 从“double”转换到“float”，可能丢失数据
+    正在创建库 ../bin/win64/Release/ALightGPU.lib 和对象 ../bin/win64/Release/ALightGPU.exp
+  正在生成代码
+  已完成代码的生成
+  ALightGPU.vcxproj -> D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALightGPU\../bin/win64/Release/ALightGPU.exe

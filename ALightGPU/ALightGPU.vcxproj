@@ -110,8 +110,8 @@
   <ItemGroup>
     <ClCompile Include="boxFilter.cpp" />
     <ClCompile Include="boxFilter_cpu.cpp" />
-    <ClCompile Include="main.cpp" />
     <CudaCompile Include="boxFilter_kernel.cu" />
+    <CudaCompile Include="main.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header\Camera.h" />
