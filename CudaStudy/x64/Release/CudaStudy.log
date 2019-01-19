@@ -1,3 +1,0 @@
-﻿    正在创建库 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\x64\Release\CudaStudy.lib 和对象 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\x64\Release\CudaStudy.exp
-  LINK : 已指定 /LTCG，但不需要生成代码；从链接命令行中移除 /LTCG 以提高链接器性能
-  CudaStudy.vcxproj -> D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\x64\Release\CudaStudy.exe

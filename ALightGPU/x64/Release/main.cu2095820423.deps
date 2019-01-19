@@ -518,4 +518,7 @@ c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\curand_mtgp32_k
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\fstream
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\string
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xstring_insert.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\curand_kernel.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\MathHelper.h

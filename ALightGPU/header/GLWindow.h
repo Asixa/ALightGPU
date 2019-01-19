@@ -2,6 +2,7 @@
 #include "root.h"
 #include "ray.h"
 #include <fstream>
+#include <string>
 
 void Render();
 void ReSetIPR();
@@ -10,9 +11,10 @@ void OnKeyDown();
 
 
 namespace GLWindow {
-
+	static float framesPerSecond = 0.0f;       // This will store our fps
+	static float lastTime = 0.0f;       // This will hold the time from the last frame
 	bool keyDown[256];
-	bool IPR_reset;
+	bool IPR_reset,IPR_Reset_once;
 	int mouse_last_x = -1, mouse_last_y = -1,dx=0,dy=0;
 
 	inline void Resize(int width, int height)
@@ -33,11 +35,25 @@ namespace GLWindow {
 		glutAttachMenu(GLUT_RIGHT_BUTTON);
 	}
 
+	inline void CaculateFPS()
+	{
+		const auto current_time = GetTickCount() * 0.001f;
+		++framesPerSecond;
+		if (current_time - lastTime > 1.0f)
+		{
+			lastTime = current_time;
+			char title[35];
+			snprintf(title, sizeof(title), "ALightGPU  FPS:%d SPP:%d", int(framesPerSecond), current_spp);
+			glutSetWindowTitle(title);
+			framesPerSecond = 0;
+		}
+	}
 
 	inline void WindowsUpdate()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
 		
+		glClear(GL_COLOR_BUFFER_BIT);
+		CaculateFPS();
 		glDrawPixels(ImageWidth, ImageHeight, GL_RGBA, GL_UNSIGNED_BYTE, PixelData);
 		glutSwapBuffers();
 		glFlush();
@@ -46,9 +62,14 @@ namespace GLWindow {
 	inline void TimerProc(int id)
 	{
 		if (IPR_reset)ReSetIPR();
+		if(IPR_Reset_once)
+		{
+			ReSetIPR();
+			IPR_Reset_once = false;
+		}
 		Render();
 		glutPostRedisplay();
-		glutTimerFunc(16, TimerProc, 16);
+		glutTimerFunc(1, TimerProc, 1);
 	}
 
 	inline void GlMouseEvent(int button, int state, int x, int y)
@@ -62,6 +83,7 @@ namespace GLWindow {
 		{
 			dx = 0, dy = 0;
 			IPR_reset = false;
+			IPR_Reset_once = true;
 			mouse_last_x = mouse_last_y = -1;
 		}
 

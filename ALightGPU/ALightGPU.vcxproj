@@ -118,6 +118,7 @@
     <ClInclude Include="header\root.h" />
     <ClInclude Include="header\vec3.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="MathHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

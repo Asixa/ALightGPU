@@ -4,31 +4,49 @@
     <CudaCompile Include="main.cu" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\vec3.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="header\root.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="header\ray.h">
-      <Filter>Header</Filter>
+    <ClInclude Include="header\Camera.h">
+      <Filter>Header\Components</Filter>
     </ClInclude>
     <ClInclude Include="header\Hitable.h">
-      <Filter>Header</Filter>
+      <Filter>Header\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="header\ray.h">
+      <Filter>Header\Components</Filter>
     </ClInclude>
     <ClInclude Include="header\GLWindow.h">
-      <Filter>Header</Filter>
+      <Filter>Header\Lowlevel</Filter>
     </ClInclude>
-    <ClInclude Include="header\Camera.h">
-      <Filter>Header</Filter>
+    <ClInclude Include="header\root.h">
+      <Filter>Header\Lowlevel</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
-      <Filter>Header</Filter>
+      <Filter>Header\Shade</Filter>
+    </ClInclude>
+    <ClInclude Include="header\vec3.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHelper.h">
+      <Filter>Header\Math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
       <UniqueIdentifier>{c3ded452-7622-4912-83b8-11d46cfadf51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Components">
+      <UniqueIdentifier>{485708af-fafb-49f5-bba0-e462163b0ea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Instances">
+      <UniqueIdentifier>{28944fda-7b5c-4a53-b316-a1bc583b2661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Lowlevel">
+      <UniqueIdentifier>{5eec38a4-a479-48ae-aabd-baf1bc15c870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Shade">
+      <UniqueIdentifier>{14d6d9ab-c10f-4e39-bc73-723f59744b79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Math">
+      <UniqueIdentifier>{028d531b-997d-4207-a171-3d3ae616daf2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

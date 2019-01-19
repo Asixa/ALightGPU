@@ -6,9 +6,9 @@
 
 
 #define M_PI 3.1415926
-const int  ImageWidth = 512,ImageHeight = 512;
+const int  ImageWidth = 800,ImageHeight = 600;
 int SPP = 1024,MAX_SCATTER_TIME = 8;
-const int IPR_SPP = 8;
+const int IPR_SPP = 32; int current_spp = 0;
 GLint    PixelLength;
 GLbyte* PixelData;
 const GLint rgbwidth = ImageWidth * 4;

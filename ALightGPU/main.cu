@@ -7,13 +7,13 @@
 #include "header/Camera.h"
 #include "header/GLWindow.h"
 #include "curand_kernel.h"
+#include "MathHelper.h"
 using namespace std;
 
 
 Vec3 cam_rotation(0, 0, 0),camera_lookat(0,0,0);
 Camera cam(Vec3(-2, 1, 1), Vec3(0, 0, -1), Vec3(0, 1, 0), 90, float(ImageWidth) / float(ImageHeight));
-bool IPR=true;
-int spp = 0;
+bool Use_IPR=true;
 float * h_pixeldataF;
 curandState *d_rng_states = nullptr;
 
@@ -30,7 +30,7 @@ float m1[MATERIAL_PARAMTER_COUNT] = { 3,0,0,0.5f,0,0 };
 float m2[MATERIAL_PARAMTER_COUNT] = { 1,1,1,0.5,0,0 };
 float m3[MATERIAL_PARAMTER_COUNT] = { 0,0,1,0.1,0,0 };
 float m4[MATERIAL_PARAMTER_COUNT] = { 0,1,0,0,0,0 };
-Material m[material_count] = { Material(DIELECTIRC,m1),Material(METAL,m2) ,Material(METAL,m3) ,Material(LAMBERTIAN,m4) };
+Material m[material_count] = { Material(DIELECTIRC,m1),Material(LAMBERTIAN,m2) ,Material(METAL,m3) ,Material(LAMBERTIAN,m4) };
 
 
 void InitData()
@@ -67,7 +67,7 @@ void IPRSampler(int d_width, int d_height, int worldsize, int seed, int SPP,int 
 	 const auto tid = blockIdx.x * blockDim.x + threadIdx.x;
 	const auto tid2 = blockIdx.y * blockDim.y + threadIdx.y;
 
-	curand_init(seed+tid+tid2*512,0, 0, &rngStates[tid]);			//初始化随机数
+	curand_init(seed+tid+tid2*d_width,0, 0, &rngStates[tid]);			//初始化随机数
 	Vec3 color(0, 0, 0);
 
 	const int x = blockIdx.x * 16 + threadIdx.x,y = blockIdx.y * 16 + threadIdx.y;
@@ -77,8 +77,8 @@ void IPRSampler(int d_width, int d_height, int worldsize, int seed, int SPP,int 
 	//float v = float(y) / float(512);
 
 	for (auto j = 0; j < SPP; j++) {
-		const auto u = float(x + curand_uniform(&rngStates[tid])) / float(512),
-			v = float(y + curand_uniform(&rngStates[tid])) / float(512);
+		const auto u = float(x + curand_uniform(&rngStates[tid])) / float(d_width),
+			v = float(y + curand_uniform(&rngStates[tid])) / float(d_height);
 		Ray ray(d_camera->Origin(), d_camera->LowerLeftCorner() + u * d_camera->Horizontal() + v * d_camera->Vertical() - d_camera->Origin());
 		Vec3 c(0, 0, 0);
 		Vec3 factor(1, 1, 1);
@@ -118,99 +118,104 @@ void IPRSampler(int d_width, int d_height, int worldsize, int seed, int SPP,int 
 	//color /= SPP;
 
 	//SetColor
-	const auto i = 512 * 4 * y + x * 4;
+	const auto i = d_width * 4 * y + x * 4;
 	d_pixeldata[i] += color.r() ;
 	d_pixeldata[i + 1] += color.g() ;
 	d_pixeldata[i + 2] += color.b() ;
 	d_pixeldata[i + 3] += SPP;
 }
 
-float Range(float a,float Small=0,float Big=1)
-{
-	if (a < Small)a = Small;
-	else if (a > Big)a = Big;
-	return a;
-}
 
-cudaError_t IPRRender()
+namespace IPR
 {
-	//****** 创建GPU显存指针 ******
 	int * d_Width = 0;
 	int * d_Height = 0;
 	float * d_pixeldata;
 	GPUHitable * d_world_gpu;
 	Material * d_materials;
 	Camera * d_camera;
-	const int random_seed = drand48() * 1000;
-	const auto cuda_status = cudaSetDevice(0);											// Cuda Status for checking error
-	dim3 grid(512 / BlockSize, 512 / BlockSize), block(BlockSize, BlockSize);			// Split area, 32*32/block
-	//dim3 grid(1),block(1);															//this line for debuging specific pixel
+	dim3 grid(ImageWidth / BlockSize, ImageHeight / BlockSize), block(BlockSize, BlockSize);
+	//dim3 grid(1),block(1);		
+	void IPR_Init()
+	{
+		//******  分配地址 ****** 
+		cudaMalloc(reinterpret_cast<void**>(&d_Width), sizeof(int));
+		cudaMalloc(reinterpret_cast<void**>(&d_Height), sizeof(int));
+		cudaMalloc(reinterpret_cast<void**>(&d_world_gpu), sizeof(GPUHitable) * object_count);
+		cudaMalloc(reinterpret_cast<void**>(&d_materials), sizeof(Material)*material_count);
+		cudaMalloc(reinterpret_cast<void**>(&d_pixeldata), ImageWidth * ImageHeight * 4 * sizeof(float));
+		cudaMalloc(reinterpret_cast<void**>(&d_camera), sizeof(Camera));
+		if (current_spp == 0) {
+			if (d_rng_states != nullptr)cudaFree(d_rng_states);
+			cudaMalloc(reinterpret_cast<void **>(&d_rng_states), grid.x * block.x * sizeof(curandState));
+		}
 
-	//******  分配地址 ****** 
-	cudaMalloc(reinterpret_cast<void**>(&d_Width), sizeof(int));
-	cudaMalloc(reinterpret_cast<void**>(&d_Height), sizeof(int));
-	cudaMalloc(reinterpret_cast<void**>(&d_world_gpu), sizeof(GPUHitable) * object_count);
-	cudaMalloc(reinterpret_cast<void**>(&d_materials), sizeof(Material)*material_count);
-	cudaMalloc(reinterpret_cast<void**>(&d_pixeldata), 512 * 512 * 4 * sizeof(float));
-	cudaMalloc(reinterpret_cast<void**>(&d_camera), sizeof(Camera));
-	if (spp == 0) {
-		if (d_rng_states != nullptr)cudaFree(d_rng_states);
-		cudaMalloc(reinterpret_cast<void **>(&d_rng_states), grid.x * block.x * sizeof(curandState));
+		//****** 内存复制 host->Device ******
+		cudaMemcpy(d_Width, &ImageWidth, sizeof(int), cudaMemcpyHostToDevice);
+		cudaMemcpy(d_Height, &ImageHeight, sizeof(int), cudaMemcpyHostToDevice);
+		cudaMemcpy(d_world_gpu, &w, sizeof(GPUHitable) * object_count, cudaMemcpyHostToDevice);
+		cudaMemcpy(d_materials, &m, sizeof(Material) *material_count, cudaMemcpyHostToDevice);
+
+		
 	}
-	//****** 内存复制 host->Device ******
-	cudaMemcpy(d_Width, &ImageWidth, sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_Height, &ImageHeight, sizeof(int), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_world_gpu, &w, sizeof(GPUHitable) * object_count, cudaMemcpyHostToDevice);
-	cudaMemcpy(d_materials, &m, sizeof(Material) *material_count, cudaMemcpyHostToDevice);
-	cudaMemcpy(d_camera, &cam, sizeof(Camera), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_pixeldata, h_pixeldataF, 512 * 512 * 4 * sizeof(float), cudaMemcpyHostToDevice);
+	void IPR_Dispose()
+	{
+		//****** 释放显存 **********
+		cudaFree(d_Width);
+		cudaFree(d_Height);
+		cudaFree(d_pixeldata);
+		cudaFree(d_world_gpu);
+		cudaFree(d_materials);
+		cudaFree(d_camera);
 
-	//******分配线程 ******
-	IPRSampler <<<grid, block >>> (
-		512, 512,
-		object_count,
-		random_seed,
-		SPP,
-		MAX_SCATTER_TIME,
-		d_world_gpu,
-		d_pixeldata,
-		d_camera,
-		d_rng_states,
-		d_materials);
+	}
+	cudaError_t IPRRender()
+	{
+		const int random_seed = drand48() * 1000;
+		const auto cuda_status = cudaSetDevice(0);
 
-	//****** 复制内存 Device->host ******
-	cudaMemcpy(h_pixeldataF, d_pixeldata, 512 * 512 * 4 * sizeof(float), cudaMemcpyDeviceToHost);
+		//更新数据
 
-	//****** 转换缓冲数据 ****** TODO 可以优化
-	for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)
-		PixelData[i] = (Range(sqrt(h_pixeldataF[i] / (spp == 0 ? SPP : spp))) * 255);
-	spp += SPP;
+		cudaMemcpy(d_camera, &cam, sizeof(Camera), cudaMemcpyHostToDevice);
+		cudaMemcpy(d_pixeldata, h_pixeldataF, ImageWidth * ImageHeight * 4 * sizeof(float), cudaMemcpyHostToDevice);
+		//******分配线程 ******
+		IPRSampler << <grid, block >> > (
+			ImageWidth, ImageHeight,
+			object_count,
+			random_seed,
+			SPP,
+			MAX_SCATTER_TIME,
+			d_world_gpu,
+			d_pixeldata,
+			d_camera,
+			d_rng_states,
+			d_materials);
 
-	//****** 释放显存 **********
-	cudaFree(d_Width);
-	cudaFree(d_Height);
-	cudaFree(d_pixeldata);
-	cudaFree(d_world_gpu);
-	cudaFree(d_materials);
-	cudaFree(d_camera);
+		//****** 复制内存 Device->host ******
+		cudaMemcpy(h_pixeldataF, d_pixeldata, ImageWidth * ImageHeight * 4 * sizeof(float), cudaMemcpyDeviceToHost);
 
-	return cuda_status;
+		//****** 转换缓冲数据 ****** TODO 可以优化
+		for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)
+			PixelData[i] = (Range(sqrt(h_pixeldataF[i] / (current_spp == 0 ? SPP : current_spp + SPP))) * 255);
+		current_spp += SPP;
+
+		return cuda_status;
+	}
 }
 void ReSetIPR()
 {
-	if(!IPR)return;
-	spp = 0; 
+	if(!Use_IPR)return;
+	current_spp = 0; 
 	for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)h_pixeldataF[i] = 0;
 }
 void Render()
 {
-	if(!IPR&&spp!=0)return;
-	IPRRender();
+	if(!Use_IPR&&current_spp!=0)return;
+	IPR::IPRRender();
 }
 
 void OnMouseMove(int x,int y)
 {
-	
 	cam_rotation[0] += x / 57.3;
 	cam_rotation[1] -= y / 57.30f;
 	if (cam_rotation[1] > 3.14 / 2)cam_rotation[1] = 3.14 / 2;
@@ -233,9 +238,11 @@ void OnKeyDown()
 
 int main(int argc, char* argv[])
 {
-	InitData(); 
-	if(IPR)SPP = IPR_SPP; 
+	InitData();
+	IPR::IPR_Init();
+	if(Use_IPR)SPP = IPR_SPP; 
 	GLWindow::InitWindow(argc, argv, GLUT_DOUBLE | GLUT_RGBA, 100, 100, ImageWidth, ImageHeight, "ALightGPU");
+	IPR::IPR_Dispose();
 	return 0;
 }
 
