@@ -72,10 +72,10 @@ public:
 		type = t;
 		memcpy(data, d, MATERIAL_PARAMTER_COUNT * sizeof(float));
 	}
-	bool scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered,Vec3 random_in_unit_sphere);
+	bool scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered,Vec3 random_in_unit_sphere, float randomnumber);
 };
 
-__device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered, Vec3 random_in_unit_sphere)
+__device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered, Vec3 random_in_unit_sphere, float randomnumber)
 {
 	switch (type)
 	{
@@ -125,7 +125,7 @@ __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, 
 			reflect_prob = schlick(cosine, ref_idx);
 		else
 			reflect_prob = 1.0;
-		if (drand48() < reflect_prob)
+		if (randomnumber < reflect_prob)
 			scattered = Ray(rec.p, reflected);
 		else
 			scattered = Ray(rec.p, refracted);

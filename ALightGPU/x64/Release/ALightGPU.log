@@ -4,70 +4,68 @@
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(78): warning : a __host__ function("Material::scatter") redeclared with __device__, hence treated as a __host__ __device__ function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(136): warning : missing return statement at end of non-void function "Material::scatter"
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(128): warning : calling a __host__ function from a __host__ __device__ function is not allowed
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h(141): warning : a __host__ function("GPUHitable::Hit") redeclared with __device__, hence treated as a __host__ __device__ function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning : variable "mods" was declared but never referenced
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(24): warning : a __device__ variable "seed" cannot be directly read in a host function
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(24): warning : a __device__ variable "seed" cannot be directly written in a host function
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning : variable "mods" was declared but never referenced
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(25): warning : a __device__ variable "seed" cannot be directly read in a host function
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(25): warning : a __device__ variable "seed" cannot be directly written in a host function
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(26): warning : a __device__ variable "seed" cannot be directly read in a host function
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
   main.cu
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\vec3.h(52): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\vec3.h(131): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(25): warning C4244: “初始化”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(25): warning C4244: “初始化”: 从“unsigned __int64”转换到“const unsigned int”，可能丢失数据
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Camera.h(17): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(43): warning C4101: “mods”: 未引用的局部变量
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(88): warning C4060: switch 语句没有包含“case”或“default”标签
-D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(147): warning C4305: “初始化”: 从“double”到“float”截断
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(26): warning C4244: “初始化”: 从“unsigned __int64”转换到“unsigned int”，可能丢失数据
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h(26): warning C4244: “初始化”: 从“unsigned __int64”转换到“const unsigned int”，可能丢失数据
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Camera.h(15): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Camera.h(49): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(56): warning C4101: “mods”: 未引用的局部变量
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h(121): warning C4065: switch 语句包含“default”但是未包含“case”标签
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(31): warning C4305: “初始化”: 从“double”到“float”截断
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(148): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(190): warning C4244: “=”: 从“float”转换到“GLbyte”，可能丢失数据
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(218): warning C4244: “+=”: 从“double”转换到“float”，可能丢失数据
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(220): warning C4305: “=”: 从“double”到“float”截断
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(221): warning C4305: “=”: 从“double”到“float”截断
+D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/ALightGPU/main.cu(224): warning C4305: “=”: 从“double”到“float”截断
     正在创建库 ../bin/win64/Release/ALightGPU.lib 和对象 ../bin/win64/Release/ALightGPU.exp
   LINK : 已指定 /LTCG，但不需要生成代码；从链接命令行中移除 /LTCG 以提高链接器性能
   ALightGPU.vcxproj -> D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALightGPU\../bin/win64/Release/ALightGPU.exe

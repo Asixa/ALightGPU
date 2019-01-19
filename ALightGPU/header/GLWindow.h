@@ -4,137 +4,172 @@
 #include <fstream>
 
 void Render();
-bool keyDown[256];
-inline void Resize(int width, int height)
-{
-	glutReshapeWindow(ImageWidth, ImageHeight);
-}
+void ReSetIPR();
+void OnMouseMove(int x, int y);
+void OnKeyDown();
 
 
-void mainMenu(int i)
-{
-	printf("Command %d", i);
-	//key((unsigned char)i, 0, 0);
-}
-void InitMenus()
-{
-	glutCreateMenu(mainMenu);
-	glutAddMenuEntry("Reset block [1]", '1');
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-}
+namespace GLWindow {
 
+	bool keyDown[256];
+	bool IPR_reset;
+	int mouse_last_x = -1, mouse_last_y = -1,dx=0,dy=0;
 
-inline void WindowsUpdate()
-{
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDrawPixels(ImageWidth, ImageHeight, GL_RGBA, GL_UNSIGNED_BYTE, PixelData);
-	glutSwapBuffers();
-	glFlush();
-}
-
-inline void TimerProc(int id)
-{
-	glutPostRedisplay();
-	glutTimerFunc(1, TimerProc, 1);
-}
-
-void mouse(int button, int state, int x, int y)
-{
-	int mods;
-
-	// if (state == GLUT_DOWN)
-	// {
-	// 	buttonState |= 1 << button;
-	// }
-	// else if (state == GLUT_UP)
-	// {
-	// 	buttonState = 0;
-	// }
-	//
-	// mods = glutGetModifiers();
-	//
-	// if (mods & GLUT_ACTIVE_SHIFT)
-	// {
-	// 	buttonState = 2;
-	// }
-	// else if (mods & GLUT_ACTIVE_CTRL)
-	// {
-	// 	buttonState = 3;
-	// }
-	//
-	// ox = x;
-	// oy = y;
-	//
-	// if (displaySliders)
-	// {
-	// 	if (params->Mouse(x, y, button, state))
-	// 	{
-	// 		glutPostRedisplay();
-	// 		return;
-	// 	}
-	// }
-
-	glutPostRedisplay();
-}
-void motion(int x, int y)
-{
-	printf("MouseMove %d,%d", x, y);
-}
-
-void key(unsigned char key, int /*x*/, int /*y*/)
-{
-	switch (key)
+	inline void Resize(int width, int height)
 	{
+		glutReshapeWindow(ImageWidth, ImageHeight);
 	}
-	keyDown[key] = true;
 
-	glutPostRedisplay();
-}
-
-void keyUp(unsigned char key, int /*x*/, int /*y*/)
-{
-	keyDown[key] = false;
-}
-
-inline void InitWindow(int argc, char** argv, unsigned int mode, int x_position, int y_position, int width, int heigth, const char * title)
-{
-	glutInit(&argc, argv);
-	glutInitDisplayMode(mode);
-	glutInitWindowPosition(x_position, y_position);
-	glutInitWindowSize(width, heigth);
-	glutCreateWindow(title);
-	glClearColor(1.0, 0.0, 1.0, 1.0);
-	glMatrixMode(GL_PROJECTION);
-	gluOrtho2D(0.0, 200.0, 0.0, 150.0);
-	//InitMenus();
-	glutMouseFunc(mouse);
-	glutMotionFunc(motion);
-	glutKeyboardFunc(key);
-	glutKeyboardUpFunc(keyUp);
-
-
-	glutReshapeFunc(Resize);
-	glutTimerFunc(1, TimerProc, 1);
-	glutDisplayFunc(WindowsUpdate); 
-	glutMainLoop();
-}
-
-
-inline void Savepic()
-{
-	std::ofstream outf;
-	outf.open("/Output/abc.ppm");
-	outf << "P3\n" << ImageWidth << " " << ImageHeight << "\n255\n";
-	for (auto h = ImageHeight - 1; h >= 0; h--)
+	inline void MainMenu(int i)
 	{
-		for (int i = 0; i < rgbwidth; i += 3)
+		printf("Command %d", i);
+		//GLKeyDownEvent((unsigned char)i, 0, 0);
+	}
+
+	inline void InitMenus()
+	{
+		glutCreateMenu(MainMenu);
+		glutAddMenuEntry("Reset block [1]", '1');
+		glutAttachMenu(GLUT_RIGHT_BUTTON);
+	}
+
+
+	inline void WindowsUpdate()
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+		
+		glDrawPixels(ImageWidth, ImageHeight, GL_RGBA, GL_UNSIGNED_BYTE, PixelData);
+		glutSwapBuffers();
+		glFlush();
+	}
+
+	inline void TimerProc(int id)
+	{
+		if (IPR_reset)ReSetIPR();
+		Render();
+		glutPostRedisplay();
+		glutTimerFunc(16, TimerProc, 16);
+	}
+
+	inline void GlMouseEvent(int button, int state, int x, int y)
+	{
+		int mods;
+		if (state == GLUT_DOWN)
 		{
-			outf << PixelData[h *(rgbwidth)+(i + 0)] << " " <<
-				PixelData[h *(rgbwidth)+(i + 1)] << " " <<
-				PixelData[h *(rgbwidth)+(i + 2)] << " \n";
+			IPR_reset = true;
 		}
+		else if (state == GLUT_UP)
+		{
+			dx = 0, dy = 0;
+			IPR_reset = false;
+			mouse_last_x = mouse_last_y = -1;
+		}
+
+		// if (state == GLUT_DOWN)
+		// {
+		// 	buttonState |= 1 << button;
+		// }
+		// else if (state == GLUT_UP)
+		// {
+		// 	buttonState = 0;
+		// }
+		//
+		// mods = glutGetModifiers();
+		//
+		// if (mods & GLUT_ACTIVE_SHIFT)
+		// {
+		// 	buttonState = 2;
+		// }
+		// else if (mods & GLUT_ACTIVE_CTRL)
+		// {
+		// 	buttonState = 3;
+		// }
+		//
+		// ox = x;
+		// oy = y;
+		//
+		// if (displaySliders)
+		// {
+		// 	if (params->Mouse(x, y, button, state))
+		// 	{
+		// 		glutPostRedisplay();
+		// 		return;
+		// 	}
+		// }
+
+		//glutPostRedisplay();
 	}
-	outf.close();
-	std::cout << "finished" << std::endl;
+
+	inline void GlMouseMotion(int x, int y)
+	{
+		
+		if (mouse_last_x == -1)mouse_last_x = x;
+		else { dx = x - mouse_last_x; mouse_last_x = x; }
+		if (mouse_last_y == -1)mouse_last_y = y;
+		else { dy = y - mouse_last_y; mouse_last_y = y; }
+		OnMouseMove(dx, dy);
+		//IPR_reset = true;
+	}
+
+	inline void GLKeyDownEvent(unsigned char key, int /*x*/, int /*y*/)
+	{
+		OnKeyDown();
+
+		switch (key)
+		{
+		default:;
+		}
+		keyDown[key] = true;
+
+	}
+
+	inline void GLKeyUpEvent(unsigned char key, int /*x*/, int /*y*/)
+	{
+		keyDown[key] = false;
+	}
+
+	inline void InitWindow(int argc, char** argv, unsigned int mode, int x_position, int y_position, int width, int heigth, const char * title)
+	{
+		glutInit(&argc, argv);
+		glutInitDisplayMode(mode);
+		glutInitWindowPosition(x_position, y_position);
+		glutInitWindowSize(width, heigth);
+		glutCreateWindow(title);
+		glutCreateSubWindow(0, 5, 5, 100, 100);
+		glClearColor(0, 0.0, 0, 1.0);
+		glMatrixMode(GL_PROJECTION);
+		gluOrtho2D(0.0, 200.0, 0.0, 150.0);
+		//InitMenus();
+		glutMouseFunc(GlMouseEvent);
+		glutMotionFunc(GlMouseMotion);
+		glutKeyboardFunc(GLKeyDownEvent);
+		glutKeyboardUpFunc(GLKeyUpEvent);
+		
+
+
+		glutReshapeFunc(Resize);
+		glutTimerFunc(1, TimerProc, 1);
+		glutDisplayFunc(WindowsUpdate);
+		glutMainLoop();
+	}
+
+
+	inline void Savepic()
+	{
+		std::ofstream outf;
+		outf.open("/Output/abc.ppm");
+		outf << "P3\n" << ImageWidth << " " << ImageHeight << "\n255\n";
+		for (auto h = ImageHeight - 1; h >= 0; h--)
+		{
+			for (int i = 0; i < rgbwidth; i += 3)
+			{
+				outf << PixelData[h *(rgbwidth)+(i + 0)] << " " <<
+					PixelData[h *(rgbwidth)+(i + 1)] << " " <<
+					PixelData[h *(rgbwidth)+(i + 2)] << " \n";
+			}
+		}
+		outf.close();
+		std::cout << "finished" << std::endl;
+	}
 }
 
