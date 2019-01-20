@@ -112,11 +112,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AABB.h" />
+    <ClInclude Include="BVH.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Hitable.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="root.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="vec3.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathHelper.h" />

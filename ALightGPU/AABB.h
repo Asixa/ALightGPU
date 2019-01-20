@@ -2,12 +2,12 @@
 #include "vec3.h"
 #include "ray.h"
 
-inline float ffmin(float a, float b) { return a < b ? a : b; }
-inline float ffmax(float a, float b) { return a > b ? a : b; }
+__device__ inline float ffmin(float a, float b) { return a < b ? a : b; }
+__device__ inline float ffmax(float a, float b) { return a > b ? a : b; }
 
 class AABB {
 public:
-	AABB() {}
+	AABB(){}
 	AABB(const Vec3& a, const Vec3& b) { _min = a; _max = b; }
 
 	__device__ bool Hit(const Ray& r, float tmin, float tmax) const {

@@ -8,6 +8,8 @@
 #include "GLWindow.h"
 #include "curand_kernel.h"
 #include "MathHelper.h"
+#include "BVH.h"
+#include "Sphere.h"
 using namespace std;
 
 
@@ -32,6 +34,7 @@ float m3[MATERIAL_PARAMTER_COUNT] = { 0,0,1,0.1,0,0 };
 float m4[MATERIAL_PARAMTER_COUNT] = { 0,1,0,0,0,0 };
 Material m[material_count] = { Material(DIELECTIRC,m1),Material(LAMBERTIAN,m2) ,Material(METAL,m3) ,Material(LAMBERTIAN,m4) };
 
+Hitable **objects;
 
 void InitData()
 {
@@ -42,6 +45,10 @@ void InitData()
 	PixelData = new GLbyte[PixelLength];
 	for (auto i = 0; i < PixelLength; i++)
 		PixelData[i] = static_cast<GLbyte>(int(0));
+
+	objects=new Hitable*[2];
+	objects[0] = new Sphere(Vec3(0, 0, 0), 0.5f, 0);
+	objects[1] = new Sphere(Vec3(0,0,0),0.5f,0);
 }
 
 __device__ bool HitTest(GPUHitable* list, int size, Ray r, float t_min, float t_max,  HitRecord& rec, Material* materials)
@@ -87,7 +94,7 @@ void IPRSampler(int d_width, int d_height, int worldsize, int seed, int SPP,int 
 			HitRecord rec;
 			if (HitTest(d_world, worldsize, ray, 0.001, 99999, rec, materials))
 			{
-				// random in unit sphere
+				// random in unit Sphere
 				Vec3 random_in_unit_sphere;
 				do random_in_unit_sphere = 2.0*Vec3(curand_uniform(&rngStates[tid]), curand_uniform(&rngStates[tid]), curand_uniform(&rngStates[tid])) - Vec3(1, 1, 1);
 				while (random_in_unit_sphere.squared_length() >= 1.0);
@@ -125,7 +132,10 @@ void IPRSampler(int d_width, int d_height, int worldsize, int seed, int SPP,int 
 	d_pixeldata[i + 3] += SPP;
 }
 
-
+__global__ void BVH_Initializer(BVHNode * output, Hitable **list, int n, float t0,float t1)
+{
+	output =new BVHNode(list, n, t0, t1);
+}
 namespace IPR
 {
 	int * d_Width = 0;
@@ -135,6 +145,17 @@ namespace IPR
 	Material * d_materials;
 	Camera * d_camera;
 	dim3 grid(ImageWidth / BlockSize, ImageHeight / BlockSize), block(BlockSize, BlockSize);
+
+	BVHNode * d_bvh_node;
+	void IPR_SetupBVH()
+	{
+		Hitable** d_objs;
+		cudaMalloc(reinterpret_cast<void**>(&d_bvh_node), sizeof(BVHNode));
+		cudaMalloc(reinterpret_cast<void**>(&d_objs), object_count * sizeof(Hitable*));
+		cudaMemcpy(d_objs,objects, object_count*sizeof(Hitable*), cudaMemcpyHostToDevice);
+		BVH_Initializer <<<1, 1 >>> (d_bvh_node, d_objs, object_count, 0, 1);
+	}
+
 	//dim3 grid(1),block(1);		
 	void IPR_Init()
 	{
@@ -238,6 +259,8 @@ void OnKeyDown()
 
 int main(int argc, char* argv[])
 {
+	cout << " Vec3: " << sizeof(Vec3) << "  AABB: " << sizeof(AABB) << "  NVH: " << sizeof(BVHNode) << "  Hitable: " << sizeof(Hitable) << endl;
+	return 0;
 	InitData();
 	IPR::IPR_Init();
 	if(Use_IPR)SPP = IPR_SPP; 

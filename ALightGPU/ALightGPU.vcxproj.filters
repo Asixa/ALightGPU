@@ -31,6 +31,12 @@
     <ClInclude Include="AABB.h">
       <Filter>Header\Instances</Filter>
     </ClInclude>
+    <ClInclude Include="BVH.h">
+      <Filter>Header\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header\Instances</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

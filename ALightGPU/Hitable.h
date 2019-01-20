@@ -60,3 +60,10 @@ __device__ inline bool GPUHitable::Hit(const Ray& r, float tmin, float tmax, Hit
 inline bool GPUHitable::bounding_box(float t0, float t1, AABB& box)
 {
 }
+
+class Hitable {
+public:
+	virtual ~Hitable() = default;
+	__device__ virtual bool Hit(const Ray& r, float t_min, float t_max, HitRecord& rec) const = 0;
+	__device__  virtual bool BoundingBox(float t0, float t1, AABB& box) const = 0;
+};
