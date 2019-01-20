@@ -111,12 +111,12 @@
     <CudaCompile Include="main.cu" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\Camera.h" />
-    <ClInclude Include="header\GLWindow.h" />
-    <ClInclude Include="header\Hitable.h" />
-    <ClInclude Include="header\ray.h" />
-    <ClInclude Include="header\root.h" />
-    <ClInclude Include="header\vec3.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="GLWindow.h" />
+    <ClInclude Include="Hitable.h" />
+    <ClInclude Include="ray.h" />
+    <ClInclude Include="root.h" />
+    <ClInclude Include="vec3.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathHelper.h" />
   </ItemGroup>

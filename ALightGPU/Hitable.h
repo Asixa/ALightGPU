@@ -43,7 +43,7 @@ public:
 //
 
 
-__device__ float schlick(float cosine, float ref_idx) {
+__device__ float Schlick(float cosine, float ref_idx) {
 	float r0 = (1 - ref_idx) / (1 + ref_idx);
 	r0 = r0 * r0;
 	return r0 + (1 - r0)*pow((1 - cosine), 5);
@@ -124,7 +124,7 @@ __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, 
 			cosine = -dot(r_in.Direction(), rec.normal) / r_in.Direction().length();
 		}
 		if (Refract(r_in.Direction(), outward_normal, ni_over_nt, refracted))
-			reflect_prob = schlick(cosine, ref_idx);
+			reflect_prob = Schlick(cosine, ref_idx);
 		else
 			reflect_prob = 1.0;
 		if (randomnumber < reflect_prob)
@@ -136,9 +136,6 @@ __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, 
 	}
 
 }
-
-
-
 
 __device__ inline bool GPUHitable::Hit(const Ray& r, float tmin, float tmax, HitRecord& rec, Material* materials)
 {

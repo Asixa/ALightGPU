@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
+#include <crt/host_defines.h>
 
 class Vec3 {
 
