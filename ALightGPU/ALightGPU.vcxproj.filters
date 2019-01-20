@@ -4,29 +4,32 @@
     <CudaCompile Include="main.cu" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="header\Camera.h">
-      <Filter>Header\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="header\Hitable.h">
-      <Filter>Header\Instances</Filter>
-    </ClInclude>
-    <ClInclude Include="header\ray.h">
-      <Filter>Header\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="header\GLWindow.h">
-      <Filter>Header\Lowlevel</Filter>
-    </ClInclude>
-    <ClInclude Include="header\root.h">
-      <Filter>Header\Lowlevel</Filter>
-    </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Header\Shade</Filter>
     </ClInclude>
-    <ClInclude Include="header\vec3.h">
-      <Filter>Header\Math</Filter>
-    </ClInclude>
     <ClInclude Include="MathHelper.h">
       <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GLWindow.h">
+      <Filter>Header\Lowlevel</Filter>
+    </ClInclude>
+    <ClInclude Include="root.h">
+      <Filter>Header\Lowlevel</Filter>
+    </ClInclude>
+    <ClInclude Include="ray.h">
+      <Filter>Header\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Hitable.h">
+      <Filter>Header\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="vec3.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Header\Instances</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

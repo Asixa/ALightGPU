@@ -40,7 +40,6 @@ public:
 		data[10] = Vertical.y();
 		data[11] = Vertical.z();
 
-
 	}
 
 	__host__ __device__ void UpdateFromRotation(Vec3 lookfrom, Vec3 rotation, Vec3 vup, float fov, float aspect)

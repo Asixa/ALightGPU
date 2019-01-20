@@ -3,9 +3,9 @@
 #include "stdlib.h"
 #include <thread>
 
-#include "header/Hitable.h"
-#include "header/Camera.h"
-#include "header/GLWindow.h"
+#include "Hitable.h"
+#include "Camera.h"
+#include "GLWindow.h"
 #include "curand_kernel.h"
 #include "MathHelper.h"
 using namespace std;

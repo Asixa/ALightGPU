@@ -238,8 +238,8 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.1
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\thr/xthread
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\thr/xtime
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\thr/xthreads.h
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Hitable.h
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\vec3.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Hitable.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\vec3.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\iostream
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\istream
@@ -260,8 +260,9 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.1
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xcall_once.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xerrc.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\share.h
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\ray.h
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header\root.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\crt/host_defines.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\ray.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\root.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\um\Windows.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\shared\winapifamily.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\shared\winpackagefamily.h
@@ -480,7 +481,9 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\um\mmsystem.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\um\GL/gl.h
 d:\codes\projects\academic\computergraphic\alightgpu\common\inc\gl\freeglut_ext.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\valarray
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/Camera.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Material.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\AABB.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Camera.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\curand_kernel.h
 c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\curand.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\cuda_runtime.h
@@ -516,7 +519,7 @@ c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\curand_discrete
 c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\curand_mrg32k3a.h
 c:\program files\nvidia gpu computing toolkit\cuda\v10.0\include\curand_mtgp32_kernel.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\header/GLWindow.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\GLWindow.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\fstream
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\string
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xstring_insert.h
