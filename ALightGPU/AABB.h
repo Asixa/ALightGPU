@@ -7,8 +7,8 @@ __device__ inline float ffmax(float a, float b) { return a > b ? a : b; }
 
 class AABB {
 public:
-	AABB(){}
-	AABB(const Vec3& a, const Vec3& b) { _min = a; _max = b; }
+	__host__ __device__ AABB(){}
+	__host__ AABB(const Vec3& a, const Vec3& b) { _min = a; _max = b; }
 
 	__device__ bool Hit(const Ray& r, float tmin, float tmax) const {
 		for (auto a = 0; a < 3; a++) {
@@ -28,7 +28,7 @@ public:
 	Vec3 _max;
 };
 
-__device__ inline AABB SurroundingBox(AABB box0, AABB box1) {
+inline AABB SurroundingBox(AABB box0, AABB box1) {
 	const Vec3 _small(fmin(box0._min.x(), box1._min.x()),
 		fmin(box0._min.y(), box1._min.y()),
 		fmin(box0._min.z(), box1._min.z()));

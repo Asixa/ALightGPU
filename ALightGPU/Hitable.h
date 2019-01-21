@@ -60,10 +60,21 @@ __device__ inline bool GPUHitable::Hit(const Ray& r, float tmin, float tmax, Hit
 inline bool GPUHitable::bounding_box(float t0, float t1, AABB& box)
 {
 }
-
+namespace Instance
+{
+	const int BVH = 2,SPHERE=1;
+}
 class Hitable {
 public:
 	virtual ~Hitable() = default;
-	__device__ virtual bool Hit(const Ray& r, float t_min, float t_max, HitRecord& rec) const = 0;
-	__device__  virtual bool BoundingBox(float t0, float t1, AABB& box) const = 0;
+	
+	__device__ virtual bool Hit(const Ray& r, float t_min, float t_max, HitRecord& rec,Material* materials, Hitable** d_world) const = 0;
+	__host__  virtual bool BoundingBox(float t0, float t1, AABB& box) const = 0;
+	__host__  virtual int Size() const = 0;
+	__device__  virtual int Debug() const = 0;
+	__host__ virtual Hitable* GPUPointer() { return nullptr; }
+	__host__ virtual int count() { return 0; }
+	__host__ virtual void SetChildId() { }
+	//__device__ __host__  virtual int type() { return 0;}
+	int id; int type;
 };

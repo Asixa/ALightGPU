@@ -37,6 +37,12 @@
     <ClInclude Include="Sphere.h">
       <Filter>Header\Instances</Filter>
     </ClInclude>
+    <ClInclude Include="device.h">
+      <Filter>Header\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -56,6 +62,12 @@
     </Filter>
     <Filter Include="Header\Math">
       <UniqueIdentifier>{028d531b-997d-4207-a171-3d3ae616daf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Device">
+      <UniqueIdentifier>{ac0cf60e-84ce-4548-8b37-a63b84c6580a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Render">
+      <UniqueIdentifier>{dcb249b3-c143-4781-8706-d6fc386b0494}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

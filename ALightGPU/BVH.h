@@ -1,15 +1,34 @@
 #pragma once
 #include "hitable.h"
+#include <algorithm>
+
 
 class BVHNode : public Hitable {
 public:
-	BVHNode() {}
-	__device__  BVHNode(Hitable **l, int n, float time0, float time1);
-	__device__ bool Hit(const Ray& r, float t_min, float t_max, HitRecord& rec) const override;
-	__device__  bool BoundingBox(float t0, float t1, AABB& b) const override;
-	Hitable *Left;
-	Hitable *Right;
+	BVHNode(){type = Instance::BVH; }
+	 BVHNode(Hitable **l, int n, float time0, float time1);
+	 __device__ BVHNode(Hitable* data)
+	{
+		type = Instance::BVH;
+		const auto mirror = static_cast<BVHNode*>(data);
+		left_id = mirror->left_id;
+		right_id= mirror->right_id;
+		Box = mirror->Box;
+	}
+	 __device__ bool Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Material* materials, Hitable** d_world) const override;
+	__host__  bool BoundingBox(float t0, float t1, AABB& b) const override;
+	int Size() const override;
+	__device__ int Debug() const override;
+	Hitable* GPUPointer() override;
+	void SetChildId() override;
+	int count() override;
+	//__device__ __host__  int type() override;
+
+	int left_id, right_id;
 	AABB Box;
+	Hitable *Left;
+    Hitable *Right;
+
 };
 
 
@@ -18,23 +37,72 @@ __device__  inline bool BVHNode::BoundingBox(float t0, float t1, AABB& b) const 
 	return true;
 }
 
-__device__ bool BVHNode::Hit(const Ray& r, const float t_min, const float t_max, HitRecord& rec) const {
-	if (Box.Hit(r, t_min, t_max)) {
+inline int BVHNode::Size() const
+{
+	return sizeof(BVHNode);
+}
+
+__device__ inline int BVHNode::Debug() const
+{
+	return 233;
+}
+
+inline Hitable* BVHNode::GPUPointer()
+{
+	
+	printf("开始创建BVH的GPU指针\n");
+
+
+
+
+	Hitable* pointer;
+	cudaMalloc(&pointer, sizeof(BVHNode));
+	cudaMemcpy(pointer, this, sizeof(this), cudaMemcpyHostToDevice);
+
+	return pointer;
+}
+
+inline void BVHNode::SetChildId()
+{
+	left_id = Left->id;
+	right_id = Right->id;
+}
+
+inline int BVHNode::count()
+{
+	return Left->count() + Right->count() + 1;
+}
+
+// __device__ __host__  inline int BVHNode::type()
+// {
+// 	return 2;
+// }
+
+
+__device__ bool BVHNode::Hit(const Ray& r, const float t_min, const float t_max, HitRecord& rec,Material* materials,Hitable** d_world) const
+{
+	// printf("检测hit");
+	 return false;
+	if (Box.Hit(r, t_min, t_max))
+	{
 		HitRecord left_rec, right_rec;
-		const auto hit_left = Left->Hit(r, t_min, t_max, left_rec);
-		const auto hit_right = Right->Hit(r, t_min, t_max, right_rec);
-		if (hit_left && hit_right) {
+		const auto hit_left = d_world[left_id]->Hit(r, t_min, t_max, left_rec, materials, d_world);
+		const auto hit_right = d_world[right_id]->Hit(r, t_min, t_max, right_rec, materials, d_world);
+		if (hit_left && hit_right)
+		{
 			if (left_rec.t < right_rec.t)
 				rec = left_rec;
 			else
 				rec = right_rec;
 			return true;
 		}
-		if (hit_left) {
+		if (hit_left)
+		{
 			rec = left_rec;
 			return true;
 		}
-		if (hit_right) {
+		if (hit_right)
+		{
 			rec = right_rec;
 			return true;
 		}
@@ -44,38 +112,38 @@ __device__ bool BVHNode::Hit(const Ray& r, const float t_min, const float t_max,
 }
 
 
-__device__  inline int BoxXCompare(const void * a, const void * b) {
+inline int BoxXCompare(const void * a, const void * b) {
 	AABB box_left, box_right;
 	Hitable *ah = *(Hitable**)a;
 	Hitable *bh = *(Hitable**)b;
 	if (!ah->BoundingBox(0, 0, box_left) || !bh->BoundingBox(0, 0, box_right))
-		std::cerr << "no bounding box in bvh_node constructor\n";
+		printf("no bounding box in bvh_node constructor\n");
 	if (box_left._min.x() - box_right._min.x() < 0.0)
 		return -1;
 	else
 		return 1;
 }
 
-__device__  inline int BoxYCompare(const void * a, const void * b)
+inline int BoxYCompare(const void * a, const void * b)
 {
 	AABB box_left, box_right;
 	Hitable *ah = *(Hitable**)a;
 	Hitable *bh = *(Hitable**)b;
 	if (!ah->BoundingBox(0, 0, box_left) || !bh->BoundingBox(0, 0, box_right))
-		std::cerr << "no bounding box in bvh_node constructor\n";
+		printf("no bounding box in bvh_node constructor\n");
 	if (box_left._min.y() - box_right._min.y() < 0.0)
 		return -1;
 	else
 		return 1;
 }
 
-__device__  inline int BoxZCompare(const void * a, const void * b)
+inline int BoxZCompare(const void * a, const void * b)
 {
 	AABB box_left, box_right;
 	Hitable *ah = *(Hitable**)a;
 	Hitable *bh = *(Hitable**)b;
 	if (!ah->BoundingBox(0, 0, box_left) || !bh->BoundingBox(0, 0, box_right))
-		std::cerr << "no bounding box in bvh_node constructor\n";
+		printf("no bounding box in bvh_node constructor\n");
 	if (box_left._min.z() - box_right._min.z() < 0.0)
 		return -1;
 	else
@@ -83,7 +151,8 @@ __device__  inline int BoxZCompare(const void * a, const void * b)
 }
 
 
-__device__  inline BVHNode::BVHNode(Hitable **l, int n, float time0, float time1) {
+inline BVHNode::BVHNode(Hitable **l, int n, float time0, float time1) {
+	type = Instance::BVH;
 	int axis = int(3 * drand48());
 	if (axis == 0)
 		qsort(l, n, sizeof(Hitable *), BoxXCompare);
@@ -91,19 +160,22 @@ __device__  inline BVHNode::BVHNode(Hitable **l, int n, float time0, float time1
 		qsort(l, n, sizeof(Hitable *), BoxYCompare);
 	else
 		qsort(l, n, sizeof(Hitable *), BoxZCompare);
-	if (n == 1) {
+	if (n == 1)
+	{
 		Left = Right = l[0];
 	}
-	else if (n == 2) {
+	else if (n == 2)
+	{
 		Left = l[0];
 		Right = l[1];
 	}
-	else {
+	else
+	{
 		Left = new BVHNode(l, n / 2, time0, time1);
 		Right = new BVHNode(l + n / 2, n - n / 2, time0, time1);
 	}
 	AABB box_left, box_right;
 	if (!Left->BoundingBox(time0, time1, box_left) || !Right->BoundingBox(time0, time1, box_right))
-		std::cerr << "no bounding box in bvh_node constructor\n";
+		printf("no bounding box in bvh_node constructor\n");
 	Box =SurroundingBox(box_left, box_right);
 }

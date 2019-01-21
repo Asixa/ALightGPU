@@ -52,8 +52,9 @@ public:
 };
 
 __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered,
-                                         Vec3 random_in_unit_sphere, float randomnumber)
+                                         const Vec3 random_in_unit_sphere, const float randomnumber)
 {
+	//printf("%f %f %f  type: %d \n", rec.normal[0], rec.normal[1], rec.normal[2],type);
 	switch (type)
 	{
 	case 1:
@@ -72,6 +73,7 @@ __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, 
 			Vec3 reflected = Reflect(unit_vector(r_in.Direction()), rec.normal);
 			scattered = Ray(rec.p, reflected + fuzz * random_in_unit_sphere);
 			attenuation = albedo;
+			//printf("%f %f %f \n", rec.normal[0], rec.normal[1], rec.normal[2]);
 			return (dot(scattered.Direction(), rec.normal) > 0);
 		}
 	case 3:

@@ -30,7 +30,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -63,7 +63,7 @@
       <OutputFile>$(OutDir)/ALightGPU.exe</OutputFile>
     </Link>
     <CudaCompile>
-      <CodeGeneration>compute_30,sm_30;compute_35,sm_35;compute_37,sm_37;compute_50,sm_50;compute_52,sm_52;compute_60,sm_60;compute_61,sm_61;compute_70,sm_70;compute_75,sm_75;</CodeGeneration>
+      <CodeGeneration>compute_35,sm_35</CodeGeneration>
       <AdditionalOptions>-Xcompiler "/wd 4819" %(AdditionalOptions)</AdditionalOptions>
       <Include>./;../common/inc</Include>
       <Defines>WIN32</Defines>
@@ -114,9 +114,11 @@
     <ClInclude Include="AABB.h" />
     <ClInclude Include="BVH.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="device.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Hitable.h" />
     <ClInclude Include="ray.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="root.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="vec3.h" />
