@@ -9,6 +9,7 @@ public:
 	 BVHNode(Hitable **l, int n, float time0, float time1);
 	 __device__ BVHNode(Hitable* data)
 	{
+		 id = data->id;
 		type = Instance::BVH;
 		const auto mirror = static_cast<BVHNode*>(data);
 		left_id = mirror->left_id;

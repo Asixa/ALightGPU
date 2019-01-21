@@ -61,12 +61,12 @@ int main(int argc, char* argv[])
 	//
 	//
 	// return 0;
-	Renderer::InitData();
+	InitData();
 
-	Renderer::Init();
-	if(Renderer::Use_IPR)SPP = IPR_SPP; 
+	Init();
+	if(Use_IPR)SPP = IPR_SPP; 
 	GLWindow::InitWindow(argc, argv, GLUT_DOUBLE | GLUT_RGBA, 100, 100, ImageWidth, ImageHeight, "ALightGPU");
-	Renderer::IPR_Dispose();
+	IPR_Dispose();
 	return 0;
 }
 

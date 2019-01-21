@@ -25,8 +25,8 @@ namespace Renderer
 	const int material_count = 4;
 
 	float m1[MATERIAL_PARAMTER_COUNT] = { 3,0,0,0.5f,0,0 };
-	float m2[MATERIAL_PARAMTER_COUNT] = { 1,1,1,0.5,0,0 };
-	float m3[MATERIAL_PARAMTER_COUNT] = { 0.5,0.5,1,0.5,0,0 };
+	float m2[MATERIAL_PARAMTER_COUNT] = { 0.5,0.5,0.6,0.5,0,0 };
+	float m3[MATERIAL_PARAMTER_COUNT] = { 1,1,1,0.5,0,0 };
 	float m4[MATERIAL_PARAMTER_COUNT] = { 0,1,0,0,0,0 };
 	Material m[material_count] = { Material(DIELECTIRC,m1),Material(LAMBERTIAN,m2) ,Material(METAL,m3) ,Material(LAMBERTIAN,m4) };
 
@@ -37,7 +37,7 @@ namespace Renderer
 	Camera * d_camera;
 	#if !RenderDEBUG 
 	dim3 grid(ImageWidth / BlockSize, ImageHeight / BlockSize), block(BlockSize, BlockSize);
-	//dim3 grid(10, 10), block(BlockSize, BlockSize);
+	//dim3 grid(1, 1), block(BlockSize, BlockSize);
 	#endif
 	#if  RenderDEBUG 
 	dim3 grid(1, 1), block(1, 1);
@@ -184,6 +184,7 @@ namespace Renderer
 	}
 	void IPR_Dispose()
 	{
+		cudaDeviceReset();
 		//******  Õ∑≈œ‘¥Ê **********
 		cudaFree(d_pixeldata);
 		cudaFree(d_materials);
@@ -219,7 +220,10 @@ namespace Renderer
 		for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)
 			PixelData[i] = (Range(sqrt(h_pixeldataF[i] / (current_spp == 0 ? SPP : current_spp + SPP))) * 255);
 		current_spp += SPP;
-
+		auto error = cudaGetLastError();
+		//cudaError_t;
+		if(error!=0)
+		printf("error %d\n", error);
 		return cuda_status;
 	}
 }

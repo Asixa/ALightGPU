@@ -8,7 +8,7 @@
 #include "Camera.h"
 
 #define  RenderDEBUG false
-
+#define  DebugLog false
 __global__
 void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable** d_world, int root, float * d_pixeldata, Camera* d_camera, curandState *const rngStates, Material* materials)
 {
@@ -21,7 +21,8 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 #if !RenderDEBUG 
 	const int x = blockIdx.x * 16 + threadIdx.x, y = blockIdx.y * 16 + threadIdx.y;
 #endif
-
+	unsigned int stack[16];
+	for (int i = 0; i < 16; i++)stack[i] = 0;
 #if RenderDEBUG 
 	int x = 256, y = 256;
 	float u = float(x) / float(512);
@@ -37,42 +38,57 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 		Vec3 factor(1, 1, 1);
 		for (auto i = 0; i < MST; i++)
 		{
-			Hitable** stackPtr = new Hitable*[5];
-			*stackPtr++ = nullptr; // push
+			// Hitable** stackPtr = new Hitable*[5];
+			// *stackPtr++ = nullptr; // push
+
+
+			if (DebugLog)printf("采样开始\n");
+			auto stack_ptr = 0;
+
 			HitRecord rec;
 			rec.t = 99999;
-			bool hit;
+			//bool hit;
 			//抛弃递归二分查找而是使用循环二分查找 以降低栈深度
 			auto node = d_world[root];
 			do
 			{
+				//printf("循环开始\n");
 				HitRecord recl, recr;
+				//printf("node type: %d\n",node->type);
 				auto bvh = static_cast<BVHNode*>(node);
 				const auto childL = d_world[bvh->left_id];
 				const auto childR = d_world[bvh->right_id];
+				
 				bool overlarpR, overlarpL;
 				const auto left_is_bvh = childL->type == Instance::BVH;
 				const auto right_is_bvh = childR->type == Instance::BVH;
+		
 				if (left_is_bvh)
 				{
 					const auto child_bvh_L = static_cast<BVHNode*>(childL);
 					overlarpL = child_bvh_L->Box.Hit(ray, 0.001, 99999);
 				}
-				else { overlarpL = childL->Hit(ray, 0.001, 99999, recl, materials, d_world); }
+				else
+				{
+					overlarpL = childL->Hit(ray, 0.001, 99999, recl, materials, d_world);
+				}
 
-
+		
 				if (right_is_bvh)
 				{
 					const auto child_bvh_R = static_cast<BVHNode*>(childR);
 					overlarpR = child_bvh_R->Box.Hit(ray, 0.001, 99999);
 				}
-				else { overlarpR = childR->Hit(ray, 0.001, 99999, recr, materials, d_world); }
-
+				else
+				{
+					overlarpR = childR->Hit(ray, 0.001, 99999, recr, materials, d_world);
+				}
+	
 				if (overlarpL&&!left_is_bvh)
 				{
 					
 					if (recl.t < rec.t) {
-						hit = true;
+						//hit = true;
 
 						rec = HitRecord(&recl);
 						//printf("Set Left  lefttype: %d  t:%f < %f? \n", childL->type, recl.t, rec.t);
@@ -85,31 +101,54 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 					
 					//printf("Set Right\n");
 					if (recr.t < rec.t) {
-						hit = true;
+						//hit = true;
 						rec = HitRecord(&recr);
 					}
 				}
-
+				//printf("state 4\n");
 				const bool traverseL = (overlarpL && left_is_bvh);
 				const bool traverseR = (overlarpR && right_is_bvh);
 
-				if (!traverseL && !traverseR)
-					node = *--stackPtr; // pop
+				if (DebugLog) printf("node id: %d  left: %d, right: %d, hit_left:%s hit_right:%s, lt: %f rt: %f, l_is_bvh:%s r_is_bvh:%s\n",
+					node->id, bvh->left_id, bvh->right_id, 
+					overlarpL ? "true" : "false", overlarpR ? "true" : "false",
+					recl.t,recr.t,
+					left_is_bvh ? "true" : "false",right_is_bvh? "true" : "false"
+					);
+
+				//printf("?? %d:%d\n",stack_ptr,stack[0]);
+				if (!traverseL && !traverseR) {
+					if (stack_ptr <= 0)
+					{
+						if(DebugLog)printf("break with ptr = %d \n",stack_ptr);
+						node = nullptr;
+					}
+					else {
+						//printf("set node %d\n", stack_ptr - 1);
+						node = d_world[stack[--stack_ptr]];
+						//printf("设置完成 此处没有越界\n", stack_ptr - 1);
+					}
+					//node = *--stackPtr; // pop
+				}
 				else
 				{
 					node = (traverseL) ? childL : childR;
-					if (traverseL && traverseR)
-						*stackPtr++ = childR; // push
+					if (traverseL && traverseR) {
+						if (DebugLog)printf("Push %d\n", childR->id);
+						stack[stack_ptr++] = bvh->right_id;
+					}
+						//*stackPtr++ = childR; // push
 				}
 
 			} while (node != nullptr);
-
-			free(stackPtr);
-
-			//printf("hit: %d  frfsdSAft: %f\n", hit, rec.t);
+			//printf("结束循环\n");
+			//free(stackPtr);
+			// free(stack);
+			//printf(" t: %f\n", rec.t);
 			//if (d_world[root]->Hit(ray, 0.001, 99999, rec, materials, d_world))
 			if (rec.t<99998)
 			{
+				//printf(" hit");
 
 				// random in unit Sphere
 				Vec3 random_in_unit_sphere;
@@ -151,7 +190,7 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 	d_pixeldata[i + 3] += SPP;
 }
 
-__global__ void WorldArrayFixer(Hitable** d_world, Hitable** new_world)//,int rootid,BVHNode* root)//
+__global__ inline void WorldArrayFixer(Hitable** d_world, Hitable** new_world)//,int rootid,BVHNode* root)//
 {
 	const auto i = threadIdx.x;//TODO add dim ,1024 is not enough
 	switch (d_world[i]->type)
@@ -166,7 +205,7 @@ __global__ void WorldArrayFixer(Hitable** d_world, Hitable** new_world)//,int ro
 	}
 }
 
-__global__ void ArraySetter(Hitable** location, int i, Hitable* obj)//
+__global__ inline void ArraySetter(Hitable** location, int i, Hitable* obj)//
 {
 	location[i] = obj;
 }

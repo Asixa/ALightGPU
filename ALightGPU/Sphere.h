@@ -10,6 +10,7 @@ public:
 
 	__device__  Sphere(Hitable* data)
 	{
+		id = data->id;
 		type = Instance::SPHERE;
 		auto mirror = static_cast<Sphere*>(data);
 		center = mirror->center;
