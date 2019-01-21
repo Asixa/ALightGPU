@@ -11,6 +11,15 @@ struct HitRecord
 	Vec3 p;
 	Vec3 normal;
 	Material *mat_ptr;
+public:
+	__device__ HitRecord() {}
+	__device__ HitRecord(HitRecord* rec)
+	{
+		t = rec->t;
+		p = rec->p;
+		normal = rec->normal;
+		mat_ptr = rec->mat_ptr;
+	}
 };
 
 

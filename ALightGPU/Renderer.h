@@ -6,6 +6,10 @@
 #include "BVH.h"
 #include "device.h"
 
+
+
+
+
 namespace Renderer
 {
 
@@ -31,9 +35,13 @@ namespace Renderer
 
 	Material * d_materials;
 	Camera * d_camera;
-	//dim3 grid(ImageWidth / BlockSize, ImageHeight / BlockSize), block(BlockSize, BlockSize);
+	#if !RenderDEBUG 
+	dim3 grid(ImageWidth / BlockSize, ImageHeight / BlockSize), block(BlockSize, BlockSize);
+	//dim3 grid(10, 10), block(BlockSize, BlockSize);
+	#endif
+	#if  RenderDEBUG 
 	dim3 grid(1, 1), block(1, 1);
-
+	#endif
 	Hitable ** d_objs;
 	Hitable ** d_new_world;
 
@@ -53,6 +61,8 @@ namespace Renderer
 		PixelData = new GLbyte[PixelLength];
 		for (auto i = 0; i < PixelLength; i++)
 			PixelData[i] = static_cast<GLbyte>(int(0));
+
+
 
 		ObjList = new Hitable*[object_count];
 		ObjList[0] = new Sphere(Vec3(0, 0, 1), 0.5f, 2);
@@ -112,7 +122,8 @@ namespace Renderer
 		if (bvh->Left->type == Instance::BVH)AddBvh(static_cast<BVHNode*>(bvh->Left));
 		if (bvh->Right->type == Instance::BVH)AddBvh(static_cast<BVHNode*>(bvh->Right));
 	}
-	void IPR_SetupBVH()
+
+	inline void SetupBVH()
 	{
 		const auto bvh_count = h_BVHRoot.count();
 		FinalList = new Hitable*[bvh_count + object_count];
@@ -150,14 +161,13 @@ namespace Renderer
 		//cudaMemcpy(d_bvh_root, &h_BVHRoot, sizeof(BVHNode), cudaMemcpyHostToDevice);
 		WorldArrayFixer << <1, total >> > (d_objs, d_new_world);
 
-		printf("GPU结束\n");
 	}
 
 	//dim3 grid(1),block(1);		
-	void IPR_Init()
+	void Init()
 	{
-		IPR_SetupBVH();
-		printf("初始化内存完成\n");
+		SetupBVH();
+		
 		//******  分配地址 ****** 
 		cudaMalloc(reinterpret_cast<void**>(&d_materials), sizeof(Material)*material_count);
 		cudaMalloc(reinterpret_cast<void**>(&d_pixeldata), ImageWidth * ImageHeight * 4 * sizeof(float));
@@ -169,7 +179,7 @@ namespace Renderer
 
 		//****** 内存复制 host->Device ******);
 		cudaMemcpy(d_materials, &m, sizeof(Material) *material_count, cudaMemcpyHostToDevice);
-
+		printf("初始化显存完成\n");
 
 	}
 	void IPR_Dispose()

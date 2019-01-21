@@ -7,6 +7,7 @@
 #include <curand_kernel.h>
 #include "Camera.h"
 
+#define  RenderDEBUG false
 
 __global__
 void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable** d_world, int root, float * d_pixeldata, Camera* d_camera, curandState *const rngStates, Material* materials)
@@ -17,21 +18,26 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 	curand_init(seed + tid + tid2 * d_width, 0, 0, &rngStates[tid]);			//初始化随机数
 	Vec3 color(0, 0, 0);
 
+#if !RenderDEBUG 
 	const int x = blockIdx.x * 16 + threadIdx.x, y = blockIdx.y * 16 + threadIdx.y;
-	//int x = 256, y = 256;
-	//float u = float(x) / float(512);
-	//float v = float(y) / float(512);
+#endif
 
+#if RenderDEBUG 
+	int x = 256, y = 256;
+	float u = float(x) / float(512);
+	float v = float(y) / float(512);
+#endif
 	for (auto j = 0; j < SPP; j++)
 	{
+#if !RenderDEBUG 
 		const auto u = float(x + curand_uniform(&rngStates[tid])) / float(d_width), v = float(y + curand_uniform(&rngStates[tid])) / float(d_height);
-
+#endif
 		Ray ray(d_camera->Origin(), d_camera->LowerLeftCorner() + u * d_camera->Horizontal() + v * d_camera->Vertical() - d_camera->Origin());
 		Vec3 c(0, 0, 0);
 		Vec3 factor(1, 1, 1);
 		for (auto i = 0; i < MST; i++)
 		{
-			Hitable** stackPtr = new Hitable*[512];
+			Hitable** stackPtr = new Hitable*[5];
 			*stackPtr++ = nullptr; // push
 			HitRecord rec;
 			rec.t = 99999;
@@ -45,8 +51,9 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 				const auto childL = d_world[bvh->left_id];
 				const auto childR = d_world[bvh->right_id];
 				bool overlarpR, overlarpL;
-
-				if (childL->type == Instance::BVH)
+				const auto left_is_bvh = childL->type == Instance::BVH;
+				const auto right_is_bvh = childR->type == Instance::BVH;
+				if (left_is_bvh)
 				{
 					const auto child_bvh_L = static_cast<BVHNode*>(childL);
 					overlarpL = child_bvh_L->Box.Hit(ray, 0.001, 99999);
@@ -54,25 +61,37 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 				else { overlarpL = childL->Hit(ray, 0.001, 99999, recl, materials, d_world); }
 
 
-				if (childR->type == Instance::BVH)
+				if (right_is_bvh)
 				{
 					const auto child_bvh_R = static_cast<BVHNode*>(childR);
 					overlarpR = child_bvh_R->Box.Hit(ray, 0.001, 99999);
 				}
 				else { overlarpR = childR->Hit(ray, 0.001, 99999, recr, materials, d_world); }
 
-				if (overlarpL&&childL->type != Instance::BVH)
+				if (overlarpL&&!left_is_bvh)
 				{
-					if (recl.t < rec.t)rec = recl;
+					
+					if (recl.t < rec.t) {
+						hit = true;
+
+						rec = HitRecord(&recl);
+						//printf("Set Left  lefttype: %d  t:%f < %f? \n", childL->type, recl.t, rec.t);
+						//printf("Record after set   t:%f \n", rec.t);
+					}
 				}
 
-				if (overlarpL&&childL->type != Instance::BVH)
+				if (overlarpR&&!right_is_bvh)
 				{
-					if (recr.t < rec.t)rec = recr;
+					
+					//printf("Set Right\n");
+					if (recr.t < rec.t) {
+						hit = true;
+						rec = HitRecord(&recr);
+					}
 				}
 
-				const bool traverseL = (overlarpL && childL->type == Instance::BVH);
-				const bool traverseR = (overlarpR && childR->type == Instance::BVH);
+				const bool traverseL = (overlarpL && left_is_bvh);
+				const bool traverseR = (overlarpR && right_is_bvh);
 
 				if (!traverseL && !traverseR)
 					node = *--stackPtr; // pop
@@ -85,9 +104,11 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 
 			} while (node != nullptr);
 
-			printf("hit: %d  t:", hit, rec.t);
+			free(stackPtr);
+
+			//printf("hit: %d  frfsdSAft: %f\n", hit, rec.t);
 			//if (d_world[root]->Hit(ray, 0.001, 99999, rec, materials, d_world))
-			if (hit)
+			if (rec.t<99998)
 			{
 
 				// random in unit Sphere
@@ -99,7 +120,6 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 				Vec3 attenuation;
 				if (i < MST&&rec.mat_ptr->scatter(ray, rec, attenuation, scattered, random_in_unit_sphere, curand_uniform(&rngStates[tid])))
 				{
-					//auto target = rec.p + rec.normal + random_in_unit_sphere;
 					factor *= attenuation;
 					ray = scattered;
 				}
@@ -112,6 +132,7 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 			}
 			else
 			{
+				//printf("SetBG");
 				const auto t = 0.5*(unit_vector(ray.Direction()).y() + 1);
 				c = factor * ((1.0 - t)*Vec3(1.0, 1.0, 1.0) + t * Vec3(0.5, 0.7, 1.0));
 				//c = factor * ((1.0 - t)*Vec3(1.0, 1.0, 1.0) + t * Vec3(73/255.0, 93/255.0, 160/255.0));

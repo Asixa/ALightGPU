@@ -67,6 +67,8 @@ inline int Sphere::count()
 
 
 bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Material* materials, Hitable** d_world) const {
+	
+	//printf("ºÏ≤‚Sphere t:");
 	// Vec3 oc = r.Origin() - center;
 	// float a = dot(r.Direction(), r.Direction());
 	// float b = dot(oc, r.Direction());
@@ -109,6 +111,7 @@ bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Materia
 			rec.p = r.PointAtParameter(rec.t);
 			rec.normal = (rec.p - center) / radius;
 			rec.mat_ptr = &materials[mat_id];
+			//printf("%f\n", temp);
 			return true;
 		}
 		temp = (-b + sqrt(b*b - a * c)) / a;
@@ -118,8 +121,10 @@ bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Materia
 			rec.p = r.PointAtParameter(rec.t);
 			rec.normal = (rec.p - center) / radius;
 			rec.mat_ptr = &materials[mat_id];
+			//printf("%f\n", temp);
 			return true;
 		}
 	}
+	//printf("%d\n", -1);
 	return false;
 }
