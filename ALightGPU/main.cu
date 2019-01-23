@@ -64,6 +64,7 @@ int main(int argc, char* argv[])
 	InitData();
 
 	Init();
+	//ImageRender();
 	if(Use_IPR)SPP = IPR_SPP; 
 	GLWindow::InitWindow(argc, argv, GLUT_DOUBLE | GLUT_RGBA, 100, 100, ImageWidth, ImageHeight, "ALightGPU");
 	IPR_Dispose();

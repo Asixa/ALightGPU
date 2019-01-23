@@ -13,7 +13,7 @@
 // #define METAL 2
 // #define DIELECTIRC 3
 #define M_PI 3.1415926
-const int  ImageWidth = 800,ImageHeight = 600;
+const int  ImageWidth = 512,ImageHeight = 512;
 int SPP = 1024,MAX_SCATTER_TIME = 8;
 const int IPR_SPP = 4; int current_spp = 0;
 GLint    PixelLength;
@@ -23,6 +23,9 @@ const int BlockSize=16;
 Vec3* col;
 
 
+//texture<unsigned char, 2, cudaReadModeElementType> tex;
+
+texture<float, cudaTextureType2DLayered> tex;
 __device__ static unsigned long long seed = 4;
 
 // Ëæ»úÊý 

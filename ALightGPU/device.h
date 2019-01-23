@@ -211,8 +211,22 @@ __global__ inline void ArraySetter(Hitable** location, int i, Hitable* obj)//
 	location[i] = obj;
 }
 
-// __global__ inline void TextureLab(float * d_pixeldata)//
-// {
-// 	const int x = blockIdx.x * 16 + threadIdx.x, y = blockIdx.y * 16 + threadIdx.y;
-// 	auto tex2D(Renderer::tex, x/512, y);
-// }
+__global__ inline void TextureLab(float* d_pixeldata,int width, int height,float theta)//
+{
+	const auto x = blockIdx.x * blockDim.x + threadIdx.x;
+	const auto y = blockIdx.y * blockDim.y + threadIdx.y;
+	float u = x / static_cast<float>(width);
+	float v = y / static_cast<float>(height);
+
+	// Transform coordinates
+	u -= 0.5f;
+	v -= 0.5f;
+	float tu = u * cosf(theta) - v * sinf(theta) + 0.5f;
+	float tv = v * cosf(theta) + u * sinf(theta) + 0.5f;
+
+	const auto i = width * 4 * y + x * 4;
+	d_pixeldata[i] += tex2DLayered(tex, tu, tv, 0);
+	d_pixeldata[i + 1] += tex2DLayered(tex, tu, tv, 1);
+	d_pixeldata[i + 2] += tex2DLayered(tex, tu, tv, 2);
+	d_pixeldata[i + 3] += 1;
+}

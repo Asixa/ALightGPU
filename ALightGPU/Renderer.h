@@ -5,8 +5,9 @@
 #include "Sphere.h"
 #include "BVH.h"
 #include "device.h"
-#include "stb_image.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 namespace Renderer
 {
@@ -53,8 +54,7 @@ namespace Renderer
 	int object_count =0;
 	BVHNode h_BVHRoot;
 
-	texture<float, 2, cudaReadModeElementType> tex;
-
+	
 	DeviceData d_data;
 	void Scene1()
 	{
@@ -113,14 +113,44 @@ namespace Renderer
 	}
 	void InitTexture()
 	{
-		// int w, h, n;
-		// const auto tex_data = stbi_load("earthmap.jpg", &w, &h, &n, 0);
-		// const unsigned int size = w * h * sizeof(unsigned char)*3;
-		// auto channel_desc =cudaCreateChannelDesc(24, 0, 0, 0, cudaChannelFormatKindFloat);
-		// cudaArray *cu_array;
-		// cudaMallocArray(&cu_array,&channel_desc,w,h);
-		// cudaMemcpyToArray(cu_array,0,0,tex_data,size,cudaMemcpyHostToDevice);
-		// cudaBindTextureToArray(tex, cu_array, &channel_desc);
+		int width, height, depth;
+		const auto tex_data = stbi_load("D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/x64/Release/wall.jpg",
+			&width, &height, &depth, 0);
+		const auto size = width * height * depth;
+		float* h_data = new float[size];
+		printf("Hello %d,%d,%d", width, height, depth);
+		//for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
+		for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
+
+
+
+		// Allocate device memory for result
+		float *dData = NULL;
+		cudaMalloc((void **)&dData, size);
+
+		// Allocate array and copy image data
+		cudaChannelFormatDesc channelDesc =
+			cudaCreateChannelDesc(32, 0, 0, 0, cudaChannelFormatKindFloat);
+		cudaArray *cuArray;
+		cudaMallocArray(&cuArray,
+			&channelDesc,
+			width,
+			height);
+		cudaMemcpyToArray(cuArray,
+			0,
+			0,
+			h_data,
+			size,
+			cudaMemcpyHostToDevice);
+
+		// Set texture parameters
+		tex.addressMode[0] = cudaAddressModeWrap;
+		tex.addressMode[1] = cudaAddressModeWrap;
+		tex.filterMode = cudaFilterModeLinear;
+		tex.normalized = true;    // access with normalized texture coordinates
+
+		// Bind the array to the texture
+		cudaBindTextureToArray(tex, cuArray, channelDesc);
 	}
 	void InitData()
 	{
@@ -186,7 +216,7 @@ namespace Renderer
 	void Init()
 	{
 		SetupBVH();
-		
+		//InitTexture();
 		//******  ·ÖÅäµØÖ· ****** 
 		cudaMalloc(reinterpret_cast<void**>(&d_materials), sizeof(Material)*material_count);
 		cudaMalloc(reinterpret_cast<void**>(&d_pixeldata), ImageWidth * ImageHeight * 4 * sizeof(float));
@@ -215,6 +245,7 @@ namespace Renderer
 		cudaFree(d_camera);
 
 	}
+
 	cudaError_t IPRRender()
 	{
 		const int random_seed = drand48() * 1000;
