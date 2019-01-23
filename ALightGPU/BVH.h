@@ -16,7 +16,7 @@ public:
 		right_id= mirror->right_id;
 		Box = mirror->Box;
 	}
-	 __device__ bool Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Material* materials, Hitable** d_world) const override;
+	 __device__ bool Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, DeviceData* data) const override;
 	__host__  bool BoundingBox(float t0, float t1, AABB& b) const override;
 	int Size() const override;
 	__device__ int Debug() const override;
@@ -80,15 +80,15 @@ inline int BVHNode::count()
 // }
 
 
-__device__ bool BVHNode::Hit(const Ray& r, const float t_min, const float t_max, HitRecord& rec,Material* materials,Hitable** d_world) const
+__device__ bool BVHNode::Hit(const Ray& r, const float t_min, const float t_max, HitRecord& rec,DeviceData* data) const
 {
 	// printf("¼ì²âhit");
 	 return false;
 	if (Box.Hit(r, t_min, t_max))
 	{
 		HitRecord left_rec, right_rec;
-		const auto hit_left = d_world[left_id]->Hit(r, t_min, t_max, left_rec, materials, d_world);
-		const auto hit_right = d_world[right_id]->Hit(r, t_min, t_max, right_rec, materials, d_world);
+		const auto hit_left = data->world[left_id]->Hit(r, t_min, t_max, left_rec, data);
+		const auto hit_right = data->world[right_id]->Hit(r, t_min, t_max, right_rec, data);
 		if (hit_left && hit_right)
 		{
 			if (left_rec.t < right_rec.t)

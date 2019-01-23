@@ -52,6 +52,12 @@
     <ClInclude Include="Material.h">
       <Filter>Header\Render</Filter>
     </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Header\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

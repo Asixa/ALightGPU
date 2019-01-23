@@ -18,7 +18,7 @@ public:
 		mat_id = mirror->mat_id;
 		//delete data;
 	};
-	__device__ bool Hit(const Ray& r, float tmin, float tmax, HitRecord& rec,Material* materials, Hitable** d_world) const override;
+	__device__ bool Hit(const Ray& r, float tmin, float tmax, HitRecord& rec,DeviceData* data) const override;
 	__host__ bool BoundingBox(float t0, float t1, AABB& box) const override;
 	int Size() const override;
 	__device__ int Debug() const override;
@@ -67,36 +67,8 @@ inline int Sphere::count()
 // }
 
 
-bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Material* materials, Hitable** d_world) const {
+bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, DeviceData* data) const {
 	
-	//printf("¼ì²âSphere t:");
-	// Vec3 oc = r.Origin() - center;
-	// float a = dot(r.Direction(), r.Direction());
-	// float b = dot(oc, r.Direction());
-	// float c = dot(oc, oc) - radius * radius;
-	// float discriminant = b * b - a * c;
-	// if (discriminant > 0) {
-	// 	float temp = (-b - sqrt(b*b - a * c)) / a;
-	// 	if (temp < t_max && temp > t_min) {
-	// 		rec.t = temp;
-	// 		rec.p = r.PointAtParameter(rec.t);
-	// 		//get_sphere_uv((rec.p - center) / radius, rec.u, rec.v);
-	// 		rec.normal = (rec.p - center) / radius;
-	// 		rec.mat_ptr = &materials[mat_id];
-	// 		return true;
-	// 	}
-	// 	temp = (-b + sqrt(b*b - a * c)) / a;
-	// 	if (temp < t_max && temp > t_min) {
-	// 		rec.t = temp;
-	// 		rec.p = r.PointAtParameter(rec.t);
-	// 		//get_sphere_uv((rec.p - center) / radius, rec.u, rec.v);
-	// 		rec.normal = (rec.p - center) / radius;
-	// 		rec.mat_ptr = &materials[mat_id];
-	// 		return true;
-	// 	}
-	// }
-	// return false;
-
 	auto oc = r.Origin() - center;
 	float a = dot(r.Direction(), r.Direction());
 	float b = dot(oc, r.Direction());
@@ -111,8 +83,8 @@ bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Materia
 			rec.t = temp;
 			rec.p = r.PointAtParameter(rec.t);
 			rec.normal = (rec.p - center) / radius;
-			rec.mat_ptr = &materials[mat_id];
-			//printf("%f\n", temp);
+			rec.mat_ptr = &data->materials[mat_id];
+			GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
 			return true;
 		}
 		temp = (-b + sqrt(b*b - a * c)) / a;
@@ -121,8 +93,8 @@ bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, Materia
 			rec.t = temp;
 			rec.p = r.PointAtParameter(rec.t);
 			rec.normal = (rec.p - center) / radius;
-			rec.mat_ptr = &materials[mat_id];
-			//printf("%f\n", temp);
+			rec.mat_ptr = &data->materials[mat_id];
+			GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
 			return true;
 		}
 	}

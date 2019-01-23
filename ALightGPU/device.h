@@ -9,8 +9,10 @@
 
 #define  RenderDEBUG false
 #define  DebugLog false
+
+
 __global__
-void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable** d_world, int root, float * d_pixeldata, Camera* d_camera, curandState *const rngStates, Material* materials)
+void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root, float * d_pixeldata, Camera* d_camera, curandState *const rngStates,DeviceData data)
 {
 	const auto tid = blockIdx.x * blockDim.x + threadIdx.x;
 	const auto tid2 = blockIdx.y * blockDim.y + threadIdx.y;
@@ -48,15 +50,15 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 			rec.t = 99999;
 			//bool hit;
 			//抛弃递归二分查找而是使用循环二分查找 以降低栈深度
-			auto node = d_world[root];
+			auto node = data.world[root];
 			do
 			{
 				//printf("循环开始\n");
 				HitRecord recl, recr;
 				//printf("node type: %d\n",node->type);
 				auto bvh = static_cast<BVHNode*>(node);
-				const auto childL = d_world[bvh->left_id];
-				const auto childR = d_world[bvh->right_id];
+				const auto childL = data.world[bvh->left_id];
+				const auto childR = data.world[bvh->right_id];
 				
 				bool overlarpR, overlarpL;
 				const auto left_is_bvh = childL->type == Instance::BVH;
@@ -69,7 +71,7 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 				}
 				else
 				{
-					overlarpL = childL->Hit(ray, 0.001, 99999, recl, materials, d_world);
+					overlarpL = childL->Hit(ray, 0.001, 99999, recl, &data);
 				}
 
 		
@@ -80,7 +82,7 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 				}
 				else
 				{
-					overlarpR = childR->Hit(ray, 0.001, 99999, recr, materials, d_world);
+					overlarpR = childR->Hit(ray, 0.001, 99999, recr, &data);
 				}
 	
 				if (overlarpL&&!left_is_bvh)
@@ -124,7 +126,7 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 					}
 					else {
 						//printf("set node %d\n", stack_ptr - 1);
-						node = d_world[stack[--stack_ptr]];
+						node = data.world[stack[--stack_ptr]];
 						//printf("设置完成 此处没有越界\n", stack_ptr - 1);
 					}
 					//node = *--stackPtr; // pop
@@ -208,3 +210,9 @@ __global__ inline void ArraySetter(Hitable** location, int i, Hitable* obj)//
 {
 	location[i] = obj;
 }
+
+// __global__ inline void TextureLab(float * d_pixeldata)//
+// {
+// 	const int x = blockIdx.x * 16 + threadIdx.x, y = blockIdx.y * 16 + threadIdx.y;
+// 	auto tex2D(Renderer::tex, x/512, y);
+// }

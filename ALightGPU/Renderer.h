@@ -55,6 +55,7 @@ namespace Renderer
 
 	texture<float, 2, cudaReadModeElementType> tex;
 
+	DeviceData d_data;
 	void Scene1()
 	{
 		//unsigned char *tex_data = stbi_load("earthmap.jpg", &nx, &ny, &nn, 0);
@@ -110,7 +111,17 @@ namespace Renderer
 
 		h_BVHRoot = BVHNode(ObjList, object_count, 0, 1);
 	}
-
+	void InitTexture()
+	{
+		// int w, h, n;
+		// const auto tex_data = stbi_load("earthmap.jpg", &w, &h, &n, 0);
+		// const unsigned int size = w * h * sizeof(unsigned char)*3;
+		// auto channel_desc =cudaCreateChannelDesc(24, 0, 0, 0, cudaChannelFormatKindFloat);
+		// cudaArray *cu_array;
+		// cudaMallocArray(&cu_array,&channel_desc,w,h);
+		// cudaMemcpyToArray(cu_array,0,0,tex_data,size,cudaMemcpyHostToDevice);
+		// cudaBindTextureToArray(tex, cu_array, &channel_desc);
+	}
 	void InitData()
 	{
 		h_pixeldataF = new float[ImageWidth*ImageHeight * 4];
@@ -187,6 +198,11 @@ namespace Renderer
 
 		//****** 内存复制 host->Device ******);
 		cudaMemcpy(d_materials, &m, sizeof(Material) *material_count, cudaMemcpyHostToDevice);
+
+		d_data.world = d_new_world;
+		d_data.materials = d_materials;
+	
+
 		printf("初始化显存完成\n");
 
 	}
@@ -209,17 +225,18 @@ namespace Renderer
 		cudaMemcpy(d_camera, &cam, sizeof(Camera), cudaMemcpyHostToDevice);
 		cudaMemcpy(d_pixeldata, h_pixeldataF, ImageWidth * ImageHeight * 4 * sizeof(float), cudaMemcpyHostToDevice);
 		//******分配线程 ******
+
+
 		IPRSampler << <grid, block >> > (
 			ImageWidth, ImageHeight,
 			random_seed,
 			SPP,
 			MAX_SCATTER_TIME,
-			d_new_world,
 			BVH_Root_ID,
 			d_pixeldata,
 			d_camera,
 			d_rng_states,
-			d_materials);
+			d_data);
 
 		//****** 复制内存 Device->host ******
 		cudaMemcpy(h_pixeldataF, d_pixeldata, ImageWidth * ImageHeight * 4 * sizeof(float), cudaMemcpyDeviceToHost);

@@ -1,6 +1,5 @@
 #pragma once
 #include "vec3.h"
-#include "Hitable.h"
 
 
 class Material;
@@ -16,6 +15,8 @@ struct HitRecord
 	Vec3 p;
 	Vec3 normal;
 	Material *mat_ptr;
+   float u, v;
+
 public:
 	__device__ HitRecord(): t(0)
 	{
@@ -27,6 +28,8 @@ public:
 		p = rec->p;
 		normal = rec->normal;
 		mat_ptr = rec->mat_ptr;
+	 u = rec->u;
+		v = rec->v;
 	}
 };
 
@@ -77,6 +80,8 @@ __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, 
 	case lambertian:
 		{
 			const auto albedo = Vec3(data[0], data[1], data[2]);
+			//const auto albedo = tex2D(Renderer::tex, rec.u, rec.v);
+
 			const Vec3 target = rec.p + rec.normal + random_in_unit_sphere;
 			scattered = Ray(rec.p, target - rec.p);
 			attenuation = albedo;
