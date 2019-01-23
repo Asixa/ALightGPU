@@ -41,7 +41,6 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 			// Hitable** stackPtr = new Hitable*[5];
 			// *stackPtr++ = nullptr; // push
 
-
 			if (DebugLog)printf("采样开始\n");
 			auto stack_ptr = 0;
 
@@ -173,8 +172,8 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, Hitable**
 			{
 				//printf("SetBG");
 				const auto t = 0.5*(unit_vector(ray.Direction()).y() + 1);
-				c = factor * ((1.0 - t)*Vec3(1.0, 1.0, 1.0) + t * Vec3(0.5, 0.7, 1.0));
-				//c = factor * ((1.0 - t)*Vec3(1.0, 1.0, 1.0) + t * Vec3(73/255.0, 93/255.0, 160/255.0));
+				//c = factor * ((1.0 - t)*Vec3(1.0, 1.0, 1.0) + t * Vec3(0.5, 0.7, 1.0));
+				c = factor * ((1.0 - t)*Vec3(1.0, 1.0, 1.0) + t * Vec3(50/255.0, 130/255.0, 255/255.0));
 				break;
 			}
 		}

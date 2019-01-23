@@ -4,7 +4,12 @@
 
 
 class Material;
-
+enum MaterialType
+{
+lambertian,
+metal,
+dielectirc
+};
 struct HitRecord
 {
 	float t;
@@ -12,7 +17,10 @@ struct HitRecord
 	Vec3 normal;
 	Material *mat_ptr;
 public:
-	__device__ HitRecord() {}
+	__device__ HitRecord(): t(0)
+	{
+	}
+
 	__device__ HitRecord(HitRecord* rec)
 	{
 		t = rec->t;
@@ -30,9 +38,9 @@ __device__ float Schlick(float cosine, float ref_idx) {
 }
 
 __device__ inline bool Refract(const Vec3& v, const Vec3& n, float ni_over_nt, Vec3& refracted) {
-	Vec3 uv = unit_vector(v);
-	float dt = dot(uv, n);
-	float discriminant = 1.0 - ni_over_nt * ni_over_nt*(1 - dt * dt);
+	const Vec3 uv = unit_vector(v);
+	const float dt = dot(uv, n);
+	const float discriminant = 1.0 - ni_over_nt * ni_over_nt*(1 - dt * dt);
 	if (discriminant > 0)
 	{
 		refracted = ni_over_nt * (uv - n * dt) - n * sqrt(discriminant);
@@ -50,10 +58,11 @@ __device__ inline Vec3 Reflect(const Vec3& v, const Vec3& n)
 class Material {
 public:
 	float data[MATERIAL_PARAMTER_COUNT];
-	int type;
-	Material(int t, float d[MATERIAL_PARAMTER_COUNT])
+	//int type;
+	MaterialType Type;
+	Material(MaterialType t, float d[MATERIAL_PARAMTER_COUNT])
 	{
-		type = t;
+		Type = t;
 		memcpy(data, d, MATERIAL_PARAMTER_COUNT * sizeof(float));
 	}
 	bool scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered, Vec3 random_in_unit_sphere,
@@ -63,35 +72,33 @@ public:
 __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered,
                                          const Vec3 random_in_unit_sphere, const float randomnumber)
 {
-	//printf("%f %f %f  type: %d \n", rec.normal[0], rec.normal[1], rec.normal[2],type);
-	switch (type)
+	switch (Type)
 	{
-	case 1:
+	case lambertian:
 		{
-			auto albedo = Vec3(data[0], data[1], data[2]);
-			Vec3 target = rec.p + rec.normal + random_in_unit_sphere;
+			const auto albedo = Vec3(data[0], data[1], data[2]);
+			const Vec3 target = rec.p + rec.normal + random_in_unit_sphere;
 			scattered = Ray(rec.p, target - rec.p);
 			attenuation = albedo;
 			return true;
 		}
-	case 2:
+	case metal:
 		{
-			auto albedo = Vec3(data[0], data[1], data[2]);
-			auto fuzz = data[3];
+			const auto albedo = Vec3(data[0], data[1], data[2]);
+			const auto fuzz = data[3];
 
-			Vec3 reflected = Reflect(unit_vector(r_in.Direction()), rec.normal);
+			const auto reflected = Reflect(unit_vector(r_in.Direction()), rec.normal);
 			scattered = Ray(rec.p, reflected + fuzz * random_in_unit_sphere);
 			attenuation = albedo;
 			//printf("%f %f %f \n", rec.normal[0], rec.normal[1], rec.normal[2]);
 			return (dot(scattered.Direction(), rec.normal) > 0);
 		}
-	case 3:
+	case dielectirc:
 		{
-
-			auto ref_idx = data[0];
+			const auto ref_idx = data[0];
 
 			Vec3 outward_normal;
-			Vec3 reflected = Reflect(r_in.Direction(), rec.normal);
+			const auto reflected = Reflect(r_in.Direction(), rec.normal);
 			float ni_over_nt;
 			attenuation = Vec3(1.0, 1.0, 1.0);
 			Vec3 refracted;

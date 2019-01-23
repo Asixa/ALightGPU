@@ -157,7 +157,6 @@ namespace GLWindow {
 		glutInitWindowPosition(x_position, y_position);
 		glutInitWindowSize(width, heigth);
 		glutCreateWindow(title);
-		glutCreateSubWindow(0, 5, 5, 100, 100);
 		glClearColor(0, 0.0, 0, 1.0);
 		glMatrixMode(GL_PROJECTION);
 		gluOrtho2D(0.0, 200.0, 0.0, 150.0);
