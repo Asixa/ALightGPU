@@ -34,4 +34,5 @@ struct  DeviceData
 {
 	Hitable** world;
 	Material* materials;
+	cudaTextureObject_t texs[TEXTURE_COUNT];
 };

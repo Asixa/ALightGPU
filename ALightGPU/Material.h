@@ -1,5 +1,6 @@
 #pragma once
 #include "vec3.h"
+#include "root.h"
 
 
 class Material;
@@ -15,7 +16,7 @@ struct HitRecord
 	Vec3 p;
 	Vec3 normal;
 	Material *mat_ptr;
-   float u, v;
+	float u, v;
 
 public:
 	__device__ HitRecord(): t(0)
@@ -28,7 +29,7 @@ public:
 		p = rec->p;
 		normal = rec->normal;
 		mat_ptr = rec->mat_ptr;
-	 u = rec->u;
+		u = rec->u;
 		v = rec->v;
 	}
 };
@@ -69,20 +70,21 @@ public:
 		memcpy(data, d, MATERIAL_PARAMTER_COUNT * sizeof(float));
 	}
 	bool scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered, Vec3 random_in_unit_sphere,
-	             float randomnumber);
+	             float randomnumber, cudaTextureObject_t* texs);
 };
 
 __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered,
-                                         const Vec3 random_in_unit_sphere, const float randomnumber)
+                                         const Vec3 random_in_unit_sphere, const float randomnumber, cudaTextureObject_t* texs)
 {
 	switch (Type)
 	{
 	case lambertian:
 		{
+			int texid = data[0];
 			const auto albedo =Vec3(
-					tex2DLayered(tex, rec.u, 1-rec.v, 0),
-					tex2DLayered(tex, rec.u, 1 - rec.v, 1),
-					tex2DLayered(tex, rec.u, 1 - rec.v, 2));
+					tex2DLayered<float>(texs[texid], rec.u, 1-rec.v, 0),
+					tex2DLayered<float>(texs[texid], rec.u, 1 - rec.v, 1),
+					tex2DLayered<float>(texs[texid], rec.u, 1 - rec.v, 2));
 			//printf("%d\n", albedo);
 			const Vec3 target = rec.p + rec.normal + random_in_unit_sphere;
 			scattered = Ray(rec.p, target - rec.p);

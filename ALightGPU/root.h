@@ -7,7 +7,7 @@
 #define MATERIAL_PARAMTER_COUNT 6
 #define HITABLE_PARAMTER_COUNT 5
 
-
+#define TEXTURE_COUNT 2
 
 // #define LAMBERTIAN 1
 // #define METAL 2
@@ -25,8 +25,6 @@ Vec3* col;
 
 //texture<unsigned char, 2, cudaReadModeElementType> tex;
 
-texture<float, cudaTextureType2DLayered> tex;
-texture<float, cudaTextureType2DLayered>* texs;
 __device__ static unsigned long long seed = 4;
 
 // Ëæ»úÊý 

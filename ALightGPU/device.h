@@ -158,7 +158,7 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root,
 
 				Ray scattered;
 				Vec3 attenuation;
-				if (i < MST&&rec.mat_ptr->scatter(ray, rec, attenuation, scattered, random_in_unit_sphere, curand_uniform(&rngStates[tid])))
+				if (i < MST&&rec.mat_ptr->scatter(ray, rec, attenuation, scattered, random_in_unit_sphere, curand_uniform(&rngStates[tid]),data.texs))
 				{
 					factor *= attenuation;
 					ray = scattered;
@@ -211,22 +211,22 @@ __global__ inline void ArraySetter(Hitable** location, int i, Hitable* obj)//
 	location[i] = obj;
 }
 
-__global__ inline void TextureLab(float* d_pixeldata,int width, int height,float theta)//
-{
-	const auto x = blockIdx.x * blockDim.x + threadIdx.x;
-	const auto y = blockIdx.y * blockDim.y + threadIdx.y;
-	float u = x / static_cast<float>(width);
-	float v = y / static_cast<float>(height);
-
-	// Transform coordinates
-	// u -= 0.5f;
-	// v -= 0.5f;
-	// float tu = u * cosf(theta) - v * sinf(theta) + 0.5f;
-	// float tv = v * cosf(theta) + u * sinf(theta) + 0.5f;
-
-	const auto i = width * 4 * y + x * 4;
-	d_pixeldata[i] += tex2DLayered(tex, u, v, 0);
-	d_pixeldata[i + 1] += tex2DLayered(tex, u, v, 1);
-	d_pixeldata[i + 2] += tex2DLayered(tex, u, v, 2);
-	d_pixeldata[i + 3] += 1;
-}
+// __global__ inline void TextureLab(float* d_pixeldata,int width, int height,float theta)//
+// {
+// 	const auto x = blockIdx.x * blockDim.x + threadIdx.x;
+// 	const auto y = blockIdx.y * blockDim.y + threadIdx.y;
+// 	float u = x / static_cast<float>(width);
+// 	float v = y / static_cast<float>(height);
+//
+// 	// Transform coordinates
+// 	// u -= 0.5f;
+// 	// v -= 0.5f;
+// 	// float tu = u * cosf(theta) - v * sinf(theta) + 0.5f;
+// 	// float tv = v * cosf(theta) + u * sinf(theta) + 0.5f;
+//
+// 	const auto i = width * 4 * y + x * 4;
+// 	d_pixeldata[i] += tex2DLayered(tex, u, v, 0);
+// 	d_pixeldata[i + 1] += tex2DLayered(tex, u, v, 1);
+// 	d_pixeldata[i + 2] += tex2DLayered(tex, u, v, 2);
+// 	d_pixeldata[i + 3] += 1;
+// }

@@ -24,13 +24,22 @@ namespace Renderer
 	const int material_count = 5;
 
 	float m1[MATERIAL_PARAMTER_COUNT] = { 3,0,0,0.5f,0,0 };
-	float m2[MATERIAL_PARAMTER_COUNT] = { 0.5,0.5,0.6,0.5,0,0 };
+	float m2[MATERIAL_PARAMTER_COUNT] = { 0,0.5,0.6,0.5,0,0 };
 	float m3[MATERIAL_PARAMTER_COUNT] = { 1,1,1,0.1,0,0 };
-	float m4[MATERIAL_PARAMTER_COUNT] = { 0,1,0,0,0,0 };
-	float m5[MATERIAL_PARAMTER_COUNT] = { 1,0.1,0.1,0.5,0,0 };
-	Material m[material_count] = { Material(dielectirc,m1),Material(lambertian,m2) ,
-		Material(metal,m3) ,Material(lambertian,m4),Material(lambertian,m5) };
+	float m4[MATERIAL_PARAMTER_COUNT] = { 1,1,0,0,0,0 };
+	float m5[MATERIAL_PARAMTER_COUNT] = { 0,0.1,0.1,0.5,0,0 };
+	Material m[material_count] = { 
+		Material(dielectirc,m1),
+		Material(lambertian,m2) ,
+		Material(metal,m3) ,
+		Material(lambertian,m4),
+		Material(lambertian,m5) };
 
+	const char *imageFilenames[] =
+	{
+		"D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/bin/win64/Release/earthmap.png",
+		"D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/bin/win64/Release/marsmap.jpg"
+	};
 
 	float * d_pixeldata;
 
@@ -53,8 +62,8 @@ namespace Renderer
 	Hitable** FinalList;
 	int object_count =0;
 	BVHNode h_BVHRoot;
+	cudaTextureObject_t textlist[TEXTURE_COUNT];
 
-	
 	DeviceData d_data;
 	void Scene1()
 	{
@@ -113,61 +122,99 @@ namespace Renderer
 	}
 	void InitTexture()
 	{
-		int width, height, depth;
-		const auto tex_data = stbi_load("D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/bin/win64/Release/earthmap.png",
-			&width, &height, &depth, 0);
-		const auto size = width * height * depth;
-		float* h_data = new float[size];
-		printf("Hello %d,%d,%d", width, height, depth);
-		//for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
-		//for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
 
-		for (unsigned int layer = 0; layer < 3; layer++)
-			for (int i = 0; i < (int)(width * height); i++)
-			{
-				h_data[layer*width*height + i] = tex_data[i*3+layer]/255.0;
-			}
+		// int width, height, depth;
+		// const auto tex_data = stbi_load("D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/bin/win64/Release/earthmap.png",
+		// 	&width, &height, &depth, 0);
+		// const auto size = width * height * depth;
+		// float* h_data = new float[size];
+		// printf("Hello %d,%d,%d", width, height, depth);
+		// //for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
+		// //for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
+		//
+		// for (unsigned int layer = 0; layer < 3; layer++)
+		// 	for (int i = 0; i < (int)(width * height); i++)
+		// 	{
+		// 		h_data[layer*width*height + i] = tex_data[i*3+layer]/255.0;
+		// 	}
+		//
+		//
+		// // Allocate device memory for result
+		// float *dData = NULL;
+		// cudaMalloc((void **)&dData, size);
+		//
+		// // Allocate array and copy image data
+		// cudaChannelFormatDesc channelDesc =
+		// 	cudaCreateChannelDesc(32, 0, 0, 0, cudaChannelFormatKindFloat);
+		// cudaArray *cuArray;
+		//
+		// cudaMalloc3DArray(&cuArray, &channelDesc, make_cudaExtent(width, height, 3), cudaArrayLayered);
+		//
+		// cudaMemcpy3DParms myparms = { 0 };
+		// myparms.srcPos = make_cudaPos(0, 0, 0);
+		// myparms.dstPos = make_cudaPos(0, 0, 0);
+		// myparms.srcPtr = make_cudaPitchedPtr(h_data, width * sizeof(float), width, height);
+		// myparms.dstArray = cuArray;
+		// myparms.extent = make_cudaExtent(width, height,3);
+		// myparms.kind = cudaMemcpyHostToDevice;
+		// cudaMemcpy3D(&myparms);
+		//
+		// // Set texture parameters
+		// tex.addressMode[0] = cudaAddressModeWrap;
+		// tex.addressMode[1] = cudaAddressModeWrap;
+		// tex.filterMode = cudaFilterModeLinear;
+		// tex.normalized = true;    // access with normalized texture coordinates
+		//
+		// // Bind the array to the texture
+		// cudaBindTextureToArray(tex, cuArray, channelDesc);
+	}
+
+	inline void InitTextureList()
+	{
+		for (auto i = 0; i < TEXTURE_COUNT; i++) {
+			int width, height, depth;
+			const auto tex_data = stbi_load(imageFilenames[i],&width, &height, &depth, 0);
+			const auto size = width * height * depth;
+			float* h_data = new float[size];
+			printf("LoadTexture %d,%d,%d\n", width, height, depth);
+
+			for (unsigned int layer = 0; layer < 3; layer++)
+				for (auto i = 0; i < static_cast<int>(width * height); i++)h_data[layer*width*height + i] = tex_data[i * 3 + layer] / 255.0;
 
 
-		// Allocate device memory for result
-		float *dData = NULL;
-		cudaMalloc((void **)&dData, size);
 
-		// Allocate array and copy image data
-		cudaChannelFormatDesc channelDesc =
-			cudaCreateChannelDesc(32, 0, 0, 0, cudaChannelFormatKindFloat);
-		cudaArray *cuArray;
+			//cudaArray Descriptor
+			cudaChannelFormatDesc channelDesc = cudaCreateChannelDesc(32, 0, 0, 0, cudaChannelFormatKindFloat);
+			//cuda Array
+			cudaArray *d_cuArr;
+			cudaMalloc3DArray(&d_cuArr, &channelDesc, make_cudaExtent(width, height, 3), cudaArrayLayered);
 
-		cudaMalloc3DArray(&cuArray, &channelDesc, make_cudaExtent(width, height, 3), cudaArrayLayered);
 
-		cudaMemcpy3DParms myparms = { 0 };
-		myparms.srcPos = make_cudaPos(0, 0, 0);
-		myparms.dstPos = make_cudaPos(0, 0, 0);
-		myparms.srcPtr = make_cudaPitchedPtr(h_data, width * sizeof(float), width, height);
-		myparms.dstArray = cuArray;
-		myparms.extent = make_cudaExtent(width, height,3);
-		myparms.kind = cudaMemcpyHostToDevice;
-		cudaMemcpy3D(&myparms);
+			cudaMemcpy3DParms myparms = { 0 };
+			myparms.srcPos = make_cudaPos(0, 0, 0);
+			myparms.dstPos = make_cudaPos(0, 0, 0);
+			myparms.srcPtr = make_cudaPitchedPtr(h_data, width * sizeof(float), width, height);
+			myparms.dstArray = d_cuArr;
+			myparms.extent = make_cudaExtent(width, height, 3);
+			myparms.kind = cudaMemcpyHostToDevice;
+			cudaMemcpy3D(&myparms);
+			
 
-		// cudaMallocArray(&cuArray,
-		// 	&channelDesc,
-		// 	width,
-		// 	height);
-		// cudaMemcpyToArray(cuArray,
-		// 	0,
-		// 	0,
-		// 	h_data,
-		// 	size,
-		// 	cudaMemcpyHostToDevice);
-
-		// Set texture parameters
-		tex.addressMode[0] = cudaAddressModeWrap;
-		tex.addressMode[1] = cudaAddressModeWrap;
-		tex.filterMode = cudaFilterModeLinear;
-		tex.normalized = true;    // access with normalized texture coordinates
-
-		// Bind the array to the texture
-		cudaBindTextureToArray(tex, cuArray, channelDesc);
+			cudaResourceDesc    texRes;
+			memset(&texRes, 0, sizeof(cudaResourceDesc));
+			texRes.resType = cudaResourceTypeArray;
+			texRes.res.array.array = d_cuArr;
+			cudaTextureDesc     texDescr;
+			memset(&texDescr, 0, sizeof(cudaTextureDesc));
+			//texDescr.normalizedCoords = false;
+			texDescr.filterMode = cudaFilterModeLinear;
+			texDescr.addressMode[0] = cudaAddressModeWrap;   // clamp
+			texDescr.addressMode[1] = cudaAddressModeWrap;
+			texDescr.addressMode[2] = cudaAddressModeWrap;
+			texDescr.readMode = cudaReadModeElementType;
+			texDescr.normalizedCoords = true;
+			cudaCreateTextureObject(&textlist[i], &texRes, &texDescr, NULL);
+		}
 	}
 	void InitData()
 	{
@@ -233,7 +280,7 @@ namespace Renderer
 	void Init()
 	{
 		SetupBVH();
-		InitTexture();
+		InitTextureList();
 		//******  分配地址 ****** 
 		cudaMalloc(reinterpret_cast<void**>(&d_materials), sizeof(Material)*material_count);
 		cudaMalloc(reinterpret_cast<void**>(&d_pixeldata), ImageWidth * ImageHeight * 4 * sizeof(float));
@@ -248,7 +295,10 @@ namespace Renderer
 
 		d_data.world = d_new_world;
 		d_data.materials = d_materials;
-	
+
+		for (int i = 0; i < TEXTURE_COUNT; i++) {
+			d_data.texs[i] = textlist[i];
+		}
 
 		printf("初始化显存完成\n");
 
@@ -271,7 +321,7 @@ namespace Renderer
 		else { return  cuda_status; }
 	
 		// InitTexture();
-		TextureLab << <grid, block >> > (d_pixeldata, ImageWidth, ImageHeight, 0);
+		//TextureLab << <grid, block >> > (d_pixeldata, ImageWidth, ImageHeight, 0);
 		cudaMemcpy(h_pixeldataF, d_pixeldata, ImageWidth * ImageHeight * 4 * sizeof(float), cudaMemcpyDeviceToHost);
 
 		for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)
