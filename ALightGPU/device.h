@@ -219,14 +219,14 @@ __global__ inline void TextureLab(float* d_pixeldata,int width, int height,float
 	float v = y / static_cast<float>(height);
 
 	// Transform coordinates
-	u -= 0.5f;
-	v -= 0.5f;
-	float tu = u * cosf(theta) - v * sinf(theta) + 0.5f;
-	float tv = v * cosf(theta) + u * sinf(theta) + 0.5f;
+	// u -= 0.5f;
+	// v -= 0.5f;
+	// float tu = u * cosf(theta) - v * sinf(theta) + 0.5f;
+	// float tv = v * cosf(theta) + u * sinf(theta) + 0.5f;
 
 	const auto i = width * 4 * y + x * 4;
-	d_pixeldata[i] += tex2DLayered(tex, tu, tv, 0);
-	d_pixeldata[i + 1] += tex2DLayered(tex, tu, tv, 1);
-	d_pixeldata[i + 2] += tex2DLayered(tex, tu, tv, 2);
+	d_pixeldata[i] += tex2DLayered(tex, u, u, 0);
+	d_pixeldata[i + 1] += tex2DLayered(tex, u, v, 1);
+	d_pixeldata[i + 2] += tex2DLayered(tex, u, v, 2);
 	d_pixeldata[i + 3] += 1;
 }

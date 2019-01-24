@@ -15,7 +15,7 @@ namespace Renderer
 	Vec3 cam_rotation(0, 0, 0), camera_lookat(0, 0, 0);
 	Camera cam(Vec3(-2, 1, 1), Vec3(0, 0, -1), Vec3(0, 1, 0), 90, float(ImageWidth) / float(ImageHeight));
 	float * h_pixeldataF;
-	bool Use_IPR = true;
+	bool Use_IPR = false;
 
 
 	curandState *d_rng_states = nullptr;
@@ -216,7 +216,7 @@ namespace Renderer
 	void Init()
 	{
 		SetupBVH();
-		//InitTexture();
+		InitTexture();
 		//******  ∑÷≈‰µÿ÷∑ ****** 
 		cudaMalloc(reinterpret_cast<void**>(&d_materials), sizeof(Material)*material_count);
 		cudaMalloc(reinterpret_cast<void**>(&d_pixeldata), ImageWidth * ImageHeight * 4 * sizeof(float));
@@ -246,6 +246,21 @@ namespace Renderer
 
 	}
 
+	int z = 0;
+	cudaError_t ImageRender()
+	{
+		const auto cuda_status = cudaSetDevice(0);
+		if (z == 0)z = 1;
+		else { return  cuda_status; }
+	
+		// InitTexture();
+		TextureLab << <grid, block >> > (d_pixeldata, ImageWidth, ImageHeight, 0);
+		cudaMemcpy(h_pixeldataF, d_pixeldata, ImageWidth * ImageHeight * 4 * sizeof(float), cudaMemcpyDeviceToHost);
+
+		for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)
+			PixelData[i] = h_pixeldataF[i]  * 255;
+		return cuda_status;
+	}
 	cudaError_t IPRRender()
 	{
 		const int random_seed = drand48() * 1000;
