@@ -15,7 +15,7 @@ namespace Renderer
 	Vec3 cam_rotation(0, 0, 0), camera_lookat(0, 0, 0);
 	Camera cam(Vec3(-2, 1, 1), Vec3(0, 0, -1), Vec3(0, 1, 0), 90, float(ImageWidth) / float(ImageHeight));
 	float * h_pixeldataF;
-	bool Use_IPR = false;
+	bool Use_IPR = true;
 
 
 	curandState *d_rng_states = nullptr;
@@ -65,7 +65,7 @@ namespace Renderer
 		//ObjList[1] = new Sphere(Vec3(0, -100.5, -1), 100, 1);
 		ObjList[1] = new Sphere(Vec3(0, 0, -1), 0.5, 3);
 		ObjList[2] = new Sphere(Vec3(0, 0, 0), 0.5, 0);
-		ObjList[3] = new Sphere(Vec3(0, -100.5, 0), 100, 1);
+		ObjList[3] = new Sphere(Vec3(0, -100.5, 0), 100, 2);
 		ObjList[4] = new Sphere(Vec3(-1, 0, 0), 0.5, 4);
 
 		h_BVHRoot = BVHNode(ObjList, object_count, 0, 1);
@@ -114,14 +114,19 @@ namespace Renderer
 	void InitTexture()
 	{
 		int width, height, depth;
-		const auto tex_data = stbi_load("D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/x64/Release/wall.jpg",
+		const auto tex_data = stbi_load("D:/Codes/Projects/Academic/ComputerGraphic/ALightGPU/bin/win64/Release/earthmap.png",
 			&width, &height, &depth, 0);
 		const auto size = width * height * depth;
 		float* h_data = new float[size];
 		printf("Hello %d,%d,%d", width, height, depth);
 		//for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
-		for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
+		//for (auto i = 0; i < size; i++)h_data[i] = tex_data[i] / 255.0;
 
+		for (unsigned int layer = 0; layer < 3; layer++)
+			for (int i = 0; i < (int)(width * height); i++)
+			{
+				h_data[layer*width*height + i] = tex_data[i*3+layer]/255.0;
+			}
 
 
 		// Allocate device memory for result
@@ -132,16 +137,28 @@ namespace Renderer
 		cudaChannelFormatDesc channelDesc =
 			cudaCreateChannelDesc(32, 0, 0, 0, cudaChannelFormatKindFloat);
 		cudaArray *cuArray;
-		cudaMallocArray(&cuArray,
-			&channelDesc,
-			width,
-			height);
-		cudaMemcpyToArray(cuArray,
-			0,
-			0,
-			h_data,
-			size,
-			cudaMemcpyHostToDevice);
+
+		cudaMalloc3DArray(&cuArray, &channelDesc, make_cudaExtent(width, height, 3), cudaArrayLayered);
+
+		cudaMemcpy3DParms myparms = { 0 };
+		myparms.srcPos = make_cudaPos(0, 0, 0);
+		myparms.dstPos = make_cudaPos(0, 0, 0);
+		myparms.srcPtr = make_cudaPitchedPtr(h_data, width * sizeof(float), width, height);
+		myparms.dstArray = cuArray;
+		myparms.extent = make_cudaExtent(width, height,3);
+		myparms.kind = cudaMemcpyHostToDevice;
+		cudaMemcpy3D(&myparms);
+
+		// cudaMallocArray(&cuArray,
+		// 	&channelDesc,
+		// 	width,
+		// 	height);
+		// cudaMemcpyToArray(cuArray,
+		// 	0,
+		// 	0,
+		// 	h_data,
+		// 	size,
+		// 	cudaMemcpyHostToDevice);
 
 		// Set texture parameters
 		tex.addressMode[0] = cudaAddressModeWrap;

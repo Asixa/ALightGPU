@@ -79,14 +79,14 @@ __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, 
 	{
 	case lambertian:
 		{
-			//const auto albedo = Vec3(data[0], data[1], data[2]);
-		//const auto albedo = tex2D(tex, rec.u, rec.v);
-		//const auto albedo = tex2D(tex, rec.u, rec.v);
-		//const auto albedo = tex2D(tex, rec.u, rec.v);
+			const auto albedo =Vec3(
+					tex2DLayered(tex, rec.u, 1-rec.v, 0),
+					tex2DLayered(tex, rec.u, 1 - rec.v, 1),
+					tex2DLayered(tex, rec.u, 1 - rec.v, 2));
 			//printf("%d\n", albedo);
 			const Vec3 target = rec.p + rec.normal + random_in_unit_sphere;
 			scattered = Ray(rec.p, target - rec.p);
-			attenuation = Vec3(data[0], data[1], data[2]);
+			attenuation = albedo;
 			return true;
 		}
 	case metal:

@@ -26,6 +26,7 @@ Vec3* col;
 //texture<unsigned char, 2, cudaReadModeElementType> tex;
 
 texture<float, cudaTextureType2DLayered> tex;
+texture<float, cudaTextureType2DLayered>* texs;
 __device__ static unsigned long long seed = 4;
 
 // Ëæ»úÊý 

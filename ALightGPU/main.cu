@@ -28,8 +28,8 @@ void ReSetIPR()
 void Render()
 {
 	if(!Use_IPR&&current_spp!=0)return;
-	ImageRender();
-	//Renderer::IPRRender();
+	//ImageRender();
+	Renderer::IPRRender();
 }
 
 void OnMouseMove(int x,int y)
