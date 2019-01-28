@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <crt/host_defines.h>
-
+#include "vec2.h"
 class Vec3 {
 
 
@@ -29,10 +29,9 @@ public:
 	__host__ __device__ inline Vec3& operator*=(const float t);
 	__host__ __device__ inline Vec3& operator/=(const float t);
 
-	__host__ __device__ inline float length() const { return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]); }
-	__host__ __device__ inline float squared_length() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
-	__host__ __device__ inline void make_unit_vector();
-
+	__host__ __device__ inline float Length() const { return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]); }
+	__host__ __device__ inline float SquaredLength() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
+	__host__ __device__ inline void MakeUnitVector();
 
 	float e[3];
 };
@@ -49,49 +48,64 @@ __device__ inline std::istream& operator>>(std::istream &is, Vec3 &t) {
 	return os;
 }
 
-__host__ __device__ inline void Vec3::make_unit_vector() {
+__host__ __device__ inline void Vec3::MakeUnitVector() {
 	float k = 1.0 / sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]);
 	e[0] *= k; e[1] *= k; e[2] *= k;
 }
 
-__host__ __device__ inline Vec3 operator+(const Vec3 &v1, const Vec3 &v2) {
+
+__host__ __device__ inline Vec3 operator+(const Vec3 &v1, const Vec3 &v2)
+{
 	return Vec3(v1.e[0] + v2.e[0], v1.e[1] + v2.e[1], v1.e[2] + v2.e[2]);
 }
 
-__host__ __device__ inline Vec3 operator-(const Vec3 &v1, const Vec3 &v2) {
+__host__ __device__ inline Vec3 operator-(const Vec3 &v1, const Vec3 &v2)
+{
 	return Vec3(v1.e[0] - v2.e[0], v1.e[1] - v2.e[1], v1.e[2] - v2.e[2]);
 }
 
-__host__ __device__ inline Vec3 operator*(const Vec3 &v1, const Vec3 &v2) {
+__host__ __device__ inline Vec3 operator*(const Vec3 &v1, const Vec3 &v2)
+{
 	return Vec3(v1.e[0] * v2.e[0], v1.e[1] * v2.e[1], v1.e[2] * v2.e[2]);
 }
 
-__host__ __device__ inline Vec3 operator/(const Vec3 &v1, const Vec3 &v2) {
+__host__ __device__ inline Vec3 operator/(const Vec3 &v1, const Vec3 &v2)
+{
 	return Vec3(v1.e[0] / v2.e[0], v1.e[1] / v2.e[1], v1.e[2] / v2.e[2]);
 }
 
-__host__ __device__ inline Vec3 operator*(float t, const Vec3 &v) {
+__host__ __device__ inline Vec3 operator*(float t, const Vec3 &v)
+{
 	return Vec3(t*v.e[0], t*v.e[1], t*v.e[2]);
 }
 
-__host__ __device__ inline Vec3 operator/(Vec3 v, float t) {
+__host__ __device__ inline Vec3 operator/(Vec3 v, float t)
+{
 	return Vec3(v.e[0] / t, v.e[1] / t, v.e[2] / t);
 }
 
-__host__ __device__ inline Vec3 operator*(const Vec3 &v, float t) {
+__host__ __device__ inline Vec3 operator*(const Vec3 &v, float t)
+{
 	return Vec3(t*v.e[0], t*v.e[1], t*v.e[2]);
 }
 
-__host__ __device__ inline float dot(const Vec3 &v1, const Vec3 &v2) {
+__host__ __device__ inline float dot(const Vec3 &v1, const Vec3 &v2)
+{
 	return v1.e[0] * v2.e[0] + v1.e[1] * v2.e[1] + v1.e[2] * v2.e[2];
 }
 
-__host__ __device__ inline Vec3 cross(const Vec3 &v1, const Vec3 &v2) {
+__host__ __device__ inline Vec3 cross(const Vec3 &v1, const Vec3 &v2)
+{
 	return Vec3((v1.e[1] * v2.e[2] - v1.e[2] * v2.e[1]),
-		(-(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0])),
-		(v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0]));
+	            (-(v1.e[0] * v2.e[2] - v1.e[2] * v2.e[0])),
+	            (v1.e[0] * v2.e[1] - v1.e[1] * v2.e[0]));
 }
-
+__host__ __device__ inline Vec3 cross2(const Vec3 &lhs, const Vec3 &rhs)
+{
+	return Vec3(lhs.y() * rhs.z() - lhs.z() * rhs.y(),
+		lhs.z() * rhs.x() - lhs.x() * rhs.z(),
+		lhs.x() * rhs.y() - lhs.y()* rhs.x());
+}
 
 __host__ __device__ inline Vec3& Vec3::operator+=(const Vec3 &v) {
 	e[0] += v.e[0];
@@ -137,6 +151,12 @@ __host__ __device__ inline Vec3& Vec3::operator/=(const float t) {
 	return *this;
 }
 
-__host__ __device__ inline Vec3 unit_vector(Vec3 v) {
-	return v / v.length();
+__host__ __device__ inline Vec3 unit_vector(Vec3 v)
+{
+	return v / v.Length();
+}
+
+__host__ __device__ inline float Distance(Vec3 a, Vec3 b)
+{
+	return (a - b).Length();
 }

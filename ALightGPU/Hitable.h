@@ -14,7 +14,7 @@ inline void GetSphereUv(const Vec3& p, float& u, float& v) {
 struct  DeviceData;
 namespace Instance
 {
-	const int BVH = 2,SPHERE=1;
+	const int BVH = 2,SPHERE=1,TRIANGLE=3;
 }
 class Hitable {
 public:

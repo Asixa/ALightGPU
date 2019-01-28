@@ -58,6 +58,15 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header\Math</Filter>
     </ClInclude>
+    <ClInclude Include="vec2.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

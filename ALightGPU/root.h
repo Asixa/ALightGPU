@@ -3,17 +3,16 @@
 #include <GL\glew.h>
 #include <GL\freeglut.h>
 #include "vec3.h"
-
 #define MATERIAL_PARAMTER_COUNT 6
 #define HITABLE_PARAMTER_COUNT 5
 
-#define TEXTURE_COUNT 2
+#define TEXTURE_COUNT 3
 
 // #define LAMBERTIAN 1
 // #define METAL 2
 // #define DIELECTIRC 3
 #define M_PI 3.1415926
-const int  ImageWidth = 512,ImageHeight = 512;
+const int  ImageWidth = 1280,ImageHeight = 720;
 int SPP = 1024,MAX_SCATTER_TIME = 8;
 const int IPR_SPP = 4; int current_spp = 0;
 GLint    PixelLength;

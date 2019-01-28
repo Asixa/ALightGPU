@@ -71,6 +71,7 @@ inline void BVHNode::SetChildId()
 
 inline int BVHNode::count()
 {
+	//printf("left type %d %s\n ", Left->type, typeid(Left).name());
 	return Left->count() + Right->count() + 1;
 }
 
@@ -154,7 +155,7 @@ inline int BoxZCompare(const void * a, const void * b)
 
 inline BVHNode::BVHNode(Hitable **l, int n, float time0, float time1) {
 	type = Instance::BVH;
-	int axis = int(3 * drand48());
+	const auto axis = int(3 * drand48());
 	if (axis == 0)
 		qsort(l, n, sizeof(Hitable *), BoxXCompare);
 	else if (axis == 1)

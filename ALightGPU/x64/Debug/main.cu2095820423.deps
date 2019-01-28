@@ -261,6 +261,8 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.1
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xerrc.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\share.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\crt/host_defines.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\vec2.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\crt/host_defines.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\ray.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\root.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\um\Windows.h
@@ -529,3 +531,16 @@ d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\BVH.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\algorithm
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Sphere.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\list
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vector
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\device.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\curand_discrete2.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\device_launch_parameters.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\curand_kernel.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Triangle.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Vertex.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Renderer.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\cuda_runtime_api.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\stb_image.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\assert.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Model.h

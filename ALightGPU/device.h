@@ -6,25 +6,26 @@
 #include <device_launch_parameters.h>
 #include <curand_kernel.h>
 #include "Camera.h"
+#include "Triangle.h"
 
 #define  RenderDEBUG false
 #define  DebugLog false
-
+#define  StackDepth 512
 
 __global__
 void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root, float * d_pixeldata, Camera* d_camera, curandState *const rngStates,DeviceData data)
 {
-	const auto tid = blockIdx.x * blockDim.x + threadIdx.x;
-	const auto tid2 = blockIdx.y * blockDim.y + threadIdx.y;
+	const auto tidx = blockIdx.x * blockDim.x + threadIdx.x;
+	const auto tidy = blockIdx.y * blockDim.y + threadIdx.y;
 
-	curand_init(seed + tid + tid2 * d_width, 0, 0, &rngStates[tid]);			//初始化随机数
+	curand_init(seed + tidx + tidy * d_width, 0, 0, &rngStates[tidx]);			//初始化随机数
 	Vec3 color(0, 0, 0);
 
 #if !RenderDEBUG 
 	const int x = blockIdx.x * 16 + threadIdx.x, y = blockIdx.y * 16 + threadIdx.y;
 #endif
-	unsigned int stack[16];
-	for (int i = 0; i < 16; i++)stack[i] = 0;
+	unsigned int stack[StackDepth];
+	for (auto i = 0; i < StackDepth; i++)stack[i] = 0;
 #if RenderDEBUG 
 	int x = 256, y = 256;
 	float u = float(x) / float(512);
@@ -33,22 +34,18 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root,
 	for (auto j = 0; j < SPP; j++)
 	{
 #if !RenderDEBUG 
-		const auto u = float(x + curand_uniform(&rngStates[tid])) / float(d_width), v = float(y + curand_uniform(&rngStates[tid])) / float(d_height);
+		const auto u = float(x + curand_uniform(&rngStates[tidx])) / float(d_width), v = float(y + curand_uniform(&rngStates[tidx])) / float(d_height);
 #endif
 		Ray ray(d_camera->Origin(), d_camera->LowerLeftCorner() + u * d_camera->Horizontal() + v * d_camera->Vertical() - d_camera->Origin());
 		Vec3 c(0, 0, 0);
 		Vec3 factor(1, 1, 1);
 		for (auto i = 0; i < MST; i++)
 		{
-			// Hitable** stackPtr = new Hitable*[5];
-			// *stackPtr++ = nullptr; // push
-
 			if (DebugLog)printf("采样开始\n");
 			auto stack_ptr = 0;
 
 			HitRecord rec;
 			rec.t = 99999;
-			//bool hit;
 			//抛弃递归二分查找而是使用循环二分查找 以降低栈深度
 			auto node = data.world[root];
 			do
@@ -99,9 +96,8 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root,
 
 				if (overlarpR&&!right_is_bvh)
 				{
-					
 					//printf("Set Right\n");
-					if (recr.t < rec.t) {
+					if (recr.t <= rec.t) {
 						//hit = true;
 						rec = HitRecord(&recr);
 					}
@@ -125,11 +121,8 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root,
 						node = nullptr;
 					}
 					else {
-						//printf("set node %d\n", stack_ptr - 1);
 						node = data.world[stack[--stack_ptr]];
-						//printf("设置完成 此处没有越界\n", stack_ptr - 1);
 					}
-					//node = *--stackPtr; // pop
 				}
 				else
 				{
@@ -153,12 +146,12 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root,
 
 				// random in unit Sphere
 				Vec3 random_in_unit_sphere;
-				do random_in_unit_sphere = 2.0*Vec3(curand_uniform(&rngStates[tid]), curand_uniform(&rngStates[tid]), curand_uniform(&rngStates[tid])) - Vec3(1, 1, 1);
-				while (random_in_unit_sphere.squared_length() >= 1.0);
+				do random_in_unit_sphere = 2.0*Vec3(curand_uniform(&rngStates[tidx]), curand_uniform(&rngStates[tidx]), curand_uniform(&rngStates[tidx])) - Vec3(1, 1, 1);
+				while (random_in_unit_sphere.SquaredLength() >= 1.0);
 
 				Ray scattered;
 				Vec3 attenuation;
-				if (i < MST&&rec.mat_ptr->scatter(ray, rec, attenuation, scattered, random_in_unit_sphere, curand_uniform(&rngStates[tid]),data.texs))
+				if (i < MST&&rec.mat_ptr->scatter(ray, rec, attenuation, scattered, random_in_unit_sphere, curand_uniform(&rngStates[tidx]),data.texs))
 				{
 					factor *= attenuation;
 					ray = scattered;
@@ -191,22 +184,29 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root,
 	d_pixeldata[i + 3] += SPP;
 }
 
-__global__ inline void WorldArrayFixer(Hitable** d_world, Hitable** new_world)//,int rootid,BVHNode* root)//
+__global__ inline void WorldArrayFixer(Hitable** d_world, Hitable** new_world,int length)//,int rootid,BVHNode* root)//
 {
-	const auto i = threadIdx.x;//TODO add dim ,1024 is not enough
+	const auto i = blockIdx.x * blockDim.x + threadIdx.x;//TODO add dim ,1024 is not enough
+	if(i>length-1)return;
+	if (i == 0)printf("it is %d\n", 0);
+	if(i>=length-1)printf("it is %d\n", i);
 	switch (d_world[i]->type)
 	{
-	case 1:
+	case Instance::SPHERE://	printf("Add Sphere\n");
 		new_world[i] = new Sphere(d_world[i]);
 		break;
-	case 2:
+	case Instance::BVH:
 		new_world[i] = new BVHNode(d_world[i]);
+		break;
+	case Instance::TRIANGLE:
+		//printf("Add Triangle");
+		new_world[i] = new Triangle(d_world[i]);
 		break;
 	default:;
 	}
 }
 
-__global__ inline void ArraySetter(Hitable** location, int i, Hitable* obj)//
+__global__ inline void ArraySetter(Hitable** location, const int i, Hitable* obj)//
 {
 	location[i] = obj;
 }

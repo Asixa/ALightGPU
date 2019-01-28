@@ -117,14 +117,17 @@
     <ClInclude Include="device.h" />
     <ClInclude Include="GLWindow.h" />
     <ClInclude Include="Hitable.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="root.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Triangle.h" />
+    <ClInclude Include="vec2.h" />
     <ClInclude Include="vec3.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MathHelper.h" />

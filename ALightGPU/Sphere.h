@@ -68,36 +68,61 @@ inline int Sphere::count()
 
 
 bool Sphere::Hit(const Ray& r, float t_min, float t_max, HitRecord& rec, DeviceData* data) const {
-	
-	auto oc = r.Origin() - center;
+	Vec3 oc = r.Origin() - center;
 	float a = dot(r.Direction(), r.Direction());
 	float b = dot(oc, r.Direction());
-	auto c = dot(oc, oc) - radius * radius;
-	const auto discriminant = b * b - a * c;
-
-	if (discriminant > 0)
-	{
+	float c = dot(oc, oc) - radius * radius;
+	float discriminant = b * b - a * c;
+	if (discriminant > 0) {
 		float temp = (-b - sqrt(b*b - a * c)) / a;
-		if (temp<t_max&&temp>t_min)
-		{
+		if (temp < t_max && temp > t_min) {
 			rec.t = temp;
 			rec.p = r.PointAtParameter(rec.t);
+			GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
 			rec.normal = (rec.p - center) / radius;
 			rec.mat_ptr = &data->materials[mat_id];
-			GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
 			return true;
 		}
 		temp = (-b + sqrt(b*b - a * c)) / a;
-		if (temp<t_max&&temp>t_min)
-		{
+		if (temp < t_max && temp > t_min) {
 			rec.t = temp;
 			rec.p = r.PointAtParameter(rec.t);
+			GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
 			rec.normal = (rec.p - center) / radius;
 			rec.mat_ptr = &data->materials[mat_id];
-			GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
 			return true;
 		}
 	}
-	//printf("%d\n", -1);
 	return false;
+	// auto oc = r.Origin() - center;
+	// float a = dot(r.Direction(), r.Direction());
+	// float b = 2*dot(oc, r.Direction());
+	// auto c = dot(oc, oc) - radius * radius;
+	// const auto discriminant = b * b -4* a * c;
+	//
+	// if (discriminant > 0)
+	// {
+	// 	float temp = (-b - sqrt(discriminant)) / a * 0.5f;
+	// 	if (temp<t_max&&temp>t_min)
+	// 	{
+	// 		rec.t = temp;
+	// 		rec.p = r.PointAtParameter(rec.t);
+	// 		rec.normal = (rec.p - center) / radius;
+	// 		rec.mat_ptr = &data->materials[mat_id];
+	// 		GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
+	// 		return true;
+	// 	}
+	// 	temp = (-b + sqrt(discriminant)) / a * 0.5f;
+	// 	if (temp<t_max&&temp>t_min)
+	// 	{
+	// 		rec.t = temp;
+	// 		rec.p = r.PointAtParameter(rec.t);
+	// 		rec.normal = (rec.p - center) / radius;
+	// 		rec.mat_ptr = &data->materials[mat_id];
+	// 		GetSphereUv((rec.p - center) / radius, rec.u, rec.v);
+	// 		return true;
+	// 	}
+	// }
+	// //printf("%d\n", -1);
+	// return false;
 }

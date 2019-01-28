@@ -61,6 +61,7 @@ __device__ inline Vec3 Reflect(const Vec3& v, const Vec3& n)
 
 class Material {
 public:
+	bool BackCulling = true;
 	float data[MATERIAL_PARAMTER_COUNT];
 	//int type;
 	MaterialType Type;
@@ -118,14 +119,14 @@ __device__ inline bool Material::scatter(const Ray& r_in, const HitRecord& rec, 
 				outward_normal = -rec.normal;
 				ni_over_nt = ref_idx;
 				//         cosine = ref_idx * dot(r_in.direction(), rec.normal) / r_in.direction().length();
-				cosine = dot(r_in.Direction(), rec.normal) / r_in.Direction().length();
+				cosine = dot(r_in.Direction(), rec.normal) / r_in.Direction().Length();
 				cosine = sqrt(1 - ref_idx * ref_idx*(1 - cosine * cosine));
 			}
 			else
 			{
 				outward_normal = rec.normal;
 				ni_over_nt = 1.0 / ref_idx;
-				cosine = -dot(r_in.Direction(), rec.normal) / r_in.Direction().length();
+				cosine = -dot(r_in.Direction(), rec.normal) / r_in.Direction().Length();
 			}
 			if (Refract(r_in.Direction(), outward_normal, ni_over_nt, refracted))
 				reflect_prob = Schlick(cosine, ref_idx);
