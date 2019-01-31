@@ -10,7 +10,7 @@
 
 #define  RenderDEBUG false
 #define  DebugLog false
-#define  StackDepth 512
+#define  StackDepth 8
 
 __global__
 void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root, float * d_pixeldata, Camera* d_camera, curandState *const rngStates,DeviceData data)
@@ -86,23 +86,16 @@ void IPRSampler(int d_width, int d_height, int seed, int SPP, int MST, int root,
 				{
 					
 					if (recl.t < rec.t) {
-						//hit = true;
-
 						rec = HitRecord(&recl);
-						//printf("Set Left  lefttype: %d  t:%f < %f? \n", childL->type, recl.t, rec.t);
-						//printf("Record after set   t:%f \n", rec.t);
 					}
 				}
 
 				if (overlarpR&&!right_is_bvh)
 				{
-					//printf("Set Right\n");
 					if (recr.t <= rec.t) {
-						//hit = true;
 						rec = HitRecord(&recr);
 					}
 				}
-				//printf("state 4\n");
 				const bool traverseL = (overlarpL && left_is_bvh);
 				const bool traverseR = (overlarpR && right_is_bvh);
 

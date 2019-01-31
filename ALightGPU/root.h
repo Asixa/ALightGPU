@@ -12,9 +12,9 @@
 // #define METAL 2
 // #define DIELECTIRC 3
 #define M_PI 3.1415926
-const int  ImageWidth = 1280,ImageHeight = 720;
+const int  ImageWidth = 512,ImageHeight =512;
 int SPP = 1024,MAX_SCATTER_TIME = 8;
-const int IPR_SPP = 4; int current_spp = 0;
+const int IPR_SPP = 1; int current_spp = 0;
 GLint    PixelLength;
 GLbyte* PixelData;
 const GLint rgbwidth = ImageWidth * 4;

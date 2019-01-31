@@ -2,7 +2,7 @@
 #include "Hitable.h"
 #include "Vertex.h"
 
-#define EPSILON  1e-4f
+#define EPSILON  1e-7f
 class Triangle:public Hitable
 {
 public:

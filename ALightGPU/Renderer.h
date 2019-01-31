@@ -67,7 +67,7 @@ namespace Renderer
 	int object_count =0;
 	BVHNode h_BVHRoot;
 	cudaTextureObject_t textlist[TEXTURE_COUNT];
-	//std::vector<Hitable*>hitables;
+	std::vector<Hitable*>hitables;
 	DeviceData d_data;
 
 	void Scene1()
@@ -151,11 +151,11 @@ namespace Renderer
 	void Scene3()
 	{
 	
-		// h_BVHRoot = LoadMesh("bunny", 4,hitables,ObjList);
-		// object_count = hitables.size();
-		// //object_count = 20000;
-		// printf("[%d]", object_count);
-		// //h_BVHRoot = BVHNode(ObjList, object_count, 0, 1);
+		h_BVHRoot = LoadMesh("teapot", 4,hitables,ObjList);
+		object_count = hitables.size();
+		//object_count = 20000;
+		printf("[%d]", object_count);
+		//h_BVHRoot = BVHNode(ObjList, object_count, 0, 1);
 	}
 
 	inline void InitTextureList()
@@ -204,9 +204,9 @@ namespace Renderer
 	}
 	void InitData()
 	{
-		// size_t newHeapSize = 1024 * 1000 * 32;
-		// cudaDeviceSetLimit(cudaLimitMallocHeapSize, newHeapSize);
-		// printf("Adjusted heap size to be %d\n", (int)newHeapSize);
+		const size_t newHeapSize = 4608ull * 1024ull * 1024ull;;
+		cudaDeviceSetLimit(cudaLimitMallocHeapSize, newHeapSize);
+		printf("Adjusted heap size to be %d\n", newHeapSize);
 
 		h_pixeldataF = new float[ImageWidth*ImageHeight * 4];
 		for (auto i = 0; i < ImageWidth*ImageHeight * 4; i++)h_pixeldataF[i] = 0;
@@ -215,7 +215,7 @@ namespace Renderer
 		PixelData = new GLbyte[PixelLength];
 		for (auto i = 0; i < PixelLength; i++)
 			PixelData[i] = static_cast<GLbyte>(int(0));
-		Scene0();
+		Scene3();
 	}
 
 	inline void AddBvh(BVHNode* bvh)
@@ -231,8 +231,8 @@ namespace Renderer
 		const auto bvh_count = h_BVHRoot.count();
 		const auto total = bvh_count + object_count;
 		FinalList = new Hitable*[total];
-		for (auto i = 0; i < object_count; i++)FinalList[i] = ObjList[i];
-		//for (auto i = 0; i < object_count; i++)FinalList[i] = hitables[i];
+		//for (auto i = 0; i < object_count; i++)FinalList[i] = ObjList[i];
+		for (auto i = 0; i < object_count; i++)FinalList[i] = hitables[i];
 
 		AddBvh(&h_BVHRoot);
 	
