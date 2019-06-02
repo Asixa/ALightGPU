@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CUDAPropsPath Condition="'$(CUDAPropsPath)'==''">$(VCTargetsPath)\BuildCustomizations</CUDAPropsPath>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BufferObject.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Defines.h" />
+    <ClInclude Include="drand.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="Float2Byte.h" />
+    <ClInclude Include="float2Extension.h" />
+    <ClInclude Include="float3Extension.h" />
+    <ClInclude Include="float3x3.h" />
+    <ClInclude Include="float4x4.h" />
+    <ClInclude Include="GLWindow.cpp" />
+    <ClInclude Include="GLWindow.h" />
+    <ClInclude Include="MathHelper.h" />
+    <ClInclude Include="Objects.h" />
+    <ClInclude Include="Rasterizer.h" />
+    <ClInclude Include="Ray.h" />
+    <ClInclude Include="RayHit.h" />
+    <ClInclude Include="RayTracer.h" />
+    <ClInclude Include="Resources.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Setting.h" />
+    <ClInclude Include="Window.h" />
+    <ClInclude Include="vec3.h" />
+    <ClInclude Include="RTSampler.h" />
+    <ClInclude Include="DeviceManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BufferObject.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="MathHelper.cpp" />
+    <ClCompile Include="Rasterizer.cpp" />
+    <ClCompile Include="RayTracer.cpp" />
+    <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Setting.cpp" />
+    <ClCompile Include="Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="DeviceManager.cu" />
+    <CudaCompile Include="Float2Byte.cu" />
+    <CudaCompile Include="float2Extension.cu" />
+    <CudaCompile Include="float3Extension.cu" />
+    <CudaCompile Include="vec3.cu" />
+    <CudaCompile Include="RTSampler.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Structure.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0E4431BE-7189-4FEA-9797-8F4158485338}</ProjectGuid>
+    <RootNamespace>fluidsGL_vs2019</RootNamespace>
+    <ProjectName>ALight</ProjectName>
+    <CudaToolkitCustomDir />
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup>
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(CUDAPropsPath)\CUDA 10.1.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IntDir>$(Platform)/$(Configuration)/</IntDir>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Platform)'=='x64'">
+    <OutDir>../bin/win64/$(Configuration)/</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>./;$(CudaToolkitDir)/include;../common/inc;$(CudaToolkitIncludeDir);</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cufft.lib;cudart_static.lib;freeglut.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(CudaToolkitLibDir);../common/lib/$(PlatformName);</AdditionalLibraryDirectories>
+      <OutputFile>$(OutDir)/ALight.exe</OutputFile>
+    </Link>
+    <CudaCompile>
+      <CodeGeneration>compute_30,sm_30;compute_35,sm_35;compute_37,sm_37;compute_50,sm_50;compute_52,sm_52;compute_60,sm_60;compute_61,sm_61;</CodeGeneration>
+      <AdditionalOptions>-Xcompiler "/wd 4819"   --verbose %(AdditionalOptions)</AdditionalOptions>
+      <Include>./;../common/inc</Include>
+      <Defines>WIN32</Defines>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
+    </Link>
+    <CudaCompile>
+      <Runtime>MTd</Runtime>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <CudaCompile>
+      <Runtime>MT</Runtime>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='Win32'">
+    <Link>
+      <AdditionalDependencies>glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
+    <Link>
+      <AdditionalDependencies>glew64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <PtxAsOptionV Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</PtxAsOptionV>
+      <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateRelocatableDeviceCode>
+    </CudaCompile>
+    <CudaCompile>
+      <GenerateRelocatableDeviceCode Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateRelocatableDeviceCode>
+    </CudaCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(CUDAPropsPath)\CUDA 10.1.targets" />
+  </ImportGroup>
+</Project>

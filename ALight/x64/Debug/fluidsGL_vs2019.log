@@ -1,0 +1,10 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(411,5): warning MSB8028: 中间目录(x64/Debug/)包含从另一个项目(fluidsGL.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  RayTracer.cpp
+D:\Codes\Projects\Academic\ComputerGraphic\MYCuda2019\ALight\RayTracer.cpp(8): warning C4244: “=”: 从“float”转换到“GLbyte”，可能丢失数据
+D:\Codes\Projects\Academic\ComputerGraphic\MYCuda2019\ALight\RayTracer.cpp(9): warning C4244: “=”: 从“float”转换到“GLbyte”，可能丢失数据
+D:\Codes\Projects\Academic\ComputerGraphic\MYCuda2019\ALight\RayTracer.cpp(10): warning C4244: “=”: 从“float”转换到“GLbyte”，可能丢失数据
+D:\Codes\Projects\Academic\ComputerGraphic\MYCuda2019\ALight\RayTracer.cpp(11): warning C4309: “static_cast”: 截断常量值
+  main.cpp
+  正在生成代码...
+    正在创建库 ../bin/win64/Debug/ALight.lib 和对象 ../bin/win64/Debug/ALight.exp
+  fluidsGL_vs2019.vcxproj -> D:\Codes\Projects\Academic\ComputerGraphic\MYCuda2019\ALight\../bin/win64/Debug/ALight.exe

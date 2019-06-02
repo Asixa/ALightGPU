@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{38c4e700-730f-491c-9a66-f9929968cf53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{433622a6-8ba8-425f-bce9-97ca604e9516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Rendering">
+      <UniqueIdentifier>{ae20ca6f-bb4d-49d0-b5f2-72471dbd5c06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Rendering">
+      <UniqueIdentifier>{d320f322-e1be-4908-ab39-fa22b471f5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Base">
+      <UniqueIdentifier>{3b476fe4-7f76-459c-a2fd-ff21cbda6b16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Base">
+      <UniqueIdentifier>{c884b36e-c099-4144-b5e3-f03f5025a5aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Engine">
+      <UniqueIdentifier>{1b873ec3-4034-4dfa-90e6-643fc758a52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Engine">
+      <UniqueIdentifier>{7496afaf-68ea-471a-b15f-642e483fe723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Math">
+      <UniqueIdentifier>{0cb8992b-fbd8-4723-88af-40f94e1a239b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{a99034c9-0cd0-4384-9795-7ea5e8b1277c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\GPUDevices">
+      <UniqueIdentifier>{dafe5136-17b1-4190-9336-7c254fb3a1b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GPUDevices">
+      <UniqueIdentifier>{81db5b54-7091-485a-8713-21e0534a9553}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\GPUDevices\RTSamplers">
+      <UniqueIdentifier>{452c16a6-deb5-4684-93b8-5eeb5560d8cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GPUDevices\RTSamplers">
+      <UniqueIdentifier>{7c0e1ab6-e135-4715-a002-404f1d7c2d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Rendering\RT">
+      <UniqueIdentifier>{45d42bfb-6eb3-48a7-9c59-ed14bdddc9ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GLWindow.cpp">
+      <Filter>Source\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="GLWindow.h">
+      <Filter>Header\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RayTracer.h">
+      <Filter>Header\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasterizer.h">
+      <Filter>Header\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Header\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="vec3.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="RTSampler.h">
+      <Filter>Header\GPUDevices\RTSamplers</Filter>
+    </ClInclude>
+    <ClInclude Include="drand.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MathHelper.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceManager.h">
+      <Filter>Header\GPUDevices</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Header\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferObject.h">
+      <Filter>Header\GPUDevices</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Header\Rendering\RT</Filter>
+    </ClInclude>
+    <ClInclude Include="RayHit.h">
+      <Filter>Header\Rendering\RT</Filter>
+    </ClInclude>
+    <ClInclude Include="Float2Byte.h">
+      <Filter>Header\GPUDevices\RTSamplers</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header\Rendering\RT</Filter>
+    </ClInclude>
+    <ClInclude Include="float3Extension.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects.h">
+      <Filter>Header\Rendering\RT</Filter>
+    </ClInclude>
+    <ClInclude Include="float4x4.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="float3x3.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="float2Extension.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="vec3.cu">
+      <Filter>Source\Math</Filter>
+    </CudaCompile>
+    <CudaCompile Include="DeviceManager.cu">
+      <Filter>Source\GPUDevices</Filter>
+    </CudaCompile>
+    <CudaCompile Include="RTSampler.cu">
+      <Filter>Source\GPUDevices\RTSamplers</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Float2Byte.cu">
+      <Filter>Source\GPUDevices\RTSamplers</Filter>
+    </CudaCompile>
+    <CudaCompile Include="float3Extension.cu">
+      <Filter>Source\Math</Filter>
+    </CudaCompile>
+    <CudaCompile Include="float2Extension.cu">
+      <Filter>Source\Math</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RayTracer.cpp">
+      <Filter>Source\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rasterizer.cpp">
+      <Filter>Source\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MathHelper.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferObject.cpp">
+      <Filter>Source\GPUDevices</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Structure.txt" />
+  </ItemGroup>
+</Project>
