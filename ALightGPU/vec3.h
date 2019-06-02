@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 #include <stdlib.h>
-#include <iostream>
+// #include <iostream>
 #include <crt/host_defines.h>
 #include "vec2.h"
 class Vec3 {
@@ -32,6 +32,10 @@ public:
 	__host__ __device__ inline float Length() const { return sqrt(e[0] * e[0] + e[1] * e[1] + e[2] * e[2]); }
 	__host__ __device__ inline float SquaredLength() const { return e[0] * e[0] + e[1] * e[1] + e[2] * e[2]; }
 	__host__ __device__ inline void MakeUnitVector();
+	__host__ __device__ inline bool isZero()
+	{
+		return e[0] == 0 && e[1] == 0 && e[2] == 0;
+	};
 
 	float e[3];
 };
@@ -54,15 +58,9 @@ __host__ __device__ inline void Vec3::MakeUnitVector() {
 }
 
 
-__host__ __device__ inline Vec3 operator+(const Vec3 &v1, const Vec3 &v2)
-{
-	return Vec3(v1.e[0] + v2.e[0], v1.e[1] + v2.e[1], v1.e[2] + v2.e[2]);
-}
+__host__ __device__ inline Vec3 operator+(const Vec3 &v1, const Vec3 &v2){return Vec3(v1.e[0] + v2.e[0], v1.e[1] + v2.e[1], v1.e[2] + v2.e[2]);}
 
-__host__ __device__ inline Vec3 operator-(const Vec3 &v1, const Vec3 &v2)
-{
-	return Vec3(v1.e[0] - v2.e[0], v1.e[1] - v2.e[1], v1.e[2] - v2.e[2]);
-}
+__host__ __device__ inline Vec3 operator-(const Vec3 &v1, const Vec3 &v2){return Vec3(v1.e[0] - v2.e[0], v1.e[1] - v2.e[1], v1.e[2] - v2.e[2]);}
 
 __host__ __device__ inline Vec3 operator*(const Vec3 &v1, const Vec3 &v2)
 {

@@ -1,12 +1,13 @@
 #pragma once
 #include "hitable.h"
 #include <algorithm>
+#include <vector>
 
 
 class BVHNode : public Hitable {
 public:
 	BVHNode(){type = Instance::BVH; }
-	 BVHNode(Hitable **l, int n, float time0, float time1);
+	BVHNode(Hitable **l, int n, float time0, float time1);
 	 __device__ BVHNode(Hitable* data)
 	{
 		 id = data->id;
@@ -181,3 +182,85 @@ inline BVHNode::BVHNode(Hitable **l, int n, float time0, float time1) {
 		printf("no bounding box in bvh_node constructor\n");
 	Box =SurroundingBox(box_left, box_right);
 }
+
+
+
+
+// Expands a 10-bit integer into 30 bits
+// by inserting 2 zeros after each bit.
+inline unsigned int ExpandBits(unsigned int v)
+{
+	v = (v * 0x00010001u) & 0xFF0000FFu;
+	v = (v * 0x00000101u) & 0x0F00F00Fu;
+	v = (v * 0x00000011u) & 0xC30C30C3u;
+	v = (v * 0x00000005u) & 0x49249249u;
+	return v;
+}
+
+// Calculates a 30-bit Morton code for the
+// given 3D point located within the unit cube [0,1].
+inline unsigned int Morton3D(float x, float y, float z)
+{
+	x = min(max(x * 1024.0f, 0.0f), 1023.0f);
+	y = min(max(y * 1024.0f, 0.0f), 1023.0f);
+	z = min(max(z * 1024.0f, 0.0f), 1023.0f);
+	const auto xx = ExpandBits(static_cast<unsigned int>(x));
+	const auto yy = ExpandBits(static_cast<unsigned int>(y));
+	const auto zz = ExpandBits(static_cast<unsigned int>(z));
+	return xx * 4 + yy * 2 + zz;
+}
+/**
+ * a wrapper to calculate morton code from
+ * the position of an object inside the
+ * unit cube.
+ */
+inline unsigned int Morton3D(Vec3 pos)
+{
+	return Morton3D(pos[0], pos[1], pos[2]);
+}
+
+bool mortonCompare(Hitable* p1, Hitable* p2)
+{
+	return p1->MortonCode < p2->MortonCode;
+}
+
+void constructBVH(BVHNode* root)
+{
+	if (root->range == 1) return;
+
+	int gamma = findSplitPosition(root->start, root->start + root->range - 1);
+
+	if (gamma == -1) return;
+
+	int lchildSpan = gamma - root->start + 1;
+	BBox lchildBBox = generate_bounding_box(root->start, lchildSpan);
+	BVHNode* lchild = new BVHNode(lchildBBox, root->start, lchildSpan);
+
+	int rchildSpan = root->range - lchildSpan;
+	BBox rchildBBox = generate_bounding_box(gamma + 1, rchildSpan);
+	BVHNode* rchild = new BVHNode(rchildBBox, gamma + 1, rchildSpan);
+
+	root->Left = lchild;
+	root->Right = rchild;
+
+	constructBVH(root->Left);
+	constructBVH(root->r);
+}
+
+inline BVHNode CreateBVH(std::vector<Hitable*>& primitives, int n)
+{
+	BBox bb;
+	for (size_t i = 0; i < primitives.size(); ++i) {
+		bb.expand(primitives[i]->get_bbox());
+	}
+	auto root = new BVHNode(bb, 0, primitives.size());
+
+	for (size_t i = 0; i < primitives.size(); ++i) {
+		const unsigned int morton_code = 
+			Morton3D(bb.getUnitcubePosOf(primitives[i]->get_bbox().centroid()));
+		primitives[i]->MortonCode = morton_code;
+	}
+	std::sort(primitives.begin(), primitives.end(), mortonCompare);
+	constructBVH(root);
+}
+

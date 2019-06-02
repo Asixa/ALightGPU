@@ -8,9 +8,11 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 
-
+#include <iostream>
+#include <vector>
 #include "stb_image.h"
 #include "Model.h"
+#include "MathHelper.h"
 
 namespace Renderer
 {
@@ -151,7 +153,7 @@ namespace Renderer
 	void Scene3()
 	{
 	
-		h_BVHRoot = LoadMesh("teapot", 4,hitables,ObjList);
+		h_BVHRoot = LoadMesh("bunny_lowpoly", 4,hitables,ObjList);
 		object_count = hitables.size();
 		//object_count = 20000;
 		printf("[%d]", object_count);
@@ -205,7 +207,7 @@ namespace Renderer
 	void InitData()
 	{
 		const size_t newHeapSize = 4608ull * 1024ull * 1024ull;;
-		cudaDeviceSetLimit(cudaLimitMallocHeapSize, newHeapSize);
+		cudaDeviceSetLimit(cudaLimitStackSize, newHeapSize);
 		printf("Adjusted heap size to be %d\n", newHeapSize);
 
 		h_pixeldataF = new float[ImageWidth*ImageHeight * 4];

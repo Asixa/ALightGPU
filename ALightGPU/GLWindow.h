@@ -43,7 +43,7 @@ namespace GLWindow {
 		{
 			lastTime = current_time;
 			char title[35];
-			snprintf(title, sizeof(title), "ALightGPU  FPS:%d SPP:%d", int(framesPerSecond), current_spp);
+			printf(title, sizeof(title), "ALightGPU  FPS:%d SPP:%d", int(framesPerSecond), current_spp);
 			glutSetWindowTitle(title);
 			framesPerSecond = 0;
 		}

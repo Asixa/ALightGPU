@@ -6,13 +6,7 @@
 #include "Hitable.h"
 #include "Camera.h"
 #include "GLWindow.h"
-#include "curand_kernel.h"
-#include "MathHelper.h"
-#include "BVH.h"
-#include "Sphere.h"
-#include <list>
-#include <vector>
-#include "device.h"
+
 #include "Renderer.h"
 #include <helper_cuda.h>
 using namespace std;

@@ -28,7 +28,7 @@ public:
 	__host__ virtual int count() { return 0; }
 	__host__ virtual void SetChildId() { }
 	//__device__ __host__  virtual int type() { return 0;}
-	int id; int type;
+	int id; int type; unsigned int MortonCode;
 }; 
 struct  DeviceData
 {

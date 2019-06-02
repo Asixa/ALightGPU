@@ -525,12 +525,11 @@ d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\GLWindow.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\fstream
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\string
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\xstring_insert.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\curand_kernel.h
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\MathHelper.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Renderer.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\cuda_runtime_api.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Sphere.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\BVH.h
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\algorithm
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Sphere.h
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\list
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\include\vector
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\device.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\curand_discrete2.h
@@ -538,9 +537,8 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\device_launch_
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\curand_kernel.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Triangle.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Vertex.h
-d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Renderer.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\/include\cuda_runtime_api.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\stb_image.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\math.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17134.0\ucrt\assert.h
 d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\Model.h
+d:\codes\projects\academic\computergraphic\alightgpu\alightgpu\MathHelper.h
