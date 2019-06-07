@@ -18,11 +18,11 @@ struct RTSamplerData
 public:
 	curandState* curand_state;
 	float2 Pixel;
-	
+	unsigned long long seed;
 	int tidx;
 	__device__ RTSamplerData(curandState* _curand_state,int _tidx,float seed,float2 pixel):tidx(_tidx),Pixel(pixel),Seed(seed)
 	{
-		
+		seed = 1;
 		curand_state = _curand_state;
 	}
 
@@ -37,6 +37,12 @@ public:
 		const float result = v-int(v);
 		Seed += 1.0f;
 		return result;
+	}
+
+	__device__ float drand48()
+	{
+		seed = (0x5DEECE66DL * seed + 0xB16) & 0xFFFFFFFFFFFFL;
+		return static_cast<float>(static_cast<double>(seed >> 16) / static_cast<double>(0x100000000L));
 	}
 };
 
@@ -60,6 +66,8 @@ __device__ RayHit CreateRayHit()
 	hit.position = make_float3(0.0f, 0.0f, 0.0f);
 	hit.distance =INF;
 	hit.normal = make_float3(0.0f, 0.0f, 0.0f);
+	hit.smoothness = 0;
+	hit.emission = make_float3(0, 0, 0);
 	return hit;
 }
 
@@ -91,6 +99,8 @@ __device__ void IntersectSphere(Ray ray, RayHit* best_hit, const Sphere sphere)
 		best_hit->normal = Float3::UnitVector(best_hit->position - sphere.position);
 		best_hit->albedo = sphere.albedo;
 		best_hit->specular = sphere.specular;
+		best_hit->smoothness = sphere.smoothness;
+		best_hit->emission = sphere.emission;
 	}
 }
 __device__ float3x3 GetTangentSpace(float3 normal)
@@ -100,28 +110,26 @@ __device__ float3x3 GetTangentSpace(float3 normal)
 	const auto binormal = Float3::UnitVector(Float3::Cross(normal, tangent));
 	return float3x3(tangent, binormal, normal);
 }
-__device__ float3 SampleHemisphere(const float3 normal,float alpha,RTSamplerData* data)
-{
-	const auto cos_theta =data->GetRandom();
-	const auto sin_theta = sqrt(fmax(0.0f, 1.0f - cos_theta * cos_theta));
-	const float phi = 2 * M_PI * data->GetRandom();
-	const auto tangent_space_dir = make_float3(cos(phi) * sin_theta, sin(phi) * sin_theta, cos_theta);
-	// if (curand_uniform(data->curand_state) < 0.1f)printf("%f,%f,%f,   %f,%f,%f\n", tangent_space_dir.x, tangent_space_dir.y, tangent_space_dir.z,
-	// 	normal.x, normal.y, normal.z);
-	
-	return GetTangentSpace(normal)* tangent_space_dir;
-
-}
-
-// __device__ float3 SampleHemisphere(const float3 normal,float alpha, RTSamplerData* data)
+// __device__ float3 SampleHemisphere(const float3 normal,float alpha,RTSamplerData* data)
 // {
+// 	const auto cos_theta =data->rand();
+// 	const auto sin_theta = sqrt(fmax(0.0f, 1.0f - cos_theta * cos_theta));
+// 	const float phi = 2 * M_PI * data->rand();
+// 	const auto tangent_space_dir = make_float3(cos(phi) * sin_theta, sin(phi) * sin_theta, cos_theta);
+// 	// if (curand_uniform(data->curand_state) < 0.1f)printf("%f,%f,%f,   %f,%f,%f\n", tangent_space_dir.x, tangent_space_dir.y, tangent_space_dir.z,
+// 	// 	normal.x, normal.y, normal.z);
+// 	
+// 	return GetTangentSpace(normal)* tangent_space_dir;
 //
-// 	float3 random_in_unit_sphere;
-// 	do random_in_unit_sphere = 2.0 * make_float3(data->GetRandom(), data->GetRandom(), data->GetRandom()) - make_float3(1, 1, 1);
-// 	while (Float3::SquaredLength(random_in_unit_sphere) >= 1.0);
-//
-// 	return random_in_unit_sphere;
 // }
+
+__device__ float3 SampleHemisphere2(const float3 normal,float alpha, RTSamplerData* data)
+{
+	float3 random_in_unit_sphere;
+	do random_in_unit_sphere = 2.0 * make_float3(data->GetRandom(), data->GetRandom(), data->GetRandom()) - make_float3(1, 1, 1);
+	while (Float3::SquaredLength(random_in_unit_sphere) >= 1.0);
+	return random_in_unit_sphere;
+}
 __device__ float3 CosineSampleHemisphere(float u1, float u2)
 {
 	const float r = sqrt(u1);
@@ -132,76 +140,76 @@ __device__ float3 CosineSampleHemisphere(float u1, float u2)
 
 	return make_float3(x, y, sqrt(fmax(0.0f, 1 - u1)));
 }
-// __device__ float3 SampleHemisphere(float3 normal, float alpha, RTSamplerData* data)
-// {
-// 	return CosineSampleHemisphere(data->GetRandom(), data->GetRandom());
-//
-// 	//Sample the hemisphere, where alpha determines the kind of the sampling
-// 	const float cosTheta = pow(data->rand(), 1.0f / (alpha + 1.0f));
-// 	const float sinTheta = sqrt(1.0f - cosTheta * cosTheta);
-// 	const float phi = 2 * M_PI * data->rand();
-// 	float3 tangent_space_dir = make_float3(cos(phi) * sinTheta, sin(phi) * sinTheta, cosTheta);
-// 	// Transform direction to world space
-// 	return GetTangentSpace(normal)* tangent_space_dir;
-// }
-
-
-
-__device__ float sdot(float3 x, float3 y, float f = 1.0f)
+__device__ float3 SampleHemisphere(const float3 normal, const float alpha, RTSamplerData* data)
 {
-	//return saturate(dot(x, y) * f);
+
+	const auto cos_theta = pow(data->rand(), 1.0f / (alpha + 1.0f));
+	const auto sin_theta = sqrt(2.0f - cos_theta * cos_theta); 
+	const float phi = 2 * M_PI * data->rand();
+	const auto tangent_space_dir = make_float3(cos(phi) * sin_theta, sin(phi) * sin_theta, cos_theta);
+	
+	return  GetTangentSpace(normal)* Float3::UnitVector(tangent_space_dir);
+	return  normal;
+}
+
+
+
+
+__device__ float Sdot(float3 x, float3 y, float f = 1.0f)
+{
 	return Range((Float3::Dot(x, y) * f));
 }
-__device__ float energy(float3 color)
+__device__ float Energy(float3 color)
 {
 	return Float3::Dot(color, make_float3(1.0 /3.0,1.0 /3.0,1.0 /3.0));
 }
-
+__device__ float SmoothnessToPhongAlpha(const float s)
+{
+	return pow(1000.0f, s * s);
+}
 __device__ RayHit Trace(Ray ray)
 {
 	auto best_hit = CreateRayHit();
 	
 	IntersectGroundPlane(ray, &best_hit);
-	// IntersectSphere(ray, &best_hit, make_float4(0, 1.5f, 0, 1.0f));
-	IntersectSphere(ray, &best_hit, Sphere(make_float3(0, 1.5, 0),1,make_float3(1,0,0),make_float3(0, 0, 0)));
+	IntersectSphere(ray, &best_hit, 
+		Sphere(make_float3(0, 1, 0),1,make_float3(1,0,0),make_float3(0, 0, 0),
+			1,make_float3(0,0,0)));
+	IntersectSphere(ray, &best_hit,
+		Sphere(make_float3(2, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0),
+			1, make_float3(5, 5, 5)));
 	return best_hit;
 }
 
 __device__ float3 Shade(Ray* ray, RayHit* hit, RTSamplerData * data)
 {
-	const auto sun_dir = Float3::UnitVector(make_float3(1, -1, 1));
-	float4 sun=make_float4(sun_dir.x, sun_dir.y, sun_dir.z,2);
-
-
 	if (hit->distance < INF)
 	{
-
 		hit->albedo = Float3::Min(make_float3(1,1,1) - hit->specular, hit->albedo);
-		auto spec_chance = energy(hit->specular);
-		auto diff_chance = energy(hit->albedo);
+		auto spec_chance = Energy(hit->specular);
+		auto diff_chance = Energy(hit->albedo);
 		const auto sum = spec_chance + diff_chance;
 		spec_chance /= sum;
 		diff_chance /= sum;
-		// Roulette-select the ray's path 
 		const auto roulette = data->GetRandom();
 		if (roulette < spec_chance)
 		{
 			// Specular reflection
-			const float alpha = 0.0f;
+			const float alpha = SmoothnessToPhongAlpha(hit->smoothness);
 			ray->origin = hit->position + hit->normal * 0.001f;
-			ray->direction = SampleHemisphere(Float3::Reflect(ray->direction, hit->normal), alpha,data);
+			ray->direction = Float3::UnitVector(SampleHemisphere(Float3::Reflect(ray->direction, hit->normal), alpha,data));
 			const float f = (alpha + 2) / (alpha + 1);
-			ray->energy = ray->energy*(1.0f / spec_chance) * hit->specular * sdot(hit->normal, ray->direction, f);
+			ray->energy = ray->energy*(1.0f / spec_chance) * hit->specular * Sdot(hit->normal, ray->direction, f);
 		}
 		else
 		{
 			// Diffuse reflection
 			ray->origin = hit->position + hit->normal * 0.001f;
-			ray->direction = SampleHemisphere(hit->normal,1,data);
+			ray->direction = SampleHemisphere2(hit->normal,1,data);
 			ray->energy = ray->energy*(1.0f / diff_chance) * hit->albedo;
 			//ray->energy = ray->energy*(1.0f / diff_chance) * 2 * hit->albedo * sdot(hit->normal, ray->direction);
 		}
-		return make_float3(0, 0, 0);
+		return hit->emission;
 
 
 
@@ -234,26 +242,25 @@ __device__ float3 Shade(Ray* ray, RayHit* hit, RTSamplerData * data)
 
 __global__ void IPRSampler(const int width, const int height, const int seed, const int spp,int Sampled, int MST, int root, float* data, curandState* const rngStates, Camera* camera)
 {
-
 	const auto tidx = blockIdx.x * blockDim.x + threadIdx.x;
 	const auto tidy = blockIdx.y * blockDim.y + threadIdx.y;
 	const int x = blockIdx.x * 16 + threadIdx.x,
 	y = blockIdx.y * 16 + threadIdx.y;
-
-	const auto rt_data = &RTSamplerData(rngStates, tidx, seed + tidx + width * tidy,make_float2(x,y));
 	curand_init(seed + tidx + width * tidy, 0, 0, &rngStates[tidx]);
+	const auto rt_data = &RTSamplerData(rngStates, tidx, Sampled,make_float2(x,y));
 
-	const auto u = float(curand_uniform(&rngStates[tidx]) + x) / float(width);
-	const auto v = float(curand_uniform(&rngStates[tidx]) + y) / float(height);
 	auto color = make_float3(0, 0, 0);
 	auto result = make_float3(0, 0, 0);
-	auto ray = CreateCameraRay(camera, u,v);
+	
 	
 	// if (x == 256 && y == 256)printf("%d", tidx);
 
 
 	//Main Sampling
 	for (auto j = 0; j < spp; j++) {
+		const auto u = float(curand_uniform(&rngStates[tidx]) + x) / float(width);
+		const auto v = float(curand_uniform(&rngStates[tidx]) + y) / float(height);
+		auto ray = CreateCameraRay(camera, u, v);
 		for (auto i = 0; i < 8; i++)
 		{
 			auto hit = Trace(ray);
@@ -281,10 +288,3 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 
 	//if (x == 1 && y == 1)printf("Sample r %f,g %f,b %f,a %f   color: r %f,g %f,b %f\n", data[i], data[i + 1], data[i + 2], data[i + 3],color.x,color.y,color.z);
 }
-
-
-void SetConstants()
-{
-	//cudaMemcpyToSymbol(sun, &make_float4(0.2, 0.2, 0.2, 1), sizeof(float4));
-}
-

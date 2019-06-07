@@ -14,7 +14,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BufferObject.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="drand.h" />
@@ -31,6 +30,8 @@
     <ClInclude Include="Rasterizer.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="RayHit.h" />
+    <ClInclude Include="RayMarcher.h" />
+    <ClInclude Include="RayMarchSampler.h" />
     <ClInclude Include="RayTracer.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />
@@ -41,7 +42,6 @@
     <ClInclude Include="DeviceManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BufferObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="MathHelper.cpp" />
@@ -57,6 +57,7 @@
     <CudaCompile Include="Float2Byte.cu" />
     <CudaCompile Include="float2Extension.cu" />
     <CudaCompile Include="float3Extension.cu" />
+    <CudaCompile Include="RayMarchSampler.cu" />
     <CudaCompile Include="vec3.cu" />
     <CudaCompile Include="RTSampler.cu" />
   </ItemGroup>

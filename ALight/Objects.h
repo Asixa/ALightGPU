@@ -7,7 +7,9 @@ struct Sphere
     float radius;
     float3 albedo;
     float3 specular;
-	__device__ Sphere(float3 p,float r,float3 a,float3  s):position(p),radius(r),albedo(a),specular(s)
+	float smoothness;
+	float3 emission;
+	__device__ Sphere(float3 p,float r,float3 a,float3 _specular,float _smoothness,float3 _emission):position(p),radius(r),albedo(a),specular(_specular),smoothness(_smoothness),emission(_emission)
 	{
 		
 	}

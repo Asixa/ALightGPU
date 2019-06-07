@@ -93,7 +93,7 @@ void DeviceManager::Run()
 	//****** ¸´ÖÆÄÚ´æ host->device ******
 	cudaMemcpy(devicde_float_data, host_float_data, ray_tracer->Width * ray_tracer->Height * 4 * sizeof(float), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_camera, Engine::Instance()->camera, sizeof(Camera), cudaMemcpyHostToDevice);
-	SetConstants();
+	//SetConstants();
 	//dim3 grid(ray_tracer->Width / Setting::BlockSize, ray_tracer->Height / Setting::BlockSize), block(Setting::BlockSize, Setting::BlockSize);
 
 
@@ -109,4 +109,9 @@ void DeviceManager::Run()
 
 	const auto error = cudaGetLastError();
 	if (error != 0)printf("Cuda Error %d\n", error);
+}
+
+void RayMarcher()
+{
+	
 }

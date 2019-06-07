@@ -93,9 +93,6 @@
     <ClInclude Include="Defines.h">
       <Filter>Header\Base</Filter>
     </ClInclude>
-    <ClInclude Include="BufferObject.h">
-      <Filter>Header\GPUDevices</Filter>
-    </ClInclude>
     <ClInclude Include="Ray.h">
       <Filter>Header\Rendering\RT</Filter>
     </ClInclude>
@@ -123,6 +120,12 @@
     <ClInclude Include="float2Extension.h">
       <Filter>Header\Math</Filter>
     </ClInclude>
+    <ClInclude Include="RayMarcher.h">
+      <Filter>Header\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RayMarchSampler.h">
+      <Filter>Header\GPUDevices\RTSamplers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="vec3.cu">
@@ -142,6 +145,9 @@
     </CudaCompile>
     <CudaCompile Include="float2Extension.cu">
       <Filter>Source\Math</Filter>
+    </CudaCompile>
+    <CudaCompile Include="RayMarchSampler.cu">
+      <Filter>Source\GPUDevices\RTSamplers</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,9 +175,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathHelper.cpp">
       <Filter>Source\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="BufferObject.cpp">
-      <Filter>Source\GPUDevices</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
