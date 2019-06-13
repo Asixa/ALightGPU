@@ -41,6 +41,47 @@ float3 operator/(float3 v, float t)
 	return make_float3(v.x / t, v.y / t, v.z / t);
 }
 
+bool operator==(float3 a, float3 b)
+{
+	return (a.x == b.x && a.y == b.y && a.z == b.z);
+}
+
+float3& operator+=(float3 x, const float3& v)
+{
+	return v+x;
+}
+
+float3& operator*=(float3 x, const float3& v)
+{
+	return v * x;
+}
+
+float3& operator*=(float x, const float3& v)
+{
+	return v * x;
+}
+
+float3& operator/=(float3 x, const float3& v)
+{
+	return v / x;
+}
+
+float3& operator/=(float x, const float3& v)
+{
+	return  v / x;
+}
+
+float3& operator-=(float3 x, const float3& v)
+{
+	return v - x;
+}
+
+float3& operator-(const float3& v)
+{
+	return v * -1;
+}
+
+
 float Float3::Dot(const float3& v1, const float3& v2)
 {
 	return v1.x* v2.x + v1.y * v2.y + v1.z * v2.z;

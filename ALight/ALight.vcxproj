@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="DiffuseMaterial.h" />
     <ClInclude Include="drand.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Float2Byte.h" />
@@ -25,28 +26,38 @@
     <ClInclude Include="float4x4.h" />
     <ClInclude Include="GLWindow.cpp" />
     <ClInclude Include="GLWindow.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="MathHelper.h" />
     <ClInclude Include="Objects.h" />
+    <ClInclude Include="ONB.h" />
+    <ClInclude Include="PathRenderer.h" />
     <ClInclude Include="Rasterizer.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="RayHit.h" />
     <ClInclude Include="RayMarcher.h" />
     <ClInclude Include="RayMarchSampler.h" />
     <ClInclude Include="RayTracer.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="RTSamplerData.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Setting.h" />
+    <ClInclude Include="SurfaceHitRecord.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="vec3.h" />
     <ClInclude Include="RTSampler.h" />
     <ClInclude Include="DeviceManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DiffuseMaterial.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="MathHelper.cpp" />
+    <ClCompile Include="ONB.cpp" />
     <ClCompile Include="Rasterizer.cpp" />
     <ClCompile Include="RayTracer.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Setting.cpp" />
@@ -57,6 +68,7 @@
     <CudaCompile Include="Float2Byte.cu" />
     <CudaCompile Include="float2Extension.cu" />
     <CudaCompile Include="float3Extension.cu" />
+    <CudaCompile Include="PathRenderer.cu" />
     <CudaCompile Include="RayMarchSampler.cu" />
     <CudaCompile Include="vec3.cu" />
     <CudaCompile Include="RTSampler.cu" />

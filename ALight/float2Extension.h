@@ -14,6 +14,8 @@ namespace Float2 {
 	// __host__ __device__ void MakeUnitVector(float3* b);
 	// __host__ __device__ float3 Reflect(float3 vin, float3 normal);
 	// __host__ __device__ float3 Min(float3 a, float3 b);
+	__host__ __device__ void Scramble(float2& v);
+
 }
 
 

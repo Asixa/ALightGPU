@@ -1,5 +1,6 @@
 #pragma once
 #include <device_launch_parameters.h>
+#include "Material.h"
 
 __host__ __device__ struct RayHit
 {
@@ -11,3 +12,4 @@ __host__ __device__ struct RayHit
 	float smoothness;
 	float3 emission;
 };
+

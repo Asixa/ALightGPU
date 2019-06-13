@@ -11,6 +11,15 @@ __host__ __device__  float3 operator*(float t, const float3& v);
 __host__ __device__  float3 operator*(const float3& v, float t);
 __host__ __device__  float3 operator/(const float3& v1, const float3& v2);
 __host__ __device__  float3 operator/(float3 v, float t);
+__host__ __device__  bool operator==(float3 a, float3 b);
+
+__host__ __device__  float3 &operator+=(float3 x,const float3& v);
+__host__ __device__  float3 &operator*=(float3 x,const float3& v);
+__host__ __device__  float3 &operator*=(float x,const float3& v);
+__host__ __device__  float3 &operator/=(float3 x,const float3& v);
+__host__ __device__  float3 &operator/=(float x ,const float3& v);
+__host__ __device__  float3 &operator-=(float3 x,const float3& v);
+__host__ __device__  float3 &operator-(const float3& v);
 
 namespace Float3 {
 	__host__ __device__ float Dot(const float3& v1, const float3& v2);
@@ -24,4 +33,5 @@ namespace Float3 {
 	__host__ __device__ void MakeUnitVector(float3* b);
 	__host__ __device__ float3 Reflect(float3 vin, float3 normal);
 	__host__ __device__ float3 Min(float3 a, float3 b);
+
 }
