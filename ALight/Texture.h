@@ -1,5 +1,5 @@
 #pragma once
-#include "float3Extension.h"
+#include <driver_functions.h>
 
 class Texture {
 public:

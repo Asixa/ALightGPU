@@ -62,7 +62,7 @@
 //
 // 		for (auto i = 0; i < 15; i++) {
 // 			iterations = i;
-// 			r = Float3::Length (z);
+// 			r = length (z);
 //
 // 			if (r > 2) {
 // 				break;
@@ -90,7 +90,7 @@
 // 		float x = SceneInfo(make_float3(p.x + EPSILON, p.y, p.z), data).y - SceneInfo(make_float3(p.x - EPSILON, p.y, p.z), data).y;
 // 		float y = SceneInfo(make_float3(p.x, p.y + EPSILON, p.z), data).y - SceneInfo(make_float3(p.x, p.y - EPSILON, p.z), data).y;
 // 		float z = SceneInfo(make_float3(p.x, p.y, p.z + EPSILON), data).y - SceneInfo(make_float3(p.x, p.y, p.z - EPSILON), data).y;
-// 		return Float3::UnitVector(make_float3(x, y, z));
+// 		return normalize(make_float3(x, y, z));
 // 	}
 //
 // 	__global__ void RayMatchSampler()
@@ -118,7 +118,7 @@
 // 				float escapeIterations = sceneInfo.x;
 // 				float3 normal = EstimateNormal(ray.origin - ray.direction * EPSILON * 2);
 //
-// 				float colourA = saturate(Float3::Dot(normal * .5 + .5, -data._LightDirection));
+// 				float colourA = saturate(dot(normal * .5 + .5, -data._LightDirection));
 // 				float colourB = saturate(escapeIterations / 16.0);
 // 				float3 colourMix = saturate(colourA * data.colourAMix + colourB * data.colourBMix);
 //

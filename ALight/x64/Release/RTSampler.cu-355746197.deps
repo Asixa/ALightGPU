@@ -221,13 +221,13 @@ C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include\curand_mrg32k3a
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include\curand_mtgp32_kernel.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\math.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Defines.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Ray.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float3Extension.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\MathHelper.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\crt/host_defines.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\vector_functions.hpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\math.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_discrete2.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_kernel.h
@@ -238,64 +238,8 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_stdio_c
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RayHit.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Material.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\ONB.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\vector_functions.hpp
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\istream
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\ostream
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\ios
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocnum
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\climits
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\streambuf
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xiosbase
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\share.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_share.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\system_error
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cerrno
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdexcept
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\exception
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\type_traits
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstddef
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstddef
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\initializer_list
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\malloc.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_exception.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\eh.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_terminate.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstring
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iosfwd
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\cuda_runtime.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstring
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cwchar
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\wchar.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wconio.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wctype.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wdirect.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wio.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wprocess.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\sys/stat.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\sys/types.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xmemory0
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdint
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdint.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\limits
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cfloat
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\float.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\new
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xutility
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\utility
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xatomic0.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\intrin0.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xcall_once.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xerrc.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocale
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\memory
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\typeinfo
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_typeinfo.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xmemory
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xfacet
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\ctype.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\locale.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Objects.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float3x3.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Float2Byte.h
@@ -304,10 +248,9 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winapifamily.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winpackagefamily.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float2Extension.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\crt/host_defines.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\PathRenderer.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\SurfaceHitRecord.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTSamplerData.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTDeviceData.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_kernel.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\SimpleRenderer.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\cuda_runtime.h

@@ -1,6 +1,7 @@
 #pragma once
 #include "RayTracer.h"
 #include "Camera.h"
+#include "RTDeviceData.h"
 
 class DeviceManager
 {
@@ -13,10 +14,12 @@ class DeviceManager
 	dim3 block;
 
 	Camera* d_camera;
+	RTHostData d_data;
 public:
 	DeviceManager();
 	~DeviceManager();
 	void PrintDeviceInfo();
 	void Init(RayTracer* ray_tracer);
 	void Run();
+	void Dispose();
 };

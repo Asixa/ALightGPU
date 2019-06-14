@@ -1,10 +1,10 @@
 #pragma once
-#include "float3Extension.h"
-#include <vector_functions.hpp>
+#include <crt/host_defines.h>
+#include <driver_functions.h>
 #include <istream>
 
 
-	class ONB
+class ONB
 	{
 	public:
 		__device__ ONB() {};

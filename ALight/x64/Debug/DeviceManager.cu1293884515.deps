@@ -226,15 +226,19 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winpackagefam
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\vec3.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\cuda_runtime_api.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Defines.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Ray.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float3Extension.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Material.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\cuda_runtime.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstring
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\MathHelper.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\crt/host_defines.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\cuda_runtime_api.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\vector_functions.hpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\math.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Defines.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Ray.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTDeviceData.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_kernel.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdint.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstdio.h
@@ -264,7 +268,6 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_terminate.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstring
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iosfwd
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstring
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cwchar
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\wchar.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wconio.h
@@ -298,12 +301,10 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\ctype.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\locale.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\string
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cctype
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_kernel.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Setting.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTSampler.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\cuda_runtime_api.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_kernel.h
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Float2Byte.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Engine.h

@@ -1,6 +1,6 @@
 #pragma once
-#include "float2Extension.h"
-struct RTSamplerData;
+#include "cuda_runtime.h"
+struct RTDeviceData;
 class SurfaceHitRecord;
 struct Ray;
 
@@ -14,7 +14,8 @@ namespace RTRenderer
 			float tmin,       
 			float tmax,        
 			float time,
-			float3& factor, const RTSamplerData* data
+			int depth,
+			float3& factor, const RTDeviceData* data
 		);
 	}
 }

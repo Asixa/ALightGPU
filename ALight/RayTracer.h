@@ -2,6 +2,7 @@
 #include "curand_kernel.h"
 #include <GL/glew.h>
 #include "vec3.h"
+#include "Material.h"
 
 
 class DeviceManager;
@@ -12,6 +13,8 @@ class RayTracer
 public:
 	RayTracer();
 	~RayTracer();
+
+	Material* Materials;
 
 	bool GPU;
 	DeviceManager* device_manager;

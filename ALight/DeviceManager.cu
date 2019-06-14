@@ -1,16 +1,16 @@
 #include "DeviceManager.h"
-#include <cuda_runtime_api.h>
-#include <cmath>
-#include <cstdlib>
-#include <helper_cuda.h>
-#include <curand_kernel.h>
+// #include <cuda_runtime_api.h>
 
-#include "RayTracer.h"
+ #include <helper_cuda.h>
+// #include <curand_kernel.h>
+
+
 #include "Setting.h"
 #include "RTSampler.h"
-#include <iostream>
+// #include <iostream>
 #include "Float2Byte.h"
 #include "Engine.h"
+#include <cstdio>
 
 
 DeviceManager::DeviceManager()
@@ -75,6 +75,7 @@ void DeviceManager::PrintDeviceInfo()
 
 void DeviceManager::Init(RayTracer* tracer)
 {
+	
 	ray_tracer = tracer;
 	grid = dim3(ray_tracer->Width / Setting::BlockSize, ray_tracer->Height / Setting::BlockSize);
 	block = dim3(Setting::BlockSize, Setting::BlockSize);
@@ -84,6 +85,8 @@ void DeviceManager::Init(RayTracer* tracer)
 	cudaMalloc(reinterpret_cast<void**>(&devicde_byte_data), ray_tracer->Width * ray_tracer->Height * 4 * sizeof(GLbyte));
 	cudaMalloc(reinterpret_cast<void**>(&rng_states), grid.x * block.x * sizeof(curandState));
 	cudaMalloc(reinterpret_cast<void**>(&d_camera), sizeof(Camera));
+
+	//cudaMalloc(reinterpret_cast<void**>(&d_data.Materials), sizeof(Material)*2);
 }
 
 void DeviceManager::Run()
@@ -93,12 +96,13 @@ void DeviceManager::Run()
 	//****** ∏¥÷∆ƒ⁄¥Ê host->device ******
 	cudaMemcpy(devicde_float_data, host_float_data, ray_tracer->Width * ray_tracer->Height * 4 * sizeof(float), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_camera, Engine::Instance()->camera, sizeof(Camera), cudaMemcpyHostToDevice);
+	//cudaMemcpy(d_data.Materials, ray_tracer->Materials, sizeof(Material) * 2, cudaMemcpyHostToDevice);
 	//SetConstants();
 	//dim3 grid(ray_tracer->Width / Setting::BlockSize, ray_tracer->Height / Setting::BlockSize), block(Setting::BlockSize, Setting::BlockSize);
 
 
 	ray_tracer->Sampled += Setting::SPP;
-	IPRSampler << <grid, block >> > (ray_tracer->Width, ray_tracer->Height, (rand() / (RAND_MAX + 1.0)) * 1000, Setting::SPP, ray_tracer->Sampled, 4, 0, devicde_float_data, rng_states, d_camera);
+	IPRSampler << <grid, block >> > (ray_tracer->Width, ray_tracer->Height, (rand() / (RAND_MAX + 1.0)) * 1000, Setting::SPP, ray_tracer->Sampled, 4, 0, devicde_float_data, rng_states, d_camera,d_data);
 	Float2Byte <<<grid, block >> > (ray_tracer->Width, ray_tracer->Sampled, Setting::SPP, devicde_float_data, devicde_byte_data);
 	
 	cudaDeviceSynchronize();
@@ -111,7 +115,15 @@ void DeviceManager::Run()
 	if (error != 0)printf("Cuda Error %d\n", error);
 }
 
-void RayMarcher()
+
+void DeviceManager::Dispose()
 {
-	
+	cudaDeviceReset();
+	//******  Õ∑≈œ‘¥Ê **********
+	 cudaFree(&devicde_float_data);
+	 cudaFree(&devicde_byte_data);
+	// cudaFree(d_materials);
+	// cudaFree(d_camera);
+
 }
+

@@ -1,6 +1,5 @@
 #pragma once
-#include <device_launch_parameters.h>
-#include "float3Extension.h"
+#include "MathHelper.h"
 __host__ __device__ struct Ray
 {
 	float3 origin;
@@ -11,6 +10,11 @@ __host__ __device__ struct Ray
 	__device__ Ray(float3 origin, float3 direction):origin(origin),direction(direction)
 	{
 		
+	}
+
+	__device__ Ray()
+	{
+
 	}
 };
 

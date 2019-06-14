@@ -1,5 +1,4 @@
 #pragma once
-#include "float3Extension.h"
 
 struct Sphere
 {

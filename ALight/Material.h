@@ -1,49 +1,40 @@
 #pragma once
-#include "float3Extension.h"
-// #include "SurfaceHitRecord.h"
-#include "ONB.h"
+#include <cuda_runtime.h>
+#include <cstring>
+#include "MathHelper.h"
+// #include <crt/host_defines.h>
+// #include <driver_functions.h>
+// #include <cstring>
+
+
+struct Ray;
 class SurfaceHitRecord;
-class Material
+class RTDeviceData;
+#define MATERIAL_PARAMTER_COUNT 6
+
+__device__ float Schlick(float cosine, float ref_idx);
+__device__ bool Refract(const float3& v, const float3& n, float ni_over_nt, float3& refracted);
+__device__ float3 Reflect(const float3& v, const float3& n);
+
+enum MaterialType
 {
-public:
-	__device__ virtual bool emits() const { return false; }
-
-	__device__ virtual float3 emittedRadiance(const ONB&,      // ONB of hit point
-		const float3&,								// outgoing direction from light
-		const float3&,								// Texture point 
-		const float2&)								// Texture coordinate 
-	{
-		return make_float3(0, 0, 0);
-	}
-
-	__device__ virtual float3 ambientResponse(const ONB&,      // ONB of hit point
-		const float3&,								// incident direction
-		const float3&,								// Texture point
-		const float2&)								// Texture coordinate
-	{
-		return make_float3(0, 0, 0);
-	}
-
-	__device__ virtual bool explicitBrdf(const ONB&,			// ONB of hit point
-		const float3&,								// outgoing vector v0
-		const float3&,								// outgoing vector v1
-		const float3&,								// Texture point
-		const float2&,								// Texture coordinate
-		float3&) {
-		return false;
-	}
-
-	__device__ virtual bool scatterDirection(const float3&,	// incident Vector
-		const SurfaceHitRecord&,					// hit we are shading
-		float2&,									// random seed                    
-		float3&,									// color to attenuate by
-		bool&,										// count emitted light?
-		float&,										// brdf scale 
-		float3&) = 0;								// scattered direction
-
-	__device__ virtual bool isSpecular() { return false; }
-	__device__ virtual bool isTransmissive() { return false; }
-	__device__ virtual int causticPhotons() { return 0; }
-	__device__ virtual int globalPhotons() { return 0; }
-	__device__ virtual float3 photonColor() { return make_float3(0.0f, 0.0f, 0.0f); }
+	lambertian,
+	metal,
+	dielectirc
 };
+class Material {
+public:
+	bool BackCulling = true;
+	float data[MATERIAL_PARAMTER_COUNT];
+	//int type;
+	MaterialType Type;
+
+	__device__ Material(){}
+	__device__ Material(MaterialType t, float d[MATERIAL_PARAMTER_COUNT])
+	{
+		Type = t;
+		memcpy(data, d, MATERIAL_PARAMTER_COUNT * sizeof(float));
+	}
+	__device__ bool scatter(const Ray& r_in, const SurfaceHitRecord& rec, float3& attenuation, Ray& scattered, float3 random_in_unit_sphere,const RTDeviceData* data);
+};
+

@@ -3,7 +3,7 @@
 #include "SurfaceHitRecord.h"
 
 
-#include "RTSamplerData.h"
+#include "RTDeviceData.h"
 
 namespace RTRenderer
 {
@@ -22,7 +22,7 @@ namespace RTRenderer
 			int spec_depth,
 			bool corl,         // count only reflected light? (not emitted)
 			//PhotonMaps* maps
-			float3 & factor, const RTSamplerData * data
+			float3 & factor, const RTDeviceData * data
 		);
 	}
 }

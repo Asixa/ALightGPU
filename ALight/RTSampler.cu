@@ -1,7 +1,6 @@
 #include "RTSampler.h"
 #include "Ray.h"
 #include "Camera.h"
-#include "float3Extension.h"
 #include <curand_discrete2.h>
 #include <device_launch_parameters.h>
 #include <curand_kernel.h>
@@ -10,15 +9,13 @@
 #include "Objects.h"
 #include "float3x3.h"
 #include "Float2Byte.h"
-#include "float2Extension.h"
 #include "PathRenderer.h"
-
-
+#include "SimpleRenderer.h"
 
 
 __device__ Ray CreateCameraRay(Camera* camera, float u, float v)
 {
-	return Ray(camera->Origin, Float3::UnitVector(camera->LowerLeftCorner + u * camera->Horizontal + v * camera->Vertical - camera->Origin));
+	return Ray(camera->Origin, normalize(camera->LowerLeftCorner + u * camera->Horizontal + v * camera->Vertical - camera->Origin));
 }
 
 // __device__ RayHit CreateRayHit()
@@ -32,23 +29,24 @@ __device__ Ray CreateCameraRay(Camera* camera, float u, float v)
 // 	return hit;
 // }
 
-__device__ void IntersectGroundPlane(Ray ray, SurfaceHitRecord* bestHit)
+__device__ void IntersectGroundPlane(Ray ray, SurfaceHitRecord* bestHit, const RTDeviceData* data)
 {
 	const auto t = -ray.origin.y / ray.direction.y;
 	if (t > 0 && t < bestHit->t)
 	{
 		bestHit->t = t;
 		bestHit->p = ray.origin + t * ray.direction;
-		// bestHit->normal = make_float3(0.0f, 1.0f, 0.0f);
+		bestHit->normal = make_float3(0.0f, 1.0f, 0.0f);
+		bestHit->mat_ptr = &data->Materials[0];
 		// bestHit->albedo = make_float3(0, 0.8, 1);
 		// bestHit->specular = make_float3(0, 0, 0);
 	}
 }
-__device__ void IntersectSphere(Ray ray, SurfaceHitRecord* best_hit, const Sphere sphere)
+__device__ void IntersectSphere(Ray ray, SurfaceHitRecord* best_hit, const Sphere sphere,const RTDeviceData* data)
 {
 	const auto d = ray.origin - sphere.position;
-	const auto p1 = Float3::Dot(ray.direction, d) * -1;
-	const auto p2_sqr = p1 * p1 - Float3::Dot(d, d) + sphere.radius * sphere.radius;
+	const auto p1 = dot(ray.direction, d) * -1;
+	const auto p2_sqr = p1 * p1 - dot(d, d) + sphere.radius * sphere.radius;
 	if (p2_sqr < 0)return;
 	const auto p2 = sqrt(p2_sqr);
 	const auto t = p1 - p2 > 0 ? p1 - p2 : p1 + p2;
@@ -56,31 +54,28 @@ __device__ void IntersectSphere(Ray ray, SurfaceHitRecord* best_hit, const Spher
 	{
 		best_hit->t = t;
 		best_hit->p = ray.origin + t * ray.direction;
-		// best_hit->normal = Float3::UnitVector(best_hit->p - sphere.position);
+		best_hit->normal = normalize(best_hit->p - sphere.position);
+		best_hit->mat_ptr =&data->Materials[1];
 		// best_hit->albedo = sphere.albedo;
 		// best_hit->specular = sphere.specular;
 		// best_hit->smoothness = sphere.smoothness;
 		// best_hit->emission = sphere.emission;
 	}
 }
-__device__ SurfaceHitRecord Trace(const Ray ray)
+__device__ SurfaceHitRecord Trace(const Ray ray,const RTDeviceData* data)
 {
 	auto best_hit = SurfaceHitRecord();
-	IntersectGroundPlane(ray, &best_hit);
-	IntersectSphere(ray, &best_hit,
-		Sphere(make_float3(0, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0),
-			1, make_float3(0, 0, 0)));
-	IntersectSphere(ray, &best_hit,
-		Sphere(make_float3(2, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0),
-			1, make_float3(5, 5, 5)));
+	IntersectGroundPlane(ray, &best_hit,data);
+	//IntersectSphere(ray, &best_hit,Sphere(make_float3(0, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0), 1, make_float3(0, 0, 0)),data);
+	//IntersectSphere(ray, &best_hit,Sphere(make_float3(2, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0), 1, make_float3(5, 5, 5)), data);
 	return best_hit;
 }
 
 __device__ float3x3 GetTangentSpace(float3 normal)
 {
 	const auto helper =  (fabs(normal.x) > 0.99f)? make_float3(0, 0, 1):make_float3(1, 0, 0);
-	const auto tangent = Float3::UnitVector(Float3::Cross(normal, helper));
-	const auto binormal = Float3::UnitVector(Float3::Cross(normal, tangent));
+	const auto tangent = normalize(cross(normal, helper));
+	const auto binormal = normalize(cross(normal, tangent));
 	return float3x3(tangent, binormal, normal);
 }
 
@@ -103,11 +98,11 @@ __device__ float3x3 GetTangentSpace(float3 normal)
 
 __device__ float Sdot(float3 x, float3 y, float f = 1.0f)
 {
-	return Range((Float3::Dot(x, y) * f));
+	return Range((dot(x, y) * f));
 }
 __device__ float Energy(float3 color)
 {
-	return Float3::Dot(color, make_float3(1.0 /3.0,1.0 /3.0,1.0 /3.0));
+	return dot(color, make_float3(1.0 /3.0,1.0 /3.0,1.0 /3.0));
 }
 __device__ float SmoothnessToPhongAlpha(const float s)
 {
@@ -115,37 +110,43 @@ __device__ float SmoothnessToPhongAlpha(const float s)
 }
 
 
-__global__ void IPRSampler(const int width, const int height, const int seed, const int spp,int Sampled, int MST, int root, float* output, curandState* const rngStates, Camera* camera)
+__global__ void IPRSampler(const int width, const int height, const int seed, const int spp,int Sampled, int MST, int root, float* output, curandState* const rngStates, Camera* camera,RTHostData host_data)
 {
 	const auto tidx = blockIdx.x * blockDim.x + threadIdx.x;
 	const auto tidy = blockIdx.y * blockDim.y + threadIdx.y;
 	const int x = blockIdx.x * 16 + threadIdx.x, y = blockIdx.y * 16 + threadIdx.y;
 	curand_init(seed + tidx + width * tidy, 0, 0, &rngStates[tidx]);
-	const auto data = &RTSamplerData(rngStates, tidx, Sampled,make_float2(x,y));
-
+	const auto data = &RTDeviceData(rngStates, tidx, Sampled,make_float2(x,y));
+	data->Materials = host_data.Materials;
 	auto color = make_float3(0, 0, 0);
 	auto result = make_float3(0, 0, 0);
 
 
 
 
-	for (auto j = 0; j < spp; j++) {
-		const auto u = static_cast<float>(curand_uniform(&rngStates[tidx]) + x) / width;
-		const auto v = static_cast<float>(curand_uniform(&rngStates[tidx]) + y) / height;
+	for (auto j = 0; j < spp; j++)
+	{
+		const auto u =( curand_uniform(&rngStates[tidx]) + x) / width;
+		const auto v = (curand_uniform(&rngStates[tidx]) + y) / height;
 		auto ray = CreateCameraRay(camera, u, v);
 
-
+		//printf("%f,%f\n", u, v);
+		// printf("%f,%f,%f\n",camera->Horizontal.x, camera->Horizontal.y, camera->Horizontal.z);
+		// printf("%f,%f,%f\n",camera->Origin.x, camera->Origin.y, camera->Origin.z);
+		// printf("%f,%f,%f\n",camera->Vertical.x, camera->Vertical.y, camera->Vertical.z);
+		//printf("%f,%f,%f\n",camera->LowerLeftCorner.x, camera->LowerLeftCorner.y, camera->LowerLeftCorner.z);
 		float3 factor = make_float3(1, 1, 1);
-		for (auto i = 0; i < 8; i++)
+		for (auto i = 0; i < 1; i++)
 		{
-			auto hit = Trace(ray);
-
-			result += PathRenderer::Shade(ray, hit, 0, FLT_MAX, 1, make_float2(1, 1), make_float2(1, 1), i, 0, false,factor,data);
+			auto hit = Trace(ray,data);
+			result = RTRenderer::SimpleRenderer::Shade(ray, hit, 0, 9999, 1, i, factor, data);
 		}
-		result = make_float3(0, 0, 0);
+
 
 		color += result;
-
+		//printf("%f,%f,%f\n", result.x, result.y, result.z);
+		//color = make_float3(228/256.0,0,127/256.0);
+		result = make_float3(0, 0, 0);
 	}
 
 	

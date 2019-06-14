@@ -2,19 +2,25 @@
 #include "float3Extension.h"
 #include <curand_kernel.h>
 #include "float2Extension.h"
+#include "Material.h"
 
-struct RTSamplerData
+class Material;
+struct RTDeviceData
 {
-	float3 ambient;
-	int max_depth;
 
-	float Seed;
-public:
-	curandState* curand_state;
-	float2 Pixel;
-	unsigned long long seed;
+	float3 Ambient;
+	int MaxDepth;
+	cudaTextureObject_t* Textures;
+	Material* Materials;
 	int tidx;
-	__device__ RTSamplerData(curandState* _curand_state, int _tidx, float seed, float2 pixel) :tidx(_tidx), Pixel(pixel), Seed(seed)
+	float2 Pixel;
+
+	//Ramdom
+	curandState* curand_state;
+	float Seed;
+	unsigned long long seed;
+
+	__device__ RTDeviceData(curandState* _curand_state, int _tidx, float seed, float2 pixel) :tidx(_tidx), Pixel(pixel), Seed(seed)
 	{
 		seed = 1;
 		curand_state = _curand_state;

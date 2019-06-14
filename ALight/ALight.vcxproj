@@ -16,12 +16,9 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Defines.h" />
-    <ClInclude Include="DiffuseMaterial.h" />
     <ClInclude Include="drand.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Float2Byte.h" />
-    <ClInclude Include="float2Extension.h" />
-    <ClInclude Include="float3Extension.h" />
     <ClInclude Include="float3x3.h" />
     <ClInclude Include="float4x4.h" />
     <ClInclude Include="GLWindow.cpp" />
@@ -39,9 +36,10 @@
     <ClInclude Include="RayTracer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resources.h" />
-    <ClInclude Include="RTSamplerData.h" />
+    <ClInclude Include="RTDeviceData.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Setting.h" />
+    <ClInclude Include="SimpleRenderer.h" />
     <ClInclude Include="SurfaceHitRecord.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Window.h" />
@@ -50,7 +48,6 @@
     <ClInclude Include="DeviceManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DiffuseMaterial.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="MathHelper.cpp" />
@@ -66,10 +63,10 @@
   <ItemGroup>
     <CudaCompile Include="DeviceManager.cu" />
     <CudaCompile Include="Float2Byte.cu" />
-    <CudaCompile Include="float2Extension.cu" />
-    <CudaCompile Include="float3Extension.cu" />
+    <CudaCompile Include="Material.cu" />
     <CudaCompile Include="PathRenderer.cu" />
     <CudaCompile Include="RayMarchSampler.cu" />
+    <CudaCompile Include="SimpleRenderer.cu" />
     <CudaCompile Include="vec3.cu" />
     <CudaCompile Include="RTSampler.cu" />
   </ItemGroup>

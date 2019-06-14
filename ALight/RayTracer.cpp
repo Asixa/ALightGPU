@@ -25,6 +25,11 @@ void RayTracer::Init(GLbyte* data,int w,int h)
 	Width = w;
 	Height = h;
 	Data = data;
+
+	Materials = new Material[2];
+	Materials[0] = Material(metal, new float[4] {1, 0, 0, 0.5f});
+	Materials[1] = Material(metal, new float[4] {0, 1, 1, 0.5f});
+
 	if (GPU)
 	{
 		device_manager->Init(this);

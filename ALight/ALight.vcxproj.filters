@@ -37,12 +37,6 @@
     <Filter Include="Source\GPUDevices">
       <UniqueIdentifier>{81db5b54-7091-485a-8713-21e0534a9553}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\GPUDevices\RTSamplers">
-      <UniqueIdentifier>{452c16a6-deb5-4684-93b8-5eeb5560d8cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GPUDevices\RTSamplers">
-      <UniqueIdentifier>{7c0e1ab6-e135-4715-a002-404f1d7c2d27}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header\Rendering\RT">
       <UniqueIdentifier>{45d42bfb-6eb3-48a7-9c59-ed14bdddc9ea}</UniqueIdentifier>
     </Filter>
@@ -66,6 +60,12 @@
     </Filter>
     <Filter Include="Source\Rendering\RT\Renderer">
       <UniqueIdentifier>{cae2f5d2-599f-49b4-9c50-1ceb5eb6f47c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Rendering\RT\Samplers">
+      <UniqueIdentifier>{452c16a6-deb5-4684-93b8-5eeb5560d8cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Rendering\RT\Samplers">
+      <UniqueIdentifier>{7c0e1ab6-e135-4715-a002-404f1d7c2d27}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,7 +100,7 @@
       <Filter>Header\Math</Filter>
     </ClInclude>
     <ClInclude Include="RTSampler.h">
-      <Filter>Header\GPUDevices\RTSamplers</Filter>
+      <Filter>Header\Rendering\RT\Samplers</Filter>
     </ClInclude>
     <ClInclude Include="drand.h">
       <Filter>Header\Math</Filter>
@@ -121,13 +121,10 @@
       <Filter>Header\Rendering\RT</Filter>
     </ClInclude>
     <ClInclude Include="Float2Byte.h">
-      <Filter>Header\GPUDevices\RTSamplers</Filter>
+      <Filter>Header\Rendering\RT\Samplers</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header\Rendering\RT</Filter>
-    </ClInclude>
-    <ClInclude Include="float3Extension.h">
-      <Filter>Header\Math</Filter>
     </ClInclude>
     <ClInclude Include="Objects.h">
       <Filter>Header\Rendering\RT</Filter>
@@ -138,14 +135,11 @@
     <ClInclude Include="float3x3.h">
       <Filter>Header\Math</Filter>
     </ClInclude>
-    <ClInclude Include="float2Extension.h">
-      <Filter>Header\Math</Filter>
-    </ClInclude>
     <ClInclude Include="RayMarcher.h">
       <Filter>Header\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="RayMarchSampler.h">
-      <Filter>Header\GPUDevices\RTSamplers</Filter>
+      <Filter>Header\Rendering\RT\Samplers</Filter>
     </ClInclude>
     <ClInclude Include="ONB.h">
       <Filter>Header\Rendering\RT</Filter>
@@ -156,9 +150,6 @@
     <ClInclude Include="SurfaceHitRecord.h">
       <Filter>Header\Rendering\RT</Filter>
     </ClInclude>
-    <ClInclude Include="DiffuseMaterial.h">
-      <Filter>Header\Rendering\RT\Materials</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header\Rendering\RT\Textures</Filter>
     </ClInclude>
@@ -166,8 +157,11 @@
       <Filter>Header\Rendering\RT\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RTSamplerData.h">
+    <ClInclude Include="SimpleRenderer.h">
       <Filter>Header\Rendering\RT\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RTDeviceData.h">
+      <Filter>Header\Rendering\RT\Samplers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -178,22 +172,22 @@
       <Filter>Source\GPUDevices</Filter>
     </CudaCompile>
     <CudaCompile Include="RTSampler.cu">
-      <Filter>Source\GPUDevices\RTSamplers</Filter>
+      <Filter>Source\Rendering\RT\Samplers</Filter>
     </CudaCompile>
     <CudaCompile Include="Float2Byte.cu">
-      <Filter>Source\GPUDevices\RTSamplers</Filter>
-    </CudaCompile>
-    <CudaCompile Include="float3Extension.cu">
-      <Filter>Source\Math</Filter>
-    </CudaCompile>
-    <CudaCompile Include="float2Extension.cu">
-      <Filter>Source\Math</Filter>
+      <Filter>Source\Rendering\RT\Samplers</Filter>
     </CudaCompile>
     <CudaCompile Include="RayMarchSampler.cu">
-      <Filter>Source\GPUDevices\RTSamplers</Filter>
+      <Filter>Source\Rendering\RT\Samplers</Filter>
     </CudaCompile>
     <CudaCompile Include="PathRenderer.cu">
       <Filter>Source\Rendering\RT\Renderer</Filter>
+    </CudaCompile>
+    <CudaCompile Include="SimpleRenderer.cu">
+      <Filter>Source\Rendering\RT\Renderer</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Material.cu">
+      <Filter>Source\Rendering\RT\Materials</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,9 +218,6 @@
     </ClCompile>
     <ClCompile Include="ONB.cpp">
       <Filter>Source\Rendering\RT</Filter>
-    </ClCompile>
-    <ClCompile Include="DiffuseMaterial.cpp">
-      <Filter>Source\Rendering\RT\Materials</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
