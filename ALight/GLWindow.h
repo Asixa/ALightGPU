@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 namespace GLWindow {
 	void Resize(int width, int height);
 	void MainMenu(int i);

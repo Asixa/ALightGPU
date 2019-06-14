@@ -14,7 +14,6 @@ class RTDeviceData;
 
 __device__ float Schlick(float cosine, float ref_idx);
 __device__ bool Refract(const float3& v, const float3& n, float ni_over_nt, float3& refracted);
-__device__ float3 Reflect(const float3& v, const float3& n);
 
 enum MaterialType
 {
@@ -22,6 +21,7 @@ enum MaterialType
 	metal,
 	dielectirc
 };
+
 class Material {
 public:
 	bool BackCulling = true;
@@ -29,12 +29,12 @@ public:
 	//int type;
 	MaterialType Type;
 
-	__device__ Material(){}
+	__device__ Material() {}
 	__device__ Material(MaterialType t, float d[MATERIAL_PARAMTER_COUNT])
 	{
 		Type = t;
 		memcpy(data, d, MATERIAL_PARAMTER_COUNT * sizeof(float));
 	}
-	__device__ bool scatter(const Ray& r_in, const SurfaceHitRecord& rec, float3& attenuation, Ray& scattered, float3 random_in_unit_sphere,const RTDeviceData* data);
+	__device__ bool scatter(const Ray& r_in, const SurfaceHitRecord& rec, float3& attenuation, Ray& scattered, float3 random_in_unit_sphere, const RTDeviceData& data);
 };
 

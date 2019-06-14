@@ -21,5 +21,4 @@ public:
 	void PrintDeviceInfo();
 	void Init(RayTracer* ray_tracer);
 	void Run();
-	void Dispose();
 };

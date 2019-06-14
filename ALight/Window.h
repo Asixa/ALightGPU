@@ -13,6 +13,7 @@ class Window
 	
 public:
 	static int Height, Width;
+	static int  dx, dy, mouse_last_x, mouse_last_y;
 	static GLbyte* Data;
 	static float FPS;
 	//static RayTracer* RayTracer;

@@ -40,32 +40,20 @@
     <Filter Include="Header\Rendering\RT">
       <UniqueIdentifier>{45d42bfb-6eb3-48a7-9c59-ed14bdddc9ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Rendering\RT">
-      <UniqueIdentifier>{d73afd47-e841-4cfd-8fcd-b2cc75bb6b3b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Rendering\RT\Materials">
-      <UniqueIdentifier>{1ece52be-4125-4503-8480-b42ffe725758}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Rendering\RT\Materials">
-      <UniqueIdentifier>{fbe484ed-c892-44b3-b80c-eeb749c1b735}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Rendering\RT\Textures">
-      <UniqueIdentifier>{d29067bc-c607-46f2-a94e-db1745e9cb02}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Rendering\RT\Textures">
-      <UniqueIdentifier>{f6b0efad-e4fc-4740-bf2d-cd6b25e9fdf1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Rendering\RT\Renderer">
-      <UniqueIdentifier>{460fe72a-2a53-412d-847f-770b31b34f7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Rendering\RT\Renderer">
-      <UniqueIdentifier>{cae2f5d2-599f-49b4-9c50-1ceb5eb6f47c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header\Rendering\RT\Samplers">
       <UniqueIdentifier>{452c16a6-deb5-4684-93b8-5eeb5560d8cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Rendering\RT">
+      <UniqueIdentifier>{0b139e1b-1bea-450f-851a-0f94c012e541}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source\Rendering\RT\Samplers">
       <UniqueIdentifier>{7c0e1ab6-e135-4715-a002-404f1d7c2d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Rendering\RT\Materials">
+      <UniqueIdentifier>{448e9522-718f-46c8-81ee-5d11118d0dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Rendering\RT\Materials">
+      <UniqueIdentifier>{217818a2-5d1b-4754-9d50-3429aee3a449}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -96,9 +84,6 @@
     <ClInclude Include="Engine.h">
       <Filter>Header\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="vec3.h">
-      <Filter>Header\Math</Filter>
-    </ClInclude>
     <ClInclude Include="RTSampler.h">
       <Filter>Header\Rendering\RT\Samplers</Filter>
     </ClInclude>
@@ -117,14 +102,14 @@
     <ClInclude Include="Ray.h">
       <Filter>Header\Rendering\RT</Filter>
     </ClInclude>
-    <ClInclude Include="RayHit.h">
-      <Filter>Header\Rendering\RT</Filter>
-    </ClInclude>
     <ClInclude Include="Float2Byte.h">
       <Filter>Header\Rendering\RT\Samplers</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header\Rendering\RT</Filter>
+    </ClInclude>
+    <ClInclude Include="float3Extension.h">
+      <Filter>Header\Math</Filter>
     </ClInclude>
     <ClInclude Include="Objects.h">
       <Filter>Header\Rendering\RT</Filter>
@@ -135,39 +120,29 @@
     <ClInclude Include="float3x3.h">
       <Filter>Header\Math</Filter>
     </ClInclude>
+    <ClInclude Include="float2Extension.h">
+      <Filter>Header\Math</Filter>
+    </ClInclude>
     <ClInclude Include="RayMarcher.h">
       <Filter>Header\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="RayMarchSampler.h">
-      <Filter>Header\Rendering\RT\Samplers</Filter>
-    </ClInclude>
-    <ClInclude Include="ONB.h">
-      <Filter>Header\Rendering\RT</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
       <Filter>Header\Rendering\RT\Materials</Filter>
     </ClInclude>
-    <ClInclude Include="SurfaceHitRecord.h">
-      <Filter>Header\Rendering\RT</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header\Rendering\RT\Textures</Filter>
-    </ClInclude>
-    <ClInclude Include="PathRenderer.h">
-      <Filter>Header\Rendering\RT\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="SimpleRenderer.h">
-      <Filter>Header\Rendering\RT\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="RTDeviceData.h">
       <Filter>Header\Rendering\RT\Samplers</Filter>
     </ClInclude>
+    <ClInclude Include="SurfaceHitRecord.h">
+      <Filter>Header\Rendering\RT</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image_write.h">
+      <Filter>Header\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="vec3.cu">
-      <Filter>Source\Math</Filter>
-    </CudaCompile>
     <CudaCompile Include="DeviceManager.cu">
       <Filter>Source\GPUDevices</Filter>
     </CudaCompile>
@@ -177,17 +152,17 @@
     <CudaCompile Include="Float2Byte.cu">
       <Filter>Source\Rendering\RT\Samplers</Filter>
     </CudaCompile>
-    <CudaCompile Include="RayMarchSampler.cu">
-      <Filter>Source\Rendering\RT\Samplers</Filter>
+    <CudaCompile Include="float3Extension.cu">
+      <Filter>Source\Math</Filter>
     </CudaCompile>
-    <CudaCompile Include="PathRenderer.cu">
-      <Filter>Source\Rendering\RT\Renderer</Filter>
-    </CudaCompile>
-    <CudaCompile Include="SimpleRenderer.cu">
-      <Filter>Source\Rendering\RT\Renderer</Filter>
+    <CudaCompile Include="float2Extension.cu">
+      <Filter>Source\Math</Filter>
     </CudaCompile>
     <CudaCompile Include="Material.cu">
       <Filter>Source\Rendering\RT\Materials</Filter>
+    </CudaCompile>
+    <CudaCompile Include="RTDeviceData.cu">
+      <Filter>Source\Rendering\RT\Samplers</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,10 +191,6 @@
     <ClCompile Include="MathHelper.cpp">
       <Filter>Source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="ONB.cpp">
-      <Filter>Source\Rendering\RT</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Structure.txt" />

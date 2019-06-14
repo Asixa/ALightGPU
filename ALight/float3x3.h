@@ -1,4 +1,5 @@
 #pragma once
+#include "float3Extension.h"
 #include <cmath>
 
 struct float3x3

@@ -13,8 +13,9 @@ namespace Setting
 	static RenderMode render_mode = RT_GPU_IPR;
 	static float FOV = 75;
 	static bool IPR = true;
-	static int SPP = 1;
+	static int SPP = 8;
 	static int argc;
 	static char* argv;
+	static  int width = 1024, height = 1024;
 	const int BlockSize = 16;
 }

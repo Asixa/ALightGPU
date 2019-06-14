@@ -3,13 +3,11 @@ class Material;
 
 class SurfaceHitRecord {
 public:
-	float t;				// Ray hits at p = Ray.origin() + r*Ray.direction()
-	float3 p;				// point of intersection
-	float3 normal;				// point of intersection
-	// float3 texp;			// point of intersection for Texture mapping
-	// ONB uvw;				// w is the outward normal
+	float t;			
+	float3 p;			
+	float3 normal;			
 	float2 uv;
-	Material* mat_ptr;		//
+	Material* mat_ptr;		
 
 	__device__ SurfaceHitRecord() : t(99999)
 	{

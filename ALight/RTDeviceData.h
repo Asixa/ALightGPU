@@ -1,14 +1,13 @@
 #pragma once
-
 #include <curand_kernel.h>
 #include "Material.h"
-// #include "MathHelper.h"
-
+#include "float2Extension.h"
 class Material;
 struct RTHostData
 {
-	cudaTextureObject_t* Textures;
+	cudaTextureObject_t Textures[1];
 	Material* Materials;
+	bool quick;
 };
 struct RTDeviceData
 {
@@ -25,12 +24,8 @@ struct RTDeviceData
 	float Seed;
 	unsigned long long seed;
 
-	__device__ RTDeviceData(curandState* _curand_state, int _tidx, float seed, float2 pixel) :tidx(_tidx), Pixel(pixel), Seed(seed)
-	{
-		seed = 1;
-		curand_state = _curand_state;
-	}
-
+	__device__ RTDeviceData(curandState* _curand_state, int _tidx, float seed, float2 pixel) :tidx(_tidx), Pixel(pixel), Seed(seed),curand_state(_curand_state){}
+	__device__ float3 SampleTexture(int index, float u, float v) const;
 	__device__ float GetRandom(float offset = 0) const
 	{
 		return curand_uniform(&curand_state[tidx]);
@@ -38,7 +33,7 @@ struct RTDeviceData
 
 	__device__ float rand()
 	{
-		float v = sin(Seed / 100.0f * dot(Pixel, make_float2(12.9898f, 78.233f))) * 43758.5453f;
+		float v = sin(Seed / 100.0f * Dot(Pixel, make_float2(12.9898f, 78.233f))) * 43758.5453f;
 		const float result = v - int(v);
 		Seed += 1.0f;
 		return result;

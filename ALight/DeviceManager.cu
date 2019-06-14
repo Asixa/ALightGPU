@@ -1,26 +1,23 @@
 #include "DeviceManager.h"
-// #include <cuda_runtime_api.h>
+#include <cuda_runtime_api.h>
+#include <cmath>
+#include <cstdlib>
+#include <helper_cuda.h>
+#include <curand_kernel.h>
 
- #include <helper_cuda.h>
-// #include <curand_kernel.h>
-
-
+#include "RayTracer.h"
 #include "Setting.h"
 #include "RTSampler.h"
-// #include <iostream>
+#include <iostream>
 #include "Float2Byte.h"
 #include "Engine.h"
-#include <cstdio>
+#include "Material.h"
 
 
-DeviceManager::DeviceManager()
-{
-}
+DeviceManager::DeviceManager(){}
 
 
-DeviceManager::~DeviceManager()
-{
-}
+DeviceManager::~DeviceManager(){}
 
 void DeviceManager::PrintDeviceInfo()
 {
@@ -75,55 +72,54 @@ void DeviceManager::PrintDeviceInfo()
 
 void DeviceManager::Init(RayTracer* tracer)
 {
-	
 	ray_tracer = tracer;
-	grid = dim3(ray_tracer->Width / Setting::BlockSize, ray_tracer->Height / Setting::BlockSize);
+	grid = dim3(ray_tracer->width / Setting::BlockSize, ray_tracer->height / Setting::BlockSize);
 	block = dim3(Setting::BlockSize, Setting::BlockSize);
 
-	host_float_data = new float[ray_tracer->Width * ray_tracer->Height * 4];
-	cudaMalloc(reinterpret_cast<void**>(&devicde_float_data), ray_tracer->Width * ray_tracer->Height * 4 * sizeof(float));
-	cudaMalloc(reinterpret_cast<void**>(&devicde_byte_data), ray_tracer->Width * ray_tracer->Height * 4 * sizeof(GLbyte));
+	host_float_data = new float[ray_tracer->width * ray_tracer->height * 4];
+	cudaMalloc(reinterpret_cast<void**>(&devicde_float_data), ray_tracer->width * ray_tracer->height * 4 * sizeof(float));
+	cudaMalloc(reinterpret_cast<void**>(&devicde_byte_data), ray_tracer->width * ray_tracer->height * 4 * sizeof(GLbyte));
 	cudaMalloc(reinterpret_cast<void**>(&rng_states), grid.x * block.x * sizeof(curandState));
 	cudaMalloc(reinterpret_cast<void**>(&d_camera), sizeof(Camera));
+	d_data = RTHostData();
+	cudaMalloc(reinterpret_cast<void**>(&d_data.Materials), sizeof(Material) * ray_tracer->material_count);
 
-	//cudaMalloc(reinterpret_cast<void**>(&d_data.Materials), sizeof(Material)*2);
+	for (int i = 0; i < 1; i++) {
+		d_data.Textures[i] = ray_tracer->textlist[i];
+	}
+
 }
 
 void DeviceManager::Run()
 {
-	// printf("Hello");
-
-	//****** 复制内存 host->device ******
-	cudaMemcpy(devicde_float_data, host_float_data, ray_tracer->Width * ray_tracer->Height * 4 * sizeof(float), cudaMemcpyHostToDevice);
+	//****** 复制输入内存 host->device ******
+	cudaMemcpy(devicde_float_data, host_float_data, ray_tracer->width * ray_tracer->height * 4 * sizeof(float), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_camera, Engine::Instance()->camera, sizeof(Camera), cudaMemcpyHostToDevice);
-	//cudaMemcpy(d_data.Materials, ray_tracer->Materials, sizeof(Material) * 2, cudaMemcpyHostToDevice);
-	//SetConstants();
-	//dim3 grid(ray_tracer->Width / Setting::BlockSize, ray_tracer->Height / Setting::BlockSize), block(Setting::BlockSize, Setting::BlockSize);
-
-
-	ray_tracer->Sampled += Setting::SPP;
-	IPRSampler << <grid, block >> > (ray_tracer->Width, ray_tracer->Height, (rand() / (RAND_MAX + 1.0)) * 1000, Setting::SPP, ray_tracer->Sampled, 4, 0, devicde_float_data, rng_states, d_camera,d_data);
-	Float2Byte <<<grid, block >> > (ray_tracer->Width, ray_tracer->Sampled, Setting::SPP, devicde_float_data, devicde_byte_data);
+	cudaMemcpy(d_data.Materials, ray_tracer->materials, sizeof(Material) * ray_tracer->material_count, cudaMemcpyHostToDevice);
 	
+	
+	
+	d_data.quick = ray_tracer->IPR_Quick;
+	auto mst = 0; auto spp = 0;
+	if (d_data.quick || ray_tracer->IPR_reset_once)
+	{
+		mst = 3;
+		spp = 1;
+	}
+	else
+	{
+		mst = 8;
+		spp = Setting::SPP;
+	}
+	ray_tracer->sampled += spp;
+	IPRSampler << <grid, block >> > (ray_tracer->width, ray_tracer->height, (rand() / (RAND_MAX + 1.0)) * 1000, spp, ray_tracer->sampled, mst, 0, devicde_float_data, rng_states, d_camera,d_data);
+	Float2Byte <<<grid, block >> > (ray_tracer->width, ray_tracer->sampled,spp, devicde_float_data, devicde_byte_data);
 	cudaDeviceSynchronize();
-	
-	//****** 复制内存 Device->host ******
-	cudaMemcpy(host_float_data, devicde_float_data, ray_tracer->Width * ray_tracer->Height * 4 * sizeof(float), cudaMemcpyDeviceToHost);
-	cudaMemcpy(ray_tracer->Data, devicde_byte_data, ray_tracer->Width * ray_tracer->Height * 4 * sizeof(GLbyte), cudaMemcpyDeviceToHost);
+
+	//****** 复制输出内存 Device->host ******
+	cudaMemcpy(host_float_data, devicde_float_data, ray_tracer->width * ray_tracer->height * 4 * sizeof(float), cudaMemcpyDeviceToHost);
+    cudaMemcpy(ray_tracer->data, devicde_byte_data, ray_tracer->width * ray_tracer->height * 4 * sizeof(GLbyte), cudaMemcpyDeviceToHost);
 
 	const auto error = cudaGetLastError();
 	if (error != 0)printf("Cuda Error %d\n", error);
 }
-
-
-void DeviceManager::Dispose()
-{
-	cudaDeviceReset();
-	//****** 释放显存 **********
-	 cudaFree(&devicde_float_data);
-	 cudaFree(&devicde_byte_data);
-	// cudaFree(d_materials);
-	// cudaFree(d_camera);
-
-}
-
