@@ -8,6 +8,8 @@ Cuda 10.1
 
 ### Samples
 
+![01](GitHub/GPU.gif)
+
 ![01](GitHub/picture1.png)
 
-![02](GitHub/picture1.png)
+![02](GitHub/picture2.png)
