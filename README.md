@@ -10,4 +10,4 @@ Cuda 10.1
 
 ![01](GitHub/picture1.png)
 
-![02](GitHub/picture1.png)
+![02](GitHub/picture2.png)
