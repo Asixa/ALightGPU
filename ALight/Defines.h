@@ -4,6 +4,7 @@ using byte = unsigned char;
 #define M_PI 3.1415926535897932384626433832795
 #define INF 99999
 #define EPSILON 0.001
+#define HIT_EPSILON 1e-4f
 
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"

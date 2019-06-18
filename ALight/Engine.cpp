@@ -22,7 +22,7 @@ void Engine::OnMouseMove(int a, int b)
 	if (camera_y < 0.1)camera_y = 0.1;
 	auto x = cos(camera_w) * camera_r;
 	auto z = sin(camera_w) * camera_r;
-	camera->Update(make_float3(x, camera_y, z), make_float3(3, 8, 0));
+	camera->Update(make_float3(x, camera_y, z), make_float3(3, 30, 0));
 }
 
 void Engine::OnMouseScroll(int a)

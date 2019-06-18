@@ -35,7 +35,7 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 	materials = new Material[material_count]
 	{ 
 		
-		Material(metal, new float[4]{ 0.5, 0.5, 0.5, 0.5f }),
+		Material(metal, new float[4]{ 0.7, 0.7, 0.7, 0.5f }),
 		Material(metal, new float[4]{ 1, 1, 1, 0.1f }),
 		Material(lambertian, new float[3]{ 1, 1, 1 }),
 		Material(dielectirc, new float[1]{1.5f }),
@@ -47,7 +47,7 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 	auto textureCount = 1;
 	const char* imageFilenames[1] =
 	{
-		"images/BG.jpg",
+		"images/BG5.jpg",
 		// "images/BG2.jpg",
 	};
 	for (auto i = 0; i < textureCount; i++) {

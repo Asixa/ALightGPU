@@ -53,17 +53,34 @@ __device__ bool IntersectTriangle_MT97(Ray ray, float3 vert0, float3 vert1, floa
 	t = Dot(edge2, qvec) * inv_det;
 	return true;
 }
+
+__device__ void GetUV(Vertex v0, Vertex v1, Vertex v2, float3 p, float3& normal,float2& uv)
+{
+	auto f1 = v0.point - p;
+	auto f2 = v1.point - p;
+	auto f3 = v2.point - p;
+	//计算面积和因子（参数顺序无关紧要）：
+	auto a = Length(Cross(v0.point - v1.point, v0.point - v2.point)); // 主三角形面积 a
+	auto a1 = Length(Cross(f2, f3)) / a; // p1 三角形面积 / a
+	auto a2 = Length(Cross(f3, f1)) / a; // p2 三角形面积 / a 
+	auto a3 = Length(Cross(f1, f2)) / a; // p3 三角形面积 / a
+	// 找到对应于点f的uv（uv1 / uv2 / uv3与p1 / p2 / p3相关）：
+	//uv = v0.uv * a1 + v1.uv * a2 + v2.uv * a3;
+	// 找到对应于点f的法线（法线1 / 法线2 / 法线3与p1 / p2 / p3相关）：
+	normal = v0.normal * a1 + v1.normal * a2 + v2.normal * a3;
+}
 __device__ void IntersectTriangle(Ray ray,  SurfaceHitRecord* bestHit, RTDeviceData& data,  int material,
-                                  float3 vert0, float3 vert1, float3 vert2)
+                                  Vertex vert0, Vertex vert1, Vertex vert2)
 {
 	float t, u, v;
-	if (IntersectTriangle_MT97(ray, vert0, vert1, vert2, t, u, v))
+	if (IntersectTriangle_MT97(ray, vert0.point, vert1.point, vert2.point, t, u, v))
 	{
-		if (t > 0.00001 && t < bestHit->t)
+		if (t > HIT_EPSILON && t < bestHit->t)
 		{
 			bestHit->t = t;
 			bestHit->p = ray.origin + t * ray.direction;
-			bestHit->normal = UnitVector(Cross(vert1 - vert0, vert2 - vert0));
+			//GetUV(vert0, vert1, vert2, bestHit->p, bestHit->normal, bestHit->uv);
+			bestHit->normal = UnitVector(Cross(vert1.point - vert0.point, vert2.point - vert0.point));
 			bestHit->mat_ptr= &data.Materials[material];
 		}
 	}
@@ -131,9 +148,9 @@ __device__ SurfaceHitRecord Trace(Ray ray,RTDeviceData& data)
 		if (current->tri)
 		{
 			IntersectTriangle(ray, &best_hit, data, current->triangle->mat,
-				current->triangle->v2.point,
-				current->triangle->v1.point,
-				current->triangle->v3.point);
+				current->triangle->v2,
+				current->triangle->v1,
+				current->triangle->v3);
 			if (ptr <= 0)current = nullptr;
 			else  current = stack[--ptr];
 		}
@@ -154,7 +171,7 @@ __device__ SurfaceHitRecord Trace(Ray ray,RTDeviceData& data)
 	} while (current!=nullptr);
 
 	free(stack);
-	IntersectGroundPlane(ray, &best_hit,data);
+	//IntersectGroundPlane(ray, &best_hit,data);
 
 
 

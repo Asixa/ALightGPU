@@ -15,8 +15,8 @@ AABB* MakeAABB(Triangle& triangle)
 	aabb->max = Maximum(triangle.v2.point, aabb->max);
 	aabb->max = Maximum(triangle.v3.point, aabb->max);
 
-	aabb->min -= EPSILON;
-	aabb->max += EPSILON;
+	// aabb->min -= EPSILON;
+	// aabb->max += EPSILON;
 	return aabb;
 }
 

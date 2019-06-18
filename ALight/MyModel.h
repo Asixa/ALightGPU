@@ -13,9 +13,9 @@
 const std::string ModelPath = "models/";
 const std::string ModelExtension = ".GPUModel";
 typedef unsigned char CSbyte;
-inline Vertice ReadVertex(std::ifstream* read_stream,float size)
+inline Vertex ReadVertex(std::ifstream* read_stream,float size)
 {
-	Vertice vertex;
+	Vertex vertex;
 	read_stream->read(reinterpret_cast<char*>(&vertex.point.x), sizeof(float));
 	read_stream->read(reinterpret_cast<char*>(&vertex.point.y), sizeof(float));
 	read_stream->read(reinterpret_cast<char*>(&vertex.point.z), sizeof(float));
