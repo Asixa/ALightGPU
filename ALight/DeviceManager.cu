@@ -12,6 +12,7 @@
 #include "Float2Byte.h"
 #include "Engine.h"
 #include "Material.h"
+#include "Scene.h"
 
 
 DeviceManager::DeviceManager(){}
@@ -70,12 +71,13 @@ void DeviceManager::PrintDeviceInfo()
 	printf("************设备信息打印完毕************\n\n");
 }
 
-void DeviceManager::Init(RayTracer* tracer)
+void DeviceManager::Init(RayTracer* tracer,HostScene scene)
 {
 	ray_tracer = tracer;
 	grid = dim3(ray_tracer->width / Setting::BlockSize, ray_tracer->height / Setting::BlockSize);
 	block = dim3(Setting::BlockSize, Setting::BlockSize);
-
+	const size_t newHeapSize = 4608ull * 1024ull * 1024ull;;
+	cudaDeviceSetLimit(cudaLimitStackSize, newHeapSize);
 	host_float_data = new float[ray_tracer->width * ray_tracer->height * 4];
 	cudaMalloc(reinterpret_cast<void**>(&devicde_float_data), ray_tracer->width * ray_tracer->height * 4 * sizeof(float));
 	cudaMalloc(reinterpret_cast<void**>(&devicde_byte_data), ray_tracer->width * ray_tracer->height * 4 * sizeof(GLbyte));
@@ -84,10 +86,12 @@ void DeviceManager::Init(RayTracer* tracer)
 	d_data = RTHostData();
 	cudaMalloc(reinterpret_cast<void**>(&d_data.Materials), sizeof(Material) * ray_tracer->material_count);
 
-	for (int i = 0; i < 1; i++) {
-		d_data.Textures[i] = ray_tracer->textlist[i];
-	}
+	for (int i = 0; i < 1; i++) d_data.Textures[i] = ray_tracer->textlist[i];
 
+
+	printf(BLU"[GPU]" YEL"Transferring BVH Data...\n" RESET);
+	d_data.bvh = ToDevice(HostScene::Instance()->bvh);
+	printf(BLU"[GPU]" GRN"Transfer BVH Data Completed\n" RESET);
 }
 
 void DeviceManager::Run()
@@ -121,5 +125,5 @@ void DeviceManager::Run()
     cudaMemcpy(ray_tracer->data, devicde_byte_data, ray_tracer->width * ray_tracer->height * 4 * sizeof(GLbyte), cudaMemcpyDeviceToHost);
 
 	const auto error = cudaGetLastError();
-	if (error != 0)printf("Cuda Error %d\n", error);
+	if (error != 0)printf(RED"[ERROR]Cuda Error %d\n" RESET, error);
 }

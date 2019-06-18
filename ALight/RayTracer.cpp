@@ -7,6 +7,7 @@
 #include <direct.h>
 #include <string>
 #include <algorithm>
+#include "Scene.h"
 RayTracer::RayTracer() = default;
 
 RayTracer::~RayTracer() = default;
@@ -30,25 +31,22 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 
 
 	//Material
-	material_count = 4;
+	material_count = 6;
 	materials = new Material[material_count]
-	{
-		Material(metal, new float[4]{ 1, 1, 1, 0.5f }),
+	{ 
+		
+		Material(metal, new float[4]{ 0.5, 0.5, 0.5, 0.5f }),
 		Material(metal, new float[4]{ 1, 1, 1, 0.1f }),
 		Material(lambertian, new float[3]{ 1, 1, 1 }),
-		Material(dielectirc, new float[1]{1.5f })
+		Material(dielectirc, new float[1]{1.5f }),
+		Material(metal, new float[4]{ 1, 1, 1, 0.0f }),
+		Material(lambertian, new float[3]{ 1, 1, 1}),
 	};
 
 	//Textures
 	auto textureCount = 1;
-
-	// std::string path = getcwd(NULL, 0);
-	// std::replace(path.begin(), path.end(), '\\', '/');
-	// printf((path + "/images/BG.jpg").data()); printf("\n");
-
 	const char* imageFilenames[1] =
 	{
-		//"D:/Codes/Projects/Academic/ComputerGraphic/MYCuda2019/ALight/images/BG.jpg"
 		"images/BG.jpg",
 		// "images/BG2.jpg",
 	};
@@ -57,7 +55,7 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 		const auto tex_data = stbi_load(imageFilenames[i], &width, &height, &depth, 0);
 		const auto size = width * height * depth;
 		auto h_data = new float[size];
-		printf("LoadTexture %d,%d,%d\n", width, height, depth);
+		printf(CYN "[CPU]" YEL "Loading Texture: %s (%d,%d,%d)\n" RESET, imageFilenames[i], width, height, depth);
 		for (unsigned int layer = 0; layer < 3; layer++)
 			for (auto i = 0; i < static_cast<int>(width * height); i++)h_data[layer * width * height + i] = tex_data[i * 3 + layer] / 255.0;
 
@@ -94,13 +92,13 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 		cudaCreateTextureObject(&textlist[i], &texRes, &texDescr, nullptr);
 
 	}
-	printf("LoadTexture Completed\n");
+	printf(CYN"[CPU]" GRN "LoadTexture Completed\n" RESET);
 
 
 
 	if (GPU)
 	{
-		device_manager->Init(this);
+		device_manager->Init(this,*HostScene::Instance());
 	}
 }
 

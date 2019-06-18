@@ -1,8 +1,6 @@
 #pragma once
 #include <GL\glew.h>
 #include <GL\freeglut.h>
-#include "Setting.h"
-#include "RayTracer.h"
 
 class RayTracer;
 class Window
@@ -20,6 +18,7 @@ public:
 	static void Init(int init_wdith, int init_height);
 	static void Show(const char* title);
 	static void CaculateFPS();
+	void Savepic();
 };
 
 

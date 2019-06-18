@@ -1,195 +1,175 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header">
+    <Filter Include="Project">
       <UniqueIdentifier>{38c4e700-730f-491c-9a66-f9929968cf53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source">
-      <UniqueIdentifier>{433622a6-8ba8-425f-bce9-97ca604e9516}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Rendering">
+    <Filter Include="Project\Rendering">
       <UniqueIdentifier>{ae20ca6f-bb4d-49d0-b5f2-72471dbd5c06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Rendering">
-      <UniqueIdentifier>{d320f322-e1be-4908-ab39-fa22b471f5df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Base">
-      <UniqueIdentifier>{3b476fe4-7f76-459c-a2fd-ff21cbda6b16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Base">
-      <UniqueIdentifier>{c884b36e-c099-4144-b5e3-f03f5025a5aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Engine">
-      <UniqueIdentifier>{1b873ec3-4034-4dfa-90e6-643fc758a52e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Engine">
-      <UniqueIdentifier>{7496afaf-68ea-471a-b15f-642e483fe723}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Math">
-      <UniqueIdentifier>{0cb8992b-fbd8-4723-88af-40f94e1a239b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Math">
-      <UniqueIdentifier>{a99034c9-0cd0-4384-9795-7ea5e8b1277c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\GPUDevices">
-      <UniqueIdentifier>{dafe5136-17b1-4190-9336-7c254fb3a1b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GPUDevices">
-      <UniqueIdentifier>{81db5b54-7091-485a-8713-21e0534a9553}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Rendering\RT">
+    <Filter Include="Project\Rendering\RT">
       <UniqueIdentifier>{45d42bfb-6eb3-48a7-9c59-ed14bdddc9ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header\Rendering\RT\Samplers">
+    <Filter Include="Project\Rendering\RT\Samplers">
       <UniqueIdentifier>{452c16a6-deb5-4684-93b8-5eeb5560d8cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Rendering\RT">
-      <UniqueIdentifier>{0b139e1b-1bea-450f-851a-0f94c012e541}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Rendering\RT\Samplers">
-      <UniqueIdentifier>{7c0e1ab6-e135-4715-a002-404f1d7c2d27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header\Rendering\RT\Materials">
+    <Filter Include="Project\Rendering\RT\Materials">
       <UniqueIdentifier>{448e9522-718f-46c8-81ee-5d11118d0dc2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Rendering\RT\Materials">
-      <UniqueIdentifier>{217818a2-5d1b-4754-9d50-3429aee3a449}</UniqueIdentifier>
+    <Filter Include="Project\Base">
+      <UniqueIdentifier>{c884b36e-c099-4144-b5e3-f03f5025a5aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\Engine">
+      <UniqueIdentifier>{1b873ec3-4034-4dfa-90e6-643fc758a52e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\Engine\Accelerator">
+      <UniqueIdentifier>{9189f5e5-719d-4e1e-9c14-be7f2df03fd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\Engine\Accelerator\BVH">
+      <UniqueIdentifier>{93b61bab-6571-4dcc-867f-87fae7d24249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\Engine\Geometry">
+      <UniqueIdentifier>{c27d5739-d03d-4cac-9434-965de82ff1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\Math">
+      <UniqueIdentifier>{0cb8992b-fbd8-4723-88af-40f94e1a239b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GPUDevices">
+      <UniqueIdentifier>{dafe5136-17b1-4190-9336-7c254fb3a1b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLWindow.cpp">
-      <Filter>Source\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="GLWindow.h">
-      <Filter>Header\Base</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header\Engine</Filter>
+      <Filter>Project\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Setting.h">
-      <Filter>Header\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="RayTracer.h">
-      <Filter>Header\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="Rasterizer.h">
-      <Filter>Header\Rendering</Filter>
+      <Filter>Project\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">
-      <Filter>Header\Engine</Filter>
+      <Filter>Project\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>Header\Base</Filter>
+      <Filter>Project\Base</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
-      <Filter>Header\Engine</Filter>
+      <Filter>Project\Engine</Filter>
     </ClInclude>
     <ClInclude Include="RTSampler.h">
-      <Filter>Header\Rendering\RT\Samplers</Filter>
-    </ClInclude>
-    <ClInclude Include="drand.h">
-      <Filter>Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="MathHelper.h">
-      <Filter>Header\Math</Filter>
+      <Filter>Project\Rendering\RT\Samplers</Filter>
     </ClInclude>
     <ClInclude Include="DeviceManager.h">
-      <Filter>Header\GPUDevices</Filter>
+      <Filter>Project\GPUDevices</Filter>
     </ClInclude>
     <ClInclude Include="Defines.h">
-      <Filter>Header\Base</Filter>
+      <Filter>Project\Base</Filter>
     </ClInclude>
     <ClInclude Include="Ray.h">
-      <Filter>Header\Rendering\RT</Filter>
+      <Filter>Project\Rendering\RT</Filter>
     </ClInclude>
     <ClInclude Include="Float2Byte.h">
-      <Filter>Header\Rendering\RT\Samplers</Filter>
+      <Filter>Project\Rendering\RT\Samplers</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header\Rendering\RT</Filter>
+      <Filter>Project\Rendering\RT</Filter>
     </ClInclude>
     <ClInclude Include="float3Extension.h">
-      <Filter>Header\Math</Filter>
+      <Filter>Project\Math</Filter>
     </ClInclude>
     <ClInclude Include="Objects.h">
-      <Filter>Header\Rendering\RT</Filter>
+      <Filter>Project\Rendering\RT</Filter>
     </ClInclude>
     <ClInclude Include="float4x4.h">
-      <Filter>Header\Math</Filter>
+      <Filter>Project\Math</Filter>
     </ClInclude>
     <ClInclude Include="float3x3.h">
-      <Filter>Header\Math</Filter>
+      <Filter>Project\Math</Filter>
     </ClInclude>
     <ClInclude Include="float2Extension.h">
-      <Filter>Header\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="RayMarcher.h">
-      <Filter>Header\Rendering</Filter>
+      <Filter>Project\Math</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
-      <Filter>Header\Rendering\RT\Materials</Filter>
+      <Filter>Project\Rendering\RT\Materials</Filter>
     </ClInclude>
     <ClInclude Include="RTDeviceData.h">
-      <Filter>Header\Rendering\RT\Samplers</Filter>
+      <Filter>Project\Rendering\RT\Samplers</Filter>
     </ClInclude>
     <ClInclude Include="SurfaceHitRecord.h">
-      <Filter>Header\Rendering\RT</Filter>
+      <Filter>Project\Rendering\RT</Filter>
     </ClInclude>
     <ClInclude Include="stb_image.h">
-      <Filter>Header\Base</Filter>
+      <Filter>Project\Base</Filter>
     </ClInclude>
     <ClInclude Include="stb_image_write.h">
-      <Filter>Header\Base</Filter>
+      <Filter>Project\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="RayTracer.h">
+      <Filter>Project\Rendering\RT</Filter>
+    </ClInclude>
+    <ClInclude Include="BVH.h">
+      <Filter>Project\Engine\Accelerator\BVH</Filter>
+    </ClInclude>
+    <ClInclude Include="AABB.h">
+      <Filter>Project\Engine\Accelerator\BVH</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.h">
+      <Filter>Project\Engine\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUPtr.h" />
+    <ClInclude Include="rand.h">
+      <Filter>Project\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="tiny_obj_loader.h">
+      <Filter>Project\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MyModel.h">
+      <Filter>Project\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="DeviceManager.cu">
-      <Filter>Source\GPUDevices</Filter>
-    </CudaCompile>
-    <CudaCompile Include="RTSampler.cu">
-      <Filter>Source\Rendering\RT\Samplers</Filter>
-    </CudaCompile>
-    <CudaCompile Include="Float2Byte.cu">
-      <Filter>Source\Rendering\RT\Samplers</Filter>
-    </CudaCompile>
-    <CudaCompile Include="float3Extension.cu">
-      <Filter>Source\Math</Filter>
+      <Filter>Project\GPUDevices</Filter>
     </CudaCompile>
     <CudaCompile Include="float2Extension.cu">
-      <Filter>Source\Math</Filter>
+      <Filter>Project\Math</Filter>
+    </CudaCompile>
+    <CudaCompile Include="float3Extension.cu">
+      <Filter>Project\Math</Filter>
     </CudaCompile>
     <CudaCompile Include="Material.cu">
-      <Filter>Source\Rendering\RT\Materials</Filter>
+      <Filter>Project\Rendering\RT\Materials</Filter>
+    </CudaCompile>
+    <CudaCompile Include="Float2Byte.cu">
+      <Filter>Project\Rendering\RT\Samplers</Filter>
     </CudaCompile>
     <CudaCompile Include="RTDeviceData.cu">
-      <Filter>Source\Rendering\RT\Samplers</Filter>
+      <Filter>Project\Rendering\RT\Samplers</Filter>
+    </CudaCompile>
+    <CudaCompile Include="RTSampler.cu">
+      <Filter>Project\Rendering\RT\Samplers</Filter>
+    </CudaCompile>
+    <CudaCompile Include="BVH.cu">
+      <Filter>Project\Engine\Accelerator\BVH</Filter>
     </CudaCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RayTracer.cpp">
-      <Filter>Source\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Rasterizer.cpp">
-      <Filter>Source\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="Setting.cpp">
-      <Filter>Source\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Source\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Resources.cpp">
-      <Filter>Source\Engine</Filter>
-    </ClCompile>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Window.cpp">
-      <Filter>Source\Base</Filter>
+      <Filter>Project\Base</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
-      <Filter>Source\Engine</Filter>
+      <Filter>Project\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MathHelper.cpp">
-      <Filter>Source\Math</Filter>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Project\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Project\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="RayTracer.cpp">
+      <Filter>Project\Rendering\RT</Filter>
+    </ClCompile>
+    <ClCompile Include="AABB.cpp">
+      <Filter>Project\Engine\Accelerator\BVH</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -5,14 +5,12 @@
 #include <curand_discrete2.h>
 #include <device_launch_parameters.h>
 #include <curand_kernel.h>
-#include <cstdio>
 #include "Objects.h"
 #include "float3x3.h"
-#include "Float2Byte.h"
-#include "float2Extension.h"
 #include "RTDeviceData.h"
 #include "SurfaceHitRecord.h"
-
+#include "BVH.h"
+#include <cstdio>
 
 
 __device__ Ray CreateCameraRay(Camera* camera, float u, float v)
@@ -26,6 +24,49 @@ __device__ SurfaceHitRecord CreateRayHit()
 	hit.t =INF;
 	hit.normal = make_float3(0.0f, 0.0f, 0.0f);
 	return hit;
+}
+__device__ bool IntersectTriangle_MT97(Ray ray, float3 vert0, float3 vert1, float3 vert2,float& t, float& u, float& v)
+{
+	// find vectors for two edges sharing vert0
+	float3 edge1 = vert1 - vert0;
+	float3 edge2 = vert2 - vert0;
+	// begin calculating determinant - also used to calculate U parameter
+	float3 pvec = Cross(ray.direction, edge2);
+	// if determinant is near zero, ray lies in plane of triangle
+	float det = Dot(edge1, pvec);
+	// use backface culling
+	if (det < EPSILON)return false;
+	float inv_det = 1.0f / det;
+	// calculate distance from vert0 to ray origin
+	float3 tvec = ray.origin - vert0;
+	// calculate U parameter and test bounds
+	u = Dot(tvec, pvec) * inv_det;
+	if (u < 0.0 || u > 1.0f)
+		return false;
+	// prepare to test V parameter
+	float3 qvec = Cross(tvec, edge1);
+	// calculate V parameter and test bounds
+	v = Dot(ray.direction, qvec) * inv_det;
+	if (v < 0.0 || u + v > 1.0f)
+		return false;
+	// calculate t, ray intersects triangle
+	t = Dot(edge2, qvec) * inv_det;
+	return true;
+}
+__device__ void IntersectTriangle(Ray ray,  SurfaceHitRecord* bestHit, RTDeviceData& data,  int material,
+                                  float3 vert0, float3 vert1, float3 vert2)
+{
+	float t, u, v;
+	if (IntersectTriangle_MT97(ray, vert0, vert1, vert2, t, u, v))
+	{
+		if (t > 0.00001 && t < bestHit->t)
+		{
+			bestHit->t = t;
+			bestHit->p = ray.origin + t * ray.direction;
+			bestHit->normal = UnitVector(Cross(vert1 - vert0, vert2 - vert0));
+			bestHit->mat_ptr= &data.Materials[material];
+		}
+	}
 }
 
 __device__ void IntersectGroundPlane(Ray ray, SurfaceHitRecord* bestHit,RTDeviceData& data)
@@ -62,22 +103,64 @@ __device__ float3x3 GetTangentSpace(float3 normal)
 	const auto binormal = UnitVector(Cross(normal, tangent));
 	return float3x3(tangent, binormal, normal);
 }
-
+__device__ bool HitAABB(const Ray& r, AABB* aabb, float tmin = 0, float tmax = FLT_MAX)
+{
+	for (auto a = 0; a < 3; a++)
+	{
+		const auto t0 = fmin((Get(aabb->min, a) - Get(r.origin, a)) / Get(r.direction, a),
+		                     (Get(aabb->max, a) - Get(r.origin, a)) / Get(r.direction, a));
+		const auto t1 = fmax((Get(aabb->min, a) - Get(r.origin, a)) / Get(r.direction, a),
+		                     (Get(aabb->max, a) - Get(r.origin, a)) / Get(r.direction, a));
+		tmin = fmax(t0, tmin);
+		tmax = fmin(t1, tmax);
+		if (tmax <= tmin)return false;
+	}
+	return true;
+}
 
 __device__ SurfaceHitRecord Trace(Ray ray,RTDeviceData& data)
 {
 	auto best_hit = CreateRayHit();
-	
+	BVH* stack[20];
+	int ptr = 0;
+	auto current = data.bvh;
+	do
+	{
+		auto left = current->left;
+		auto right = current->right;
+		if (current->tri)
+		{
+			IntersectTriangle(ray, &best_hit, data, current->triangle->mat,
+				current->triangle->v2.point,
+				current->triangle->v1.point,
+				current->triangle->v3.point);
+			if (ptr <= 0)current = nullptr;
+			else  current = stack[--ptr];
+		}
+		else
+		{
+			if (HitAABB(ray, current->aabb))
+			{
+				current= left;
+				stack[ptr++]= right;
+			}
+			else
+			{
+				if (ptr <= 0)current = nullptr;
+				else  current = stack[--ptr];
+				
+			}
+		}
+	} while (current!=nullptr);
+
+	free(stack);
 	IntersectGroundPlane(ray, &best_hit,data);
-	IntersectSphere(ray, &best_hit, 
-		Sphere(make_float3(0, 1, 0),1,make_float3(1,0,0),make_float3(0, 0, 0),
-			1,make_float3(0,0,0)),data,1);
-	IntersectSphere(ray, &best_hit,
-		Sphere(make_float3(2, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0),
-			1, make_float3(0, 0, 0)), data,2);
-	IntersectSphere(ray, &best_hit,
-		Sphere(make_float3(-2, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0),
-			1, make_float3(0, 0, 0)), data, 3);
+
+
+
+	// IntersectSphere(ray, &best_hit, Sphere(make_float3(0, 1, 0),1,make_float3(1,0,0),make_float3(0, 0, 0),1,make_float3(0,0,0)),data,1);
+	// IntersectSphere(ray, &best_hit,Sphere(make_float3(2, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0),1, make_float3(0, 0, 0)), data,2);
+	// IntersectSphere(ray, &best_hit,Sphere(make_float3(-2, 1, 0), 1, make_float3(1, 0, 0), make_float3(0, 0, 0),1, make_float3(0, 0, 0)), data, 3);
 	return best_hit;
 }
 
@@ -97,10 +180,7 @@ __device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int dep
 			factor *= attenuation;
 			ray = scattered;
 		}
-		else
-		{
-			return make_float3(-1,0,0);//break;
-		}
+		else return make_float3(-1,0,0);//break;
 	}
 	else return factor * data.SampleTexture(0, atan2(ray.direction.x, -ray.direction.z) / -M_PI * 0.5f, acos(ray.direction.y) / -M_PI);
 	
@@ -113,18 +193,23 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 	const auto tidx = blockIdx.x * blockDim.x + threadIdx.x;
 	const auto tidy = blockIdx.y * blockDim.y + threadIdx.y;
 	const int x = blockIdx.x * 16 + threadIdx.x,
-	y = blockIdx.y * 16 + threadIdx.y;
+	          y = blockIdx.y * 16 + threadIdx.y;
+
+
 
 	curand_init((seed + tidx + width * tidy)*Sampled, 0, 0, &rngStates[tidx]);
 	auto data = RTDeviceData(rngStates, tidx, Sampled,make_float2(x,y));
 	data.Materials = host_data.Materials;
 	data.Textures = host_data.Textures;
+	data.bvh = host_data.bvh;
+
 	auto color = make_float3(0, 0, 0);
 	auto result = make_float3(0, 0, 0);
 
 	
 	//Main Sampling
-	for (auto j = 0; j < spp; j++) {
+	for (auto j = 0; j < spp; j++)
+	{
 		const auto u = float(data.GetRandom() + x) / float(width);
 		const auto v = float(data.GetRandom() + y) / float(height);
 		auto ray = CreateCameraRay(camera, u, v);
@@ -137,9 +222,6 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 		}
 		color += result;
 	}
-
-
-
 
 
 	//Set color to buffer.

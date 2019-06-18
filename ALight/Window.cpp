@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include <ostream>
 #include <iostream>
+#include "Setting.h"
 
 
 int Window::Height = 0;
@@ -30,8 +31,6 @@ inline void Window::WindowsUpdate()
 	glutSwapBuffers();
 	glFlush();
 }
-
-
 
 inline void TimerProc(int id)
 {
@@ -86,8 +85,8 @@ void Window::Show(const char* title)
 	glMatrixMode(GL_PROJECTION);
 	gluOrtho2D(0.0, 200.0, 0.0, 150.0);
 
-	   glutMouseFunc(GlMouseEvent);
-	   glutMotionFunc(GlMouseMotion);
+	glutMouseFunc(GlMouseEvent);
+	glutMotionFunc(GlMouseMotion);
 	// glutKeyboardFunc(GLKeyDownEvent);
 	// glutKeyboardUpFunc(GLKeyUpEvent);
 
@@ -109,4 +108,22 @@ void Window::CaculateFPS()
 		glutSetWindowTitle("ALightGPU");
 		FPS = 0;
 	}
+}
+
+void Window::Savepic()
+{
+		// std::ofstream outf;
+		// outf.open("/Output/abc.ppm");
+		// outf << "P3\n" << Setting::width << " " << Setting::height << "\n255\n";
+		// for (auto h = ImageHeight - 1; h >= 0; h--)
+		// {
+		// 	for (int i = 0; i < 3; i += 3)
+		// 	{
+		// 		outf << PixelData[h * (rgbwidth)+(i + 0)] << " " <<
+		// 			PixelData[h * (rgbwidth)+(i + 1)] << " " <<
+		// 			PixelData[h * (rgbwidth)+(i + 2)] << " \n";
+		// 	}
+		// }
+		// outf.close();
+		// std::cout << "finished" << std::endl;
 }

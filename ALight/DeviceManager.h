@@ -3,6 +3,8 @@
 #include "Camera.h"
 #include "RTDeviceData.h"
 
+class HostScene;
+
 class DeviceManager
 {
 	curandState* rng_states;
@@ -19,6 +21,6 @@ public:
 	DeviceManager();
 	~DeviceManager();
 	void PrintDeviceInfo();
-	void Init(RayTracer* ray_tracer);
+	void Init(RayTracer* ray_tracer, HostScene scene);
 	void Run();
 };

@@ -4,7 +4,7 @@
 
 class Engine
 {
-	float camera_w=M_PI/2,camera_y=2,camera_r=5;
+	float camera_w=M_PI/2,camera_y=2,camera_r=20;
 	static Engine* instance;
 public:
 	Engine() {}

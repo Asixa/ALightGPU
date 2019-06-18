@@ -2,11 +2,13 @@
 #include <curand_kernel.h>
 #include "Material.h"
 #include "float2Extension.h"
+#include "BVH.h"
 class Material;
 struct RTHostData
 {
 	cudaTextureObject_t Textures[1];
 	Material* Materials;
+	BVH* bvh;
 	bool quick;
 };
 struct RTDeviceData
@@ -16,6 +18,9 @@ struct RTDeviceData
 	int MaxDepth;
 	cudaTextureObject_t* Textures;
 	Material* Materials;
+	BVH* bvh;
+
+
 	int tidx;
 	float2 Pixel;
 

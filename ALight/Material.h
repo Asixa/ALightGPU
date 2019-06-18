@@ -1,7 +1,6 @@
 #pragma once
 #include <cuda_runtime.h>
 #include <cstring>
-#include "MathHelper.h"
 // #include <crt/host_defines.h>
 // #include <driver_functions.h>
 // #include <cstring>

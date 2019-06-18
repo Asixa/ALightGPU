@@ -112,3 +112,17 @@ __host__ __device__ float3 operator-(const float3& a)
 {
 	return make_float3(-a.x, -a.y, -a.z);
 }
+
+void Set(float3& f, float a, float b, float c)
+{
+	f.x = a;
+	f.y = b;
+	f.z = c;
+}
+
+void Set(float3& f, float a)
+{
+	f.x = a;
+	f.y = a;
+	f.z = a;
+}

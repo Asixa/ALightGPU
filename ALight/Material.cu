@@ -3,7 +3,6 @@
 #include "RTDeviceData.h"
 #include "float3Extension.h"
 #include "SurfaceHitRecord.h"
-#include <cstdio>
 
 float Schlick(float cosine, float ref_idx) {
 	float r0 = (1 - ref_idx) / (1 + ref_idx);
