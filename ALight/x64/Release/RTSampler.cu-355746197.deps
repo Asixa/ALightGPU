@@ -223,28 +223,36 @@ C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\math.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Defines.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Ray.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float3Extension.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\crt/host_defines.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\vector_functions.hpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\math.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Ray.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_discrete2.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_kernel.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Objects.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float3x3.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTDeviceData.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\curand_kernel.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Material.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\cuda_runtime.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstring
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float2Extension.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\crt/host_defines.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\BVH.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\AABB.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\vector_types.h
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Triangle.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\vector_types.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cfloat
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\float.h
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\vector_functions.hpp
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\SurfaceHitRecord.h
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdio
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstdio.h
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_stdio_config.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RayHit.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Objects.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float3x3.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Float2Byte.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\device_launch_parameters.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winapifamily.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winpackagefamily.h
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\float2Extension.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\crt/host_defines.h
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include\driver_functions.h

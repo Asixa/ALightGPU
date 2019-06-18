@@ -10,7 +10,7 @@
 #include "Renderer.h"
 #include <vector>
 #include "Defines.h"
-const std::string ModelPath = "Models/";
+const std::string ModelPath = "models/";
 const std::string ModelExtension = ".GPUModel";
 typedef unsigned char CSbyte;
 inline Vertice ReadVertex(std::ifstream* read_stream,float size)
@@ -30,7 +30,7 @@ inline Vertice ReadVertex(std::ifstream* read_stream,float size)
 
 inline void LoadMesh(const std::string name, int mat, std::vector<Triangle*>& list, float  size=1)
 {
-	std::ifstream read_stream("D:/" + name + ModelExtension, std::ios::binary);
+	std::ifstream read_stream(ModelPath+ name + ModelExtension, std::ios::binary);
 	if (!read_stream.good())return;
 	CSbyte m;
 	read_stream >> m;
