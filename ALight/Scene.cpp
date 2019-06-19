@@ -9,6 +9,7 @@ HostScene* HostScene::instance = nullptr;
 
 void HostScene::LoadObj(std::string filename,int mat,float size)
 {
+	printf(CYN "[CPU]" YEL "Loading Obj Model:%s ...\n" RESET, filename);
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> material;
@@ -73,12 +74,12 @@ void HostScene::LoadObj(std::string filename,int mat,float size)
 
 
 	for (int i=0;i<vertice.size();i+=3)triangles.push_back(new Triangle(*vertice[i + 1], *vertice[i],  *vertice[i+2],mat));
-	
+	printf(CYN "[CPU]" GRN "Load Obj Model:%s Completed\n" RESET,filename);
 }
 void HostScene::Load(std::string filename)
-{
+{ 
 	LoadObj("models/buddha.obj", 0,5);
-	printf(CYN "[CPU]" YEL "Load Obj Model Completed\n" RESET);
+
 	//LoadMesh("bunny", 5, triangles,10);
 	// triangles.push_back(
 	// 	new Triangle(

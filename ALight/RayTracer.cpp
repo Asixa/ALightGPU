@@ -47,7 +47,7 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 	auto textureCount = 1;
 	const char* imageFilenames[1] =
 	{
-		"images/BG5.jpg",
+		"images/BG2.jpg",
 		// "images/BG2.jpg",
 	};
 	for (auto i = 0; i < textureCount; i++) {

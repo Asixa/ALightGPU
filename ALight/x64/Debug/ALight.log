@@ -4,5 +4,7 @@
   crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\MyModel.h(46): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
 D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\MyModel.h(54): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Scene.cpp(120): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Scene.cpp(119): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  LINK : 没有找到 ..\bin\win64\Debug\\ALight.exe 或上一个增量链接没有生成它；正在执行完全链接
+    正在创建库 ../bin/win64/Debug/ALight.lib 和对象 ../bin/win64/Debug/ALight.exp
   ALight.vcxproj -> D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\../bin/win64/Debug/ALight.exe

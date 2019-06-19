@@ -16,6 +16,6 @@ namespace Setting
 	static int SPP = 1;
 	static int argc;
 	static char* argv;
-	static  int width = 1024, height = 1024;
+	static  int width = 1024/2, height = 1024/2;
 	const int BlockSize = 16;
 }

@@ -1,75 +1,11 @@
-﻿  RayTracer.cpp
+﻿  Scene.cpp
   crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h(17): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h(17): warning C4244: “初始化”: 从“double”转换到“const float”，可能丢失数据
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h(18): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Camera.h(18): warning C4244: “初始化”: 从“double”转换到“const float”，可能丢失数据
   crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\BVH.h(5): warning C4099: “RTDeviceData”: 类型名称以前使用“class”现在使用的是“struct”
-  D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Material.h(11): note: 参见“RTDeviceData”的声明
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTDeviceData.h(15): warning C4099: “RTDeviceData”: 类型名称以前使用“class”现在使用的是“struct”
-  D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTDeviceData.h(14): note: 参见“RTDeviceData”的声明
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RTDeviceData.h(41): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(964): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(1033): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(1082): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(1104): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(1330): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(1368): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(1388): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(3297): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(3325): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(3343): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4457): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4585): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4591): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4599): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4601): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4609): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4644): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4647): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4674): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4677): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4688): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4726): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4904): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4925): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(4930): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5062): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5066): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5074): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5082): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5095): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5112): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5116): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5258): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5286): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5297): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5298): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5312): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5331): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5349): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5360): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5369): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5396): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5397): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5611): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5615): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5620): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5631): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5660): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5667): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5684): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5714): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5747): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5860): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5869): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5874): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5878): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(5927): warning C4312: “类型强制转换”: 从“int”转换到更大的“float *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\stb_image.h(6142): warning C4312: “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RayTracer.cpp(38): warning C4305: “初始化”: 从“double”到“float”截断
-D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\RayTracer.cpp(60): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\MyModel.h(46): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\MyModel.h(54): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Scene.cpp(12): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“std::string”
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Scene.cpp(77): warning C4477: “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“std::string”
+D:\Codes\Projects\Academic\ComputerGraphic\ALightGPU\ALight\Scene.cpp(120): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
     正在创建库 ../bin/win64/Release/ALight.lib 和对象 ../bin/win64/Release/ALight.exp
   正在生成代码
   已完成代码的生成
