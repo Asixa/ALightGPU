@@ -79,8 +79,9 @@ __device__ void IntersectTriangle(Ray ray,  SurfaceHitRecord* bestHit, RTDeviceD
 		{
 			bestHit->t = t;
 			bestHit->p = ray.origin + t * ray.direction;
-			//GetUV(vert0, vert1, vert2, bestHit->p, bestHit->normal, bestHit->uv);
-			bestHit->normal = UnitVector(Cross(vert1.point - vert0.point, vert2.point - vert0.point));
+			if(Length(vert0.normal)==0)bestHit->normal = UnitVector(Cross(vert1.point - vert0.point, vert2.point - vert0.point));
+			else GetUV(vert0, vert1, vert2, bestHit->p, bestHit->normal, bestHit->uv);
+			//bestHit->normal = UnitVector(Cross(vert1.point - vert0.point, vert2.point - vert0.point));
 			bestHit->mat_ptr= &data.Materials[material];
 		}
 	}
@@ -171,7 +172,7 @@ __device__ SurfaceHitRecord Trace(Ray ray,RTDeviceData& data)
 	} while (current!=nullptr);
 
 	free(stack);
-	//IntersectGroundPlane(ray, &best_hit,data);
+	IntersectGroundPlane(ray, &best_hit,data);
 
 
 
@@ -212,6 +213,33 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 	const int x = blockIdx.x * 16 + threadIdx.x,
 	          y = blockIdx.y * 16 + threadIdx.y;
 
+	if(host_data.quick)
+	{
+		if (!(x % PREVIEW_PIXEL_SIZE == 0 && y % PREVIEW_PIXEL_SIZE == 0)){
+			// const auto a = width * 4 * (y-y% PREVIEW_PIXEL_SIZE)+(x-x% PREVIEW_PIXEL_SIZE) * 4;
+			// const auto i = width * 4 * (y)+(x) * 4;
+			// output[i] = output[a];
+			// output[1 + i] = output[1 + a];
+			// output[2 + i] = output[2 + a];
+			// output[3 + i] = 1;
+
+			const auto i = width * 4 * (y)+(x) * 4;
+			output[i] =0;
+			output[1 + i] = 0;
+			output[2 + i] = 0;
+			output[3 + i] = 1;
+			return;
+		}
+		// if (x % 2 == 0 && y % 2 == 0) {
+		// 	const auto i = width * 4 * y + x * 4;
+		//
+		// 	output[i] = output[i-4];
+		// 	output[1 + i] = output[i - 3];
+		// 	output[2 + i] = output[i - 2];
+		// 	output[3 + i] = spp;
+		// 	return;
+		// }
+	}
 
 
 	curand_init((seed + tidx + width * tidy)*Sampled, 0, 0, &rngStates[tidx]);

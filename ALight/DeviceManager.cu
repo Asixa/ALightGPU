@@ -117,7 +117,7 @@ void DeviceManager::Run()
 	}
 	ray_tracer->sampled += spp;
 	IPRSampler << <grid, block >> > (ray_tracer->width, ray_tracer->height, (rand() / (RAND_MAX + 1.0)) * 1000, spp, ray_tracer->sampled, mst, 0, devicde_float_data, rng_states, d_camera,d_data);
-	Float2Byte <<<grid, block >> > (ray_tracer->width, ray_tracer->sampled,spp, devicde_float_data, devicde_byte_data);
+	Float2Byte <<<grid, block >> > (d_data.quick,ray_tracer->width, ray_tracer->sampled,spp, devicde_float_data, devicde_byte_data);
 	cudaDeviceSynchronize();
 
 	//****** ¸´ÖÆÊä³öÄÚ´æ Device->host ******

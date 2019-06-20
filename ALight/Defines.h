@@ -5,7 +5,7 @@ using byte = unsigned char;
 #define INF 99999
 #define EPSILON 0.001
 #define HIT_EPSILON 1e-4f
-
+#define PREVIEW_PIXEL_SIZE 8
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
 #define YEL   "\x1B[33m"

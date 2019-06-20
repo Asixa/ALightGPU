@@ -40,14 +40,14 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 		Material(lambertian, new float[3]{ 1, 1, 1 }),
 		Material(dielectirc, new float[1]{1.5f }),
 		Material(metal, new float[4]{ 1, 1, 1, 0.0f }),
-		Material(lambertian, new float[3]{ 1, 1, 1}),
+		Material(lambertian, new float[3]{ 1, 0, 0}),
 	};
 
 	//Textures
 	auto textureCount = 1;
 	const char* imageFilenames[1] =
 	{
-		"images/BG2.jpg",
+		"images/BG.jpg",
 		// "images/BG2.jpg",
 	};
 	for (auto i = 0; i < textureCount; i++) {
@@ -72,7 +72,7 @@ void RayTracer::Init(GLbyte* d,int w,int h)
 		myparms.srcPtr = make_cudaPitchedPtr(h_data, width * sizeof(float), width, height);
 		myparms.dstArray = d_cuArr;
 		myparms.extent = make_cudaExtent(width, height, 3);
-		myparms.kind = cudaMemcpyHostToDevice;
+		myparms.kind = cudaMemcpyHostToDevice; 
 		cudaMemcpy3D(&myparms);
 
 

@@ -50,25 +50,24 @@ void Window::Init(int init_wdith, int init_height)
 inline void GlMouseEvent(int button, int state, int x, int y)
 {
 	int mods;
-	if (state == GLUT_DOWN)
-	{
-		Engine::Instance()->RayTracer->IPR_Quick = true;
-	}
-	else if (state == GLUT_UP)
-	{
-		Window::dx = 0, Window::dy = 0;
-		Engine::Instance()->RayTracer->IPR_Quick = false;
-		Engine::Instance()->RayTracer->IPR_reset_once = true;
-		Window::mouse_last_x = Window::mouse_last_y = -1;
-	}
+	// if (state == GLUT_DOWN)Engine::Instance()->RayTracer->IPR_Quick = true;
+	// else if (state == GLUT_UP)
+	// {
+	// 	Window::dx = 0, Window::dy = 0;
+	// 	Engine::Instance()->RayTracer->IPR_Quick = false;
+	// 	Engine::Instance()->RayTracer->IPR_reset_once = true;
+	// 	Window::mouse_last_x = Window::mouse_last_y = -1;
+	// }
 	if (button == 4)Engine::Instance()->OnMouseScroll(1);
 	else if(button == 3)Engine::Instance()->OnMouseScroll(-1);
 }
 inline void GlMouseMotion(int x, int y)
 {
 	if (Window::mouse_last_x == -1)Window::mouse_last_x = x;
-	else { Window::dx = x - Window::mouse_last_x;
-		Window::mouse_last_x = x; }
+	else { 
+		Window::dx = x - Window::mouse_last_x;
+		Window::mouse_last_x = x;
+	}
 	if (Window::mouse_last_y == -1)Window::mouse_last_y = y;
 	else { Window::dy = y - Window::mouse_last_y;
 		Window::mouse_last_y = y; }

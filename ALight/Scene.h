@@ -12,7 +12,8 @@ public:
 	std::vector<Triangle*>triangles;
 	std::vector<AABB>aabbs;
 	BVH* bvh;
-	void LoadObj(std::string filename, int mat, float size = 1);
+	float3 lookat;
+	void LoadObj(std::string filename, int* mat, int mat_count, float size = 1);
 	void Load(std::string filename);
 	void Build();
 	static HostScene* Instance()
