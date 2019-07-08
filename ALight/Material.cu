@@ -23,7 +23,7 @@ bool Refract(const float3 & v, const float3 & n, float ni_over_nt, float3 & refr
 		return false;
 }
 
-bool Material::scatter(const Ray & r_in, const SurfaceHitRecord & rec, float3 & attenuation, Ray & scattered,
+bool Material::scatter(const Ray& r_in, const SurfaceHitRecord& rec, float3& attenuation, Ray& scattered,
 	float3 random_in_unit_sphere, const RTDeviceData& rt_data)
 {
 
@@ -38,8 +38,6 @@ bool Material::scatter(const Ray & r_in, const SurfaceHitRecord & rec, float3 & 
 		// 	tex2DLayered<float>(rt_data->Textures[texid], rec.uv.x, 1 - rec.uv.y, 1),
 		// 	tex2DLayered<float>(rt_data->Textures[texid], rec.uv.x, 1 - rec.uv.y, 2));
 		const auto albedo = make_float3(data[0], data[1], data[2]);
-
-		//printf("%d\n", albedo);
 		const auto target = rec.p + rec.normal + random_in_unit_sphere;
 		scattered = Ray(rec.p, target - rec.p);
 		attenuation = albedo;
@@ -48,10 +46,7 @@ bool Material::scatter(const Ray & r_in, const SurfaceHitRecord & rec, float3 & 
 	case metal:
 	{
 		const auto albedo = make_float3(data[0], data[1], data[2]);
-		const auto fuzz = data[3];	
-		//printf("Hello\n");
-		// const auto albedo = make_float3(1, 0, 0);
-		// const auto fuzz = 0.5;
+		const auto fuzz = data[3];
 		const auto reflected = Reflect(UnitVector(r_in.direction), rec.normal);
 		scattered = Ray(rec.p, reflected + fuzz * random_in_unit_sphere);
 		attenuation = albedo;
@@ -92,6 +87,15 @@ bool Material::scatter(const Ray & r_in, const SurfaceHitRecord & rec, float3 & 
 			scattered = Ray(rec.p, refracted);
 		return true;
 	}
+	case light:return false;
+	
 	}
 
+}
+
+float3 Material::emitted(float u, float v, float3& p)
+{
+	if (Type == light)return  make_float3(data[0], data[1], data[2])*data[3];
+	
+	else return make_float3(0, 0, 0);
 }

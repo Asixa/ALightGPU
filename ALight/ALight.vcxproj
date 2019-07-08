@@ -24,7 +24,6 @@
     <ClInclude Include="float3Extension.h" />
     <ClInclude Include="float3x3.h" />
     <ClInclude Include="float4x4.h" />
-    <ClInclude Include="GPUPtr.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MyModel.h" />
     <ClInclude Include="Objects.h" />

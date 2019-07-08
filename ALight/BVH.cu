@@ -93,8 +93,13 @@ BVH* ToDevice(BVH* host)
 	return device;
 }
 
-void Print(BVH* bvh)
+void Print(BVH* bvh,bool root)
 {
+	if(root)
+	{
+		printf("BVH Root (%f,%f,%f) ~ (%f,%f,%f)\n",bvh->aabb->min.x, bvh->aabb->min.y, bvh->aabb->min.z, bvh->aabb->max.x, bvh->aabb->max.y, bvh->aabb->max.z);
+		return;
+	}
 	if(bvh->triangle==nullptr)
 	{
 		printf("Node [isTriangle: %s , AABB: (%f,%f,%f)(%f,%f,%f), Triangle(%p)\n", bvh->tri ? "true" : "false",

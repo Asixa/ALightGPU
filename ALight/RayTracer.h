@@ -12,14 +12,13 @@ class RayTracer
 public:
 	RayTracer();
 	~RayTracer();
-	Material* materials;
-	int material_count;
+
 	bool GPU;
 	DeviceManager* device_manager;
 	GLbyte* data;
 	int sampled = 0;
 	int width, height;
-	cudaTextureObject_t textlist[1];
+
 	bool thingsChanged;
 	bool IPR_Quick=false, IPR_reset_once=false;
 	void ReSetIPR();

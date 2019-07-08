@@ -34,7 +34,7 @@ void Engine::OnMouseMove(int a, int b)
 {
 	RayTracer->thingsChanged = true;
 	camera_w+= a*0.01;
-	camera_y += b * 0.05;
+	camera_y += b * 0.01*camera_r;
 	if (camera_y < 0.1)camera_y = 0.1;
 	auto x = cos(camera_w) * camera_r;
 	auto z = sin(camera_w) * camera_r;
@@ -43,8 +43,7 @@ void Engine::OnMouseMove(int a, int b)
 
 void Engine::OnMouseScroll(int a)
 {
-	RayTracer->thingsChanged = true;
 	camera_r += a*0.5f;
-	//if(!RayTracer->IPR_Quick)OnMouseMove(0, 0);
+	OnMouseMove(0, 0);
 }
 

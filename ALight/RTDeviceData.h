@@ -10,6 +10,7 @@ struct RTHostData
 	Material* Materials;
 	BVH* bvh;
 	bool quick;
+	bool ground;
 };
 struct RTDeviceData
 {
@@ -19,7 +20,7 @@ struct RTDeviceData
 	cudaTextureObject_t* Textures;
 	Material* Materials;
 	BVH* bvh;
-
+	bool ground;
 
 	int tidx;
 	float2 Pixel;

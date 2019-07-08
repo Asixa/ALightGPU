@@ -18,7 +18,8 @@ enum MaterialType
 {
 	lambertian,
 	metal,
-	dielectirc
+	dielectirc,
+	light
 };
 
 class Material {
@@ -35,5 +36,6 @@ public:
 		memcpy(data, d, MATERIAL_PARAMTER_COUNT * sizeof(float));
 	}
 	__device__ bool scatter(const Ray& r_in, const SurfaceHitRecord& rec, float3& attenuation, Ray& scattered, float3 random_in_unit_sphere, const RTDeviceData& data);
+	__device__ float3 emitted(float u, float v, float3& p);
 };
 

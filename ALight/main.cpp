@@ -4,14 +4,14 @@
 #include "Engine.h"
 #include "Setting.h"
 #include "Scene.h"
+#include "DeviceManager.h"
 
 int main(int argc, char* argv[])
 {
 	Setting::argc = argc;
 	Setting::argv = *argv;
-	int x = 6; int y = 6;
 
-	//printf ("%d,%d",(x-x%4),(y-y%4));
+	PrintDeviceInfo();
 
 	Window::Init(Setting::width, Setting::height);
 

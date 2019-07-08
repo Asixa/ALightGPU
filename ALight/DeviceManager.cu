@@ -20,7 +20,7 @@ DeviceManager::DeviceManager(){}
 
 DeviceManager::~DeviceManager(){}
 
-void DeviceManager::PrintDeviceInfo()
+void PrintDeviceInfo()
 {
 	auto device_count = 0;
 	cudaGetDeviceCount(&device_count);
@@ -84,9 +84,9 @@ void DeviceManager::Init(RayTracer* tracer,HostScene scene)
 	cudaMalloc(reinterpret_cast<void**>(&rng_states), grid.x * block.x * sizeof(curandState));
 	cudaMalloc(reinterpret_cast<void**>(&d_camera), sizeof(Camera));
 	d_data = RTHostData();
-	cudaMalloc(reinterpret_cast<void**>(&d_data.Materials), sizeof(Material) * ray_tracer->material_count);
+	cudaMalloc(reinterpret_cast<void**>(&d_data.Materials), sizeof(Material) * HostScene::Instance()->material_count);
 
-	for (int i = 0; i < 1; i++) d_data.Textures[i] = ray_tracer->textlist[i];
+	for (int i = 0; i < 1; i++) d_data.Textures[i] = HostScene::Instance()->textlist[i];
 
 
 	printf(BLU"[GPU]" YEL"Transferring BVH Data...\n" RESET);
@@ -99,11 +99,12 @@ void DeviceManager::Run()
 	//****** ¸´ÖÆÊäÈëÄÚ´æ host->device ******
 	cudaMemcpy(devicde_float_data, host_float_data, ray_tracer->width * ray_tracer->height * 4 * sizeof(float), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_camera, Engine::Instance()->camera, sizeof(Camera), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_data.Materials, ray_tracer->materials, sizeof(Material) * ray_tracer->material_count, cudaMemcpyHostToDevice);
+	cudaMemcpy(d_data.Materials, HostScene::instance->materials, sizeof(Material) * HostScene::instance->material_count, cudaMemcpyHostToDevice);
 	
 	
 	
 	d_data.quick = ray_tracer->IPR_Quick;
+	d_data.ground = HostScene::instance->ground;
 	auto mst = 0; auto spp = 0;
 	if (d_data.quick || ray_tracer->IPR_reset_once)
 	{

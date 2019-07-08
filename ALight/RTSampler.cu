@@ -75,7 +75,7 @@ __device__ void IntersectTriangle(Ray ray,  SurfaceHitRecord* bestHit, RTDeviceD
 	float t, u, v;
 	if (IntersectTriangle_MT97(ray, vert0.point, vert1.point, vert2.point, t, u, v))
 	{
-		if (t > HIT_EPSILON && t < bestHit->t)
+		if (t > 0 && t < bestHit->t)
 		{
 			bestHit->t = t;
 			bestHit->p = ray.origin + t * ray.direction;
@@ -172,7 +172,7 @@ __device__ SurfaceHitRecord Trace(Ray ray,RTDeviceData& data)
 	} while (current!=nullptr);
 
 	free(stack);
-	IntersectGroundPlane(ray, &best_hit,data);
+	if(data.ground)IntersectGroundPlane(ray, &best_hit,data);
 
 
 
@@ -182,9 +182,20 @@ __device__ SurfaceHitRecord Trace(Ray ray,RTDeviceData& data)
 	return best_hit;
 }
 
-__device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int depth, const RTDeviceData data)
+__device__ float3 total(float3* es, float3* as,int index)
 {
-	auto c = make_float3(0, 0, 0);
+	auto a = make_float3(0, 0, 0);
+	for (int i=0;i<index;i++)
+	{
+		auto e = es[i];
+		for (int j = 0; j < i;j++)e *= as[i];
+		a += e;
+	}
+}
+
+__device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int depth, const RTDeviceData data,bool& _break)
+{
+	// auto c = make_float3(0, 0, 0);
 	if (hit.t < 99999)
 	{
 		float3 random_in_unit_sphere;
@@ -192,17 +203,22 @@ __device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int dep
 		while (SquaredLength(random_in_unit_sphere) >= 1.0);
 		auto scattered = Ray();
 		float3 attenuation;
-
+		auto emitted = hit.mat_ptr->emitted(hit.uv.x, hit.uv.y, hit.p);
 		if (depth < 8 &&hit.mat_ptr->scatter(ray, hit, attenuation, scattered, random_in_unit_sphere, data))
 		{
+			auto e = emitted * factor;
 			factor *= attenuation;
 			ray = scattered;
+			return make_float3(0, 0, 0);
 		}
-		else return make_float3(-1,0,0);//break;
-	}
+		else
+		{
+			_break = true;
+			return emitted*factor;
+		}
+	}//total(es,as,depth)+
 	else return factor * data.SampleTexture(0, atan2(ray.direction.x, -ray.direction.z) / -M_PI * 0.5f, acos(ray.direction.y) / -M_PI);
-	
-	return c;
+
 }
 
 
@@ -216,13 +232,6 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 	if(host_data.quick)
 	{
 		if (!(x % PREVIEW_PIXEL_SIZE == 0 && y % PREVIEW_PIXEL_SIZE == 0)){
-			// const auto a = width * 4 * (y-y% PREVIEW_PIXEL_SIZE)+(x-x% PREVIEW_PIXEL_SIZE) * 4;
-			// const auto i = width * 4 * (y)+(x) * 4;
-			// output[i] = output[a];
-			// output[1 + i] = output[1 + a];
-			// output[2 + i] = output[2 + a];
-			// output[3 + i] = 1;
-
 			const auto i = width * 4 * (y)+(x) * 4;
 			output[i] =0;
 			output[1 + i] = 0;
@@ -230,15 +239,6 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 			output[3 + i] = 1;
 			return;
 		}
-		// if (x % 2 == 0 && y % 2 == 0) {
-		// 	const auto i = width * 4 * y + x * 4;
-		//
-		// 	output[i] = output[i-4];
-		// 	output[1 + i] = output[i - 3];
-		// 	output[2 + i] = output[i - 2];
-		// 	output[3 + i] = spp;
-		// 	return;
-		// }
 	}
 
 
@@ -247,6 +247,8 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 	data.Materials = host_data.Materials;
 	data.Textures = host_data.Textures;
 	data.bvh = host_data.bvh;
+	data.ground = host_data.ground;
+
 
 	auto color = make_float3(0, 0, 0);
 	auto result = make_float3(0, 0, 0);
@@ -259,13 +261,17 @@ __global__ void IPRSampler(const int width, const int height, const int seed, co
 		const auto v = float(data.GetRandom() + y) / float(height);
 		auto ray = CreateCameraRay(camera, u, v);
 		auto factor = make_float3(1, 1, 1);
+
 		for (auto i = 0; i < mst; i++)
 		{
 			auto hit = Trace(ray,data);
-			result =Shade(ray, hit, factor, i,data);
-			if (result.x == -1) { result.x = 0; break; }
+			auto _break = false;
+			result =result+Shade(ray, hit, factor, i,data, _break);
+		
+			if (_break) break;
+			
 		}
-		color += result;
+		color =color+ result;
 	}
 
 

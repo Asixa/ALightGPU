@@ -114,7 +114,6 @@
     <ClInclude Include="Triangle.h">
       <Filter>Project\Engine\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="GPUPtr.h" />
     <ClInclude Include="rand.h">
       <Filter>Project\Math</Filter>
     </ClInclude>

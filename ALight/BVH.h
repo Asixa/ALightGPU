@@ -11,7 +11,7 @@ int box_z_compare(const void* a, const void* b);
 BVH* BuildBVH(Triangle* tri);
 BVH* BuildBVH(Triangle** list, int n);
 BVH* ToDevice(BVH*);
-__host__ __device__ void Print(BVH* bvh);
+__host__ __device__ void Print(BVH* bvh,bool root=false);
 struct Ray;
 struct  BVH
 {
