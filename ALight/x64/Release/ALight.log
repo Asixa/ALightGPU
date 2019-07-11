@@ -1,77 +1,25 @@
-﻿  Scene.cpp
+﻿  RayTracer.cpp
   crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
-  crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Material.h(11,19): warning C4099:  “RTDeviceData”: 类型名称以前使用“struct”现在使用的是“class”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\BVH.h(5): message :  参见“RTDeviceData”的声明
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\MyModel.h(46,9): warning C4477:  “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\MyModel.h(54,9): warning C4477:  “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(964,11): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1033,19): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1082,11): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1104,19): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1330,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1368,50): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1388,50): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(3297,45): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(3325,71): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(3343,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4457,45): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4585,61): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4591,80): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4599,38): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4601,25): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4609,50): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4644,26): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4647,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4674,21): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4677,63): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4688,37): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4726,58): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4904,26): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4925,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4930,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5062,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5066,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5074,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5082,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5095,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5112,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5116,21): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5258,38): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5286,17): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5297,44): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5298,38): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5312,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5331,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5349,48): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5360,32): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5369,45): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5396,33): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5397,34): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5611,31): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5615,48): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5620,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5631,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5660,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5667,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5684,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5714,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5747,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5860,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5869,26): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5874,42): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5878,42): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5927,79): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(6142,21): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(14,9): warning C4477:  “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“std::string”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(28,9): warning C4477:  “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“unsigned __int64”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(28,9): message :  请考虑在格式字符串中使用“%zd”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(28,9): warning C4477:  “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 2 拥有了类型“unsigned __int64”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(28,9): message :  请考虑在格式字符串中使用“%zd”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(80,9): warning C4477:  “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“std::string”
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(94,124): warning C4244:  “=”: 从“double”转换到“float”，可能丢失数据
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(138,53): warning C4305:  “初始化”: 从“double”到“float”截断
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(178,51): warning C4267:  “参数”: 从“size_t”转换到“int”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,34): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,21): warning C4244:  “初始化”: 从“double”转换到“const float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(18,32): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(18,27): warning C4244:  “初始化”: 从“double”转换到“const float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(18,27): warning C4244: crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\BVH.h(5,20): warning C4099:  “RTDeviceData”: 类型名称以前使用“class”现在使用的是“struct”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Material.h(11): message :  参见“RTDeviceData”的声明
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(16,1): warning C4099:  “RTDeviceData”: 类型名称以前使用“class”现在使用的是“struct”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(15): message :  参见“RTDeviceData”的声明
+  Window.cpp
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(42,11): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(42,11): warning C4244: crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,34): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,21): warning C4244:  “初始化”: 从“double”转换到“const float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(18,32): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(18,27): warning C4244:  “初始化”: 从“double”转换到“const float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Engine.h(7,23): warning C4305:  “初始化”: 从“double”到“float”截断
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Window.cpp(54,6): warning C4101:  “mods”: 未引用的局部变量
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Window.cpp(137,1): warning C4996:  'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h(506): message :  参见“localtime”的声明
     正在创建库 ../bin/win64/Release/ALight.lib 和对象 ../bin/win64/Release/ALight.exp
   正在生成代码
   已完成代码的生成

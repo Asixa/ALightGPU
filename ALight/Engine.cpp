@@ -38,7 +38,7 @@ void Engine::OnMouseMove(int a, int b)
 	if (camera_y < 0.1)camera_y = 0.1;
 	auto x = cos(camera_w) * camera_r;
 	auto z = sin(camera_w) * camera_r;
-	camera->Update(make_float3(x, camera_y, z), HostScene::Instance()->lookat);
+	HostScene::instance->camera->Update(make_float3(x, camera_y, z), HostScene::Instance()->lookat);
 }
 
 void Engine::OnMouseScroll(int a)

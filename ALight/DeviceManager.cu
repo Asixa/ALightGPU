@@ -13,6 +13,7 @@
 #include "Engine.h"
 #include "Material.h"
 #include "Scene.h"
+#include "Window.h"
 
 
 DeviceManager::DeviceManager(){}
@@ -89,19 +90,19 @@ void DeviceManager::Init(RayTracer* tracer,HostScene scene)
 	for (int i = 0; i < 1; i++) d_data.Textures[i] = HostScene::Instance()->textlist[i];
 
 
-	printf(BLU"[GPU]" YEL"Transferring BVH Data...\n" RESET);
+	printf(BLU"[GPU]" YEL"Transferring BVH Data...");
 	d_data.bvh = ToDevice(HostScene::Instance()->bvh);
-	printf(BLU"[GPU]" GRN"Transfer BVH Data Completed\n" RESET);
+	printf(GRN"Done\n" RESET);
 }
 
 void DeviceManager::Run()
 {
 	//****** ¸´ÖÆÊäÈëÄÚ´æ host->device ******
 	cudaMemcpy(devicde_float_data, host_float_data, ray_tracer->width * ray_tracer->height * 4 * sizeof(float), cudaMemcpyHostToDevice);
-	cudaMemcpy(d_camera, Engine::Instance()->camera, sizeof(Camera), cudaMemcpyHostToDevice);
+	cudaMemcpy(d_camera, HostScene::instance->camera, sizeof(Camera), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_data.Materials, HostScene::instance->materials, sizeof(Material) * HostScene::instance->material_count, cudaMemcpyHostToDevice);
 	
-	
+
 	
 	d_data.quick = ray_tracer->IPR_Quick;
 	d_data.ground = HostScene::instance->ground;

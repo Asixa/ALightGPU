@@ -5,11 +5,13 @@
 #include "BVH.h"
 #include <string>
 #include "Material.h"
+#include "Camera.h"
 
 class  HostScene
 {
 	
 public:
+	Camera* camera;
 	static HostScene* instance;
 	std::vector<Triangle*>triangles;
 	std::vector<AABB>aabbs;

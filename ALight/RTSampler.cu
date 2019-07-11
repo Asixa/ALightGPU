@@ -222,6 +222,8 @@ __device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int dep
 }
 
 
+
+
 __global__ void IPRSampler(const int width, const int height, const int seed, const int spp,int Sampled, int mst, int root, float* output, curandState* const rngStates, Camera* camera,RTHostData host_data)
 {
 	const auto tidx = blockIdx.x * blockDim.x + threadIdx.x;

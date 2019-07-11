@@ -18,7 +18,7 @@ public:
 	static void Init(int init_wdith, int init_height);
 	static void Show(const char* title);
 	static void CaculateFPS();
-	void Savepic();
+	static void Savepic();
 };
 
 

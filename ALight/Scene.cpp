@@ -6,28 +6,26 @@
 #include "MyModel.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#include <regex>
+#include "Camera.h"
+#include "Setting.h"
 
 HostScene* HostScene::instance = nullptr;
 
 void HostScene::LoadObj(std::string filename, int* mat, int mat_count, float size)
 {
-	printf(CYN "[CPU]" YEL "Loading Obj Model:%s ...\n" RESET, filename);
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
 	std::vector<tinyobj::material_t> material;
-	std::string err;
-	std::string warn;
-	//bool ret = tinyobj::LoadObj(&attrib, &shapes, &material, &err, filename.c_str());
+	std::string err,warn;
+	printf(CYN "[CPU]" YEL "Loading Obj Model:" RESET " %s ", filename.data(), material.size(), shapes.size());
 	bool ret = tinyobj::LoadObj(&attrib, &shapes, &material, &warn, &err, filename.c_str());
-
-
-	if (!warn.empty())std::cout << warn ;
-	if (!err.empty()) std::cerr << err ;
-	if (!ret) exit(1);
-
-	printf("Materials count: %d shapes count: %d \n", material.size(), shapes.size());
+	printf(YEL"(mat:%d)(shapes:%d) ..." RESET, material.size(), shapes.size());
+	if (!ret) {
+		std::cerr <<"       "<< err;
+		exit(1);
+	}
 	auto vertice = std::vector<Vertex*>();
-
 	for (size_t s = 0; s < shapes.size(); s++) {
 		vertice.clear();
 		size_t index_offset = 0;
@@ -75,10 +73,9 @@ void HostScene::LoadObj(std::string filename, int* mat, int mat_count, float siz
 		for (int i = 0; i < vertice.size(); i += 3)triangles.push_back(new Triangle(*vertice[i + 1], *vertice[i], *vertice[i + 2], s > mat_count ? mat[0] : mat[s]));
 	}
 
-
-
-	printf(CYN "[CPU]" GRN "Load Obj Model:%s Completed\n" RESET, filename);
-
+	printf(GRN"Done\n" RESET);
+	if (!warn.empty())std::cout << "     " YEL<< std::regex_replace(warn, std::regex("\n"), "\n     ")<<RESET<<std::endl;
+	//if (!err.empty()) std::cerr << "       " RED<< err << RESET;
 }
 
 void HostScene::LoadTextures(char** imageFilenames,int textureCount)
@@ -89,7 +86,7 @@ void HostScene::LoadTextures(char** imageFilenames,int textureCount)
 		const auto tex_data = stbi_load(imageFilenames[i], &width, &height, &depth, 0);
 		const auto size = width * height * depth;
 		auto h_data = new float[size];
-		printf(CYN "[CPU]" YEL "Loading Texture: %s (%d,%d,%d)\n" RESET, imageFilenames[i], width, height, depth);
+		printf(CYN "[CPU]" YEL "Loading Texture: " RESET "%s " YEL"(%d,%d,%d)..." RESET, imageFilenames[i], width, height, depth);
 		for (unsigned int layer = 0; layer < 3; layer++)
 			for (auto i = 0; i < static_cast<int>(width * height); i++)h_data[layer * width * height + i] = tex_data[i * 3 + layer] / 255.0;
 
@@ -126,7 +123,7 @@ void HostScene::LoadTextures(char** imageFilenames,int textureCount)
 		cudaCreateTextureObject(&textlist[i], &texRes, &texDescr, nullptr);
 
 	}
-	printf(CYN"[CPU]" GRN "LoadTexture Completed\n" RESET);
+	printf(GRN "Done\n" RESET);
 }
 
 void HostScene::Load(std::string filename)
@@ -162,8 +159,15 @@ void HostScene::Load(std::string filename)
 	};
 	LoadTextures(imageFilenames,textureCount);
 
+
 	lookat = make_float3(0, 5, 0);
+	camera = new Camera(
+		make_float3(0, 5, 15),
+		lookat,make_float3(0, 1, 0), 60, float(Setting::width) / float(Setting::height));
+
+
 	LoadObj("models/cornell/CornellBox-Original.obj", new int[7] {0,0,0,2,1,0,3},7, 5);
+
 
 	// lookat = make_float3(3, 8, 0);
 	// LoadMesh("bunny", 2, triangles,10);
@@ -174,8 +178,8 @@ void HostScene::Load(std::string filename)
 
 void HostScene::Build()
 {
-	printf(CYN "[CPU]" YEL "Building BVH...\n" RESET);
+	printf(CYN "[CPU]" YEL "Building BVH..." RESET);
 	bvh = BuildBVH(triangles.data(), triangles.size());
-	Print(bvh,true);
-	printf(CYN "[CPU]" GRN "Build BVH Completed\n" RESET);
+	printf(GRN "Done\n" RESET);
+	printf("     "); Print(bvh, true);
 }

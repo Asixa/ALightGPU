@@ -10,7 +10,6 @@ public:
 	Engine() {}
 	~Engine(){};
 	RayTracer* RayTracer;
-	Camera* camera;
 
 
 	void Init();
