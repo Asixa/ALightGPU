@@ -42,7 +42,7 @@ void RayTracer::Render()
 	if(Done)return;
 	if(GPU)
 	{
-		int targetSample = 512;
+		int targetSample = 8;
 		if (sampled <targetSample)device_manager->Run();
 		else if (sampled == targetSample) {
 			Done = true;

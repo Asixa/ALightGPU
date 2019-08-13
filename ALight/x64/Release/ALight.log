@@ -1,4 +1,67 @@
-﻿  RayTracer.cpp
+﻿  Compiling CUDA source file RTSampler.cu...
+  
+  F:\2019 Summer\Projects\CPP\ALightGPU\ALight>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" -gencode=arch=compute_35,code=\"sm_35,compute_35\" -gencode=arch=compute_37,code=\"sm_37,compute_37\" -gencode=arch=compute_50,code=\"sm_50,compute_50\" -gencode=arch=compute_52,code=\"sm_52,compute_52\" -gencode=arch=compute_60,code=\"sm_60,compute_60\" -gencode=arch=compute_61,code=\"sm_61,compute_61\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.21.27702\bin\HostX86\x64" -x cu -rdc=true -I./ -I../common/inc -I./ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\/include" -I../common/inc -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\include"     --keep-dir x64\Release -maxrregcount=0  --machine 64 --compile -cudart static -Xcompiler "/wd 4819"   --verbose    -DWIN32 -DWIN32 -D_MBCS -D_UNICODE -DUNICODE -Xcompiler "/EHsc /W3 /nologo /O2 /Fdx64/Release/vc142.pdb /FS /Zi  /MT " -o x64/Release/RTSampler.cu.obj "F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTSampler.cu" 
+  #$ _SPACE_= 
+  #$ _CUDART_=cudart
+  #$ _HERE_=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin
+  #$ _THERE_=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin
+  #$ _TARGET_SIZE_=
+  #$ _TARGET_DIR_=
+  #$ _TARGET_SIZE_=64
+  #$ _WIN_PLATFORM_=x64
+  #$ TOP=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/..
+  #$ NVVMIR_LIBRARY_DIR=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice
+  #$ PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../lib;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.21.27702\bin\HostX86\x64;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.21.27702\bin\HostX86\x86;C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86;;C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.7.2 Tools;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\tools;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\ide;C:\Program Files (x86)\HTML Help Workshop;;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin;C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319\;;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\libnvvp;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\Administrator\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files (x86)\Autodesk\Backburner\;C:\Program Files\Common Files\Autodesk Shared\;D:\Git\cmd;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\NVIDIA Corporation\Nsight Compute 2019.3.0\;C:\Users\Administrator\AppData\Local\GitHubDesktop\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;;
+  #$ INCLUDES="-IC:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../include"  
+  #$ LIBRARIES=  "/LIBPATH:C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../lib/x64"
+  #$ CUDAFE_FLAGS=--sdk_dir "C:\Program Files (x86)\Windows Kits\10"
+  #$ PTXAS_FLAGS=
+  RTSampler.cu
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-14.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-13_RTSampler.compute_61.cpp1.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-14.res
+  #$ cicc --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10"  -arch compute_61 -m64 -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_000092c4_00000000-3_RTSampler.fatbin.c" -tused -nvvmir-library "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice/libdevice.10.bc" --gen_module_id_file --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" --orig_src_file_name "F:/2019 Summer/Projects/CPP/ALightGPU/ALight/RTSampler.cu" --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-6_RTSampler.compute_61.cudafe1.c" --stub_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-6_RTSampler.compute_61.cudafe1.stub.c" --gen_device_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-6_RTSampler.compute_61.cudafe1.gpu"  "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-13_RTSampler.compute_61.cpp1.ii" -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-6_RTSampler.compute_61.ptx"
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-16.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-15_RTSampler.compute_30.cpp1.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-16.res
+  #$ cicc --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10"  -arch compute_30 -m64 -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_000092c4_00000000-3_RTSampler.fatbin.c" -tused -nvvmir-library "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice/libdevice.10.bc" --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" --orig_src_file_name "F:/2019 Summer/Projects/CPP/ALightGPU/ALight/RTSampler.cu" --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-12_RTSampler.compute_30.cudafe1.c" --stub_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-12_RTSampler.compute_30.cudafe1.stub.c" --gen_device_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-12_RTSampler.compute_30.cudafe1.gpu"  "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-15_RTSampler.compute_30.cpp1.ii" -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-12_RTSampler.compute_30.ptx"
+  #$ ptxas -arch=sm_30 -m64 --compile-only "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-12_RTSampler.compute_30.ptx"  -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-17_RTSampler.compute_30.sm_30.cubin" 
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-19.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-18_RTSampler.compute_35.cpp1.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-19.res
+  #$ cicc --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10"  -arch compute_35 -m64 -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_000092c4_00000000-3_RTSampler.fatbin.c" -tused -nvvmir-library "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice/libdevice.10.bc" --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" --orig_src_file_name "F:/2019 Summer/Projects/CPP/ALightGPU/ALight/RTSampler.cu" --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-11_RTSampler.compute_35.cudafe1.c" --stub_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-11_RTSampler.compute_35.cudafe1.stub.c" --gen_device_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-11_RTSampler.compute_35.cudafe1.gpu"  "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-18_RTSampler.compute_35.cpp1.ii" -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-11_RTSampler.compute_35.ptx"
+  #$ ptxas -arch=sm_35 -m64 --compile-only "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-11_RTSampler.compute_35.ptx"  -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-20_RTSampler.compute_35.sm_35.cubin" 
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-22.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-21_RTSampler.compute_37.cpp1.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-22.res
+  #$ cicc --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10"  -arch compute_37 -m64 -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_000092c4_00000000-3_RTSampler.fatbin.c" -tused -nvvmir-library "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice/libdevice.10.bc" --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" --orig_src_file_name "F:/2019 Summer/Projects/CPP/ALightGPU/ALight/RTSampler.cu" --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-10_RTSampler.compute_37.cudafe1.c" --stub_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-10_RTSampler.compute_37.cudafe1.stub.c" --gen_device_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-10_RTSampler.compute_37.cudafe1.gpu"  "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-21_RTSampler.compute_37.cpp1.ii" -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-10_RTSampler.compute_37.ptx"
+  #$ ptxas -arch=sm_37 -m64 --compile-only "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-10_RTSampler.compute_37.ptx"  -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-23_RTSampler.compute_37.sm_37.cubin" 
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-25.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-24_RTSampler.compute_50.cpp1.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-25.res
+  #$ cicc --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10"  -arch compute_50 -m64 -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_000092c4_00000000-3_RTSampler.fatbin.c" -tused -nvvmir-library "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice/libdevice.10.bc" --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" --orig_src_file_name "F:/2019 Summer/Projects/CPP/ALightGPU/ALight/RTSampler.cu" --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-9_RTSampler.compute_50.cudafe1.c" --stub_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-9_RTSampler.compute_50.cudafe1.stub.c" --gen_device_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-9_RTSampler.compute_50.cudafe1.gpu"  "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-24_RTSampler.compute_50.cpp1.ii" -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-9_RTSampler.compute_50.ptx"
+  #$ ptxas -arch=sm_50 -m64 --compile-only "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-9_RTSampler.compute_50.ptx"  -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-26_RTSampler.compute_50.sm_50.cubin" 
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-28.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-27_RTSampler.compute_52.cpp1.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-28.res
+  #$ cicc --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10"  -arch compute_52 -m64 -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_000092c4_00000000-3_RTSampler.fatbin.c" -tused -nvvmir-library "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice/libdevice.10.bc" --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" --orig_src_file_name "F:/2019 Summer/Projects/CPP/ALightGPU/ALight/RTSampler.cu" --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-8_RTSampler.compute_52.cudafe1.c" --stub_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-8_RTSampler.compute_52.cudafe1.stub.c" --gen_device_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-8_RTSampler.compute_52.cudafe1.gpu"  "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-27_RTSampler.compute_52.cpp1.ii" -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-8_RTSampler.compute_52.ptx"
+  #$ ptxas -arch=sm_52 -m64 --compile-only "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-8_RTSampler.compute_52.ptx"  -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-29_RTSampler.compute_52.sm_52.cubin" 
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-31.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-30_RTSampler.compute_60.cpp1.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-31.res
+  #$ cicc --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10"  -arch compute_60 -m64 -ftz=0 -prec_div=1 -prec_sqrt=1 -fmad=1 --include_file_name "tmpxft_000092c4_00000000-3_RTSampler.fatbin.c" -tused -nvvmir-library "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin/../nvvm/libdevice/libdevice.10.bc" --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" --orig_src_file_name "F:/2019 Summer/Projects/CPP/ALightGPU/ALight/RTSampler.cu" --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-7_RTSampler.compute_60.cudafe1.c" --stub_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-7_RTSampler.compute_60.cudafe1.stub.c" --gen_device_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-7_RTSampler.compute_60.cudafe1.gpu"  "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-30_RTSampler.compute_60.cpp1.ii" -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-7_RTSampler.compute_60.ptx"
+  #$ ptxas -arch=sm_60 -m64 --compile-only "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-7_RTSampler.compute_60.ptx"  -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-32_RTSampler.compute_60.sm_60.cubin" 
+  #$ ptxas -arch=sm_61 -m64 --compile-only "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-6_RTSampler.compute_61.ptx"  -o "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-33_RTSampler.compute_61.sm_61.cubin" 
+  #$ fatbinary --create="C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-3_RTSampler.fatbin" -64 --cmdline="--compile-only " "--image=profile=sm_30@compute_30,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-17_RTSampler.compute_30.sm_30.cubin" "--image=profile=compute_30,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-12_RTSampler.compute_30.ptx" "--image=profile=sm_35@compute_35,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-20_RTSampler.compute_35.sm_35.cubin" "--image=profile=compute_35,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-11_RTSampler.compute_35.ptx" "--image=profile=sm_37@compute_37,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-23_RTSampler.compute_37.sm_37.cubin" "--image=profile=compute_37,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-10_RTSampler.compute_37.ptx" "--image=profile=sm_50@compute_50,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-26_RTSampler.compute_50.sm_50.cubin" "--image=profile=compute_50,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-9_RTSampler.compute_50.ptx" "--image=profile=sm_52@compute_52,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-29_RTSampler.compute_52.sm_52.cubin" "--image=profile=compute_52,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-8_RTSampler.compute_52.ptx" "--image=profile=sm_60@compute_60,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-32_RTSampler.compute_60.sm_60.cubin" "--image=profile=compute_60,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-7_RTSampler.compute_60.ptx" "--image=profile=sm_61@compute_61,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-33_RTSampler.compute_61.sm_61.cubin" "--image=profile=compute_61,file=C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-6_RTSampler.compute_61.ptx" --embedded-fatbin="C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-3_RTSampler.fatbin.c"  --device-c
+  #$ erase C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-3_RTSampler.fatbin
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-34.res" > "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-5_RTSampler.cpp4.ii" 
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-34.res
+  #$ cudafe++ --microsoft_version=1921 --msvc_target_version=1921 --compiler_bindir "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.21.27702/bin/HostX86/x64/../../../../../../.." --allow_managed  --device-c --sdk_dir "C:\Program Files (x86)\Windows Kits\10" --m64 --parse_templates --gen_c_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-6_RTSampler.compute_61.cudafe1.cpp" --stub_file_name "tmpxft_000092c4_00000000-6_RTSampler.compute_61.cudafe1.stub.c" --module_id_file_name "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-4_RTSampler.module_id" "C:/Users/ADMINI~1/AppData/Local/Temp/tmpxft_000092c4_00000000-5_RTSampler.cpp4.ii" 
+  #$ cl.exe @"C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-35.res" -Fo"x64/Release/RTSampler.cu.obj" 
+  tmpxft_000092c4_00000000-6_RTSampler.compute_61.cudafe1.cpp
+  crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17): warning C4244: “初始化”: 从“double”转换到“const float”，可能丢失数据
+  crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\BVH.h(5): warning C4099: “RTDeviceData”: 类型名称以前使用“class”现在使用的是“struct”
+  F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Material.h(11): note: 参见“RTDeviceData”的声明
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(15): warning C4099: “RTDeviceData”: 类型名称以前使用“class”现在使用的是“struct”
+  F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(15): note: 参见“RTDeviceData”的声明
+  #$ erase C:\Users\ADMINI~1\AppData\Local\Temp/tmpxft_000092c4_00000000-35.res
+  RayTracer.cpp
   crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,34): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,21): warning C4244:  “初始化”: 从“double”转换到“const float”，可能丢失数据
@@ -9,17 +72,111 @@ F:\2019 Summer\Projects\CPP\ALightGPU\ALight\BVH.h(5,20): warning C4099:  “RTD
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Material.h(11): message :  参见“RTDeviceData”的声明
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(16,1): warning C4099:  “RTDeviceData”: 类型名称以前使用“class”现在使用的是“struct”
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(15): message :  参见“RTDeviceData”的声明
-  Window.cpp
+  Scene.cpp
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(42,11): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(42,11): warning C4244: crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\RTDeviceData.h(42,11): warning C4244: crt/host_defines.h is an internal header file and must not be used directly.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Material.h(11,19): warning C4099:  “RTDeviceData”: 类型名称以前使用“struct”现在使用的是“class”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\BVH.h(5): message :  参见“RTDeviceData”的声明
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,34): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(17,21): warning C4244:  “初始化”: 从“double”转换到“const float”，可能丢失数据
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(18,32): warning C4244:  “初始化”: 从“double”转换到“float”，可能丢失数据
 F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Camera.h(18,27): warning C4244:  “初始化”: 从“double”转换到“const float”，可能丢失数据
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Engine.h(7,23): warning C4305:  “初始化”: 从“double”到“float”截断
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Window.cpp(54,6): warning C4101:  “mods”: 未引用的局部变量
-F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Window.cpp(137,1): warning C4996:  'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h(506): message :  参见“localtime”的声明
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\MyModel.h(46,9): warning C4477:  “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\MyModel.h(54,9): warning C4477:  “printf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 1 拥有了类型“const std::string”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(964,11): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1033,19): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1082,11): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1104,19): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1330,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1368,50): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(1388,50): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(3297,45): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(3325,71): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(3343,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4457,45): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4585,61): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4591,80): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4599,38): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4601,25): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4609,50): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4644,26): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4647,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4674,21): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4677,63): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4688,37): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4726,58): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4904,26): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4925,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(4930,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5062,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5066,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5074,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5082,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5095,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5112,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5116,21): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5258,38): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5286,17): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5297,44): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5298,38): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5312,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5331,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5349,48): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5360,32): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5369,45): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5396,33): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5397,34): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5611,31): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5615,48): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5620,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5631,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5660,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5667,52): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5684,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5714,23): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5747,20): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5860,14): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5869,26): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5874,42): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5878,42): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(5927,79): warning C4312:  “类型强制转换”: 从“int”转换到更大的“float *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\stb_image.h(6142,21): warning C4312:  “类型强制转换”: 从“int”转换到更大的“unsigned char *”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(21,90): warning C4474:  printf: 格式字符串中传递的参数太多
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(21,90): message :  占位符和其参数预计 1 可变参数，但提供的却是 3 参数
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(23,9): warning C4477:  “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“unsigned __int64”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(23,9): message :  请考虑在格式字符串中使用“%zd”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(23,9): warning C4477:  “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 2 拥有了类型“unsigned __int64”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(23,9): message :  请考虑在格式字符串中使用“%zd”
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(91,124): warning C4244:  “=”: 从“double”转换到“float”，可能丢失数据
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(135,53): warning C4305:  “初始化”: 从“double”到“float”截断
+F:\2019 Summer\Projects\CPP\ALightGPU\ALight\Scene.cpp(182,51): warning C4267:  “参数”: 从“size_t”转换到“int”，可能丢失数据
+  
+  F:\2019 Summer\Projects\CPP\ALightGPU\ALight>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin\nvcc.exe" -dlink -o x64/Release/ALight.device-link.obj -Xcompiler "/EHsc /W3 /nologo /O2 /Zi  /MT " -L"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\lib\x64" -L../common/lib/x64 glew64.lib cufft.lib cudart_static.lib freeglut.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  -gencode=arch=compute_30,code=sm_30 -gencode=arch=compute_35,code=sm_35 -gencode=arch=compute_37,code=sm_37 -gencode=arch=compute_50,code=sm_50 -gencode=arch=compute_52,code=sm_52 -gencode=arch=compute_60,code=sm_60 -gencode=arch=compute_61,code=sm_61  --machine 64 x64/Release/BVH.cu.obj x64/Release/DeviceManager.cu.obj x64/Release/Float2Byte.cu.obj x64/Release/float2Extension.cu.obj x64/Release/float3Extension.cu.obj x64/Release/Material.cu.obj x64/Release/RTDeviceData.cu.obj x64/Release/RTSampler.cu.obj 
+  glew64.lib
+  cufft.lib
+  cudart_static.lib
+  freeglut.lib
+  kernel32.lib
+  user32.lib
+  gdi32.lib
+  winspool.lib
+  comdlg32.lib
+  advapi32.lib
+  shell32.lib
+  ole32.lib
+  oleaut32.lib
+  uuid.lib
+  odbc32.lib
+  odbccp32.lib
+  BVH.cu.obj
+  DeviceManager.cu.obj
+  Float2Byte.cu.obj
+  float2Extension.cu.obj
+  float3Extension.cu.obj
+  Material.cu.obj
+  RTDeviceData.cu.obj
+  RTSampler.cu.obj
     正在创建库 ../bin/win64/Release/ALight.lib 和对象 ../bin/win64/Release/ALight.exp
   正在生成代码
   已完成代码的生成

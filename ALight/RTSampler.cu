@@ -182,16 +182,6 @@ __device__ SurfaceHitRecord Trace(Ray ray,RTDeviceData& data)
 	return best_hit;
 }
 
-__device__ float3 total(float3* es, float3* as,int index)
-{
-	auto a = make_float3(0, 0, 0);
-	for (int i=0;i<index;i++)
-	{
-		auto e = es[i];
-		for (int j = 0; j < i;j++)e *= as[i];
-		a += e;
-	}
-}
 
 __device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int depth, const RTDeviceData data,bool& _break)
 {
@@ -206,7 +196,6 @@ __device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int dep
 		auto emitted = hit.mat_ptr->emitted(hit.uv.x, hit.uv.y, hit.p);
 		if (depth < 8 &&hit.mat_ptr->scatter(ray, hit, attenuation, scattered, random_in_unit_sphere, data))
 		{
-			auto e = emitted * factor;
 			factor *= attenuation;
 			ray = scattered;
 			return make_float3(0, 0, 0);
@@ -221,7 +210,55 @@ __device__ float3 Shade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int dep
 
 }
 
-
+// __device__ float3 PathShade(Ray& ray, SurfaceHitRecord& hit, float3& factor, int depth, const RTDeviceData data, bool& _break)
+// {
+// 	SurfaceHitRecord rec;
+// 	bool dummy_bool = true;
+// 	float brdf_scale;
+// 	auto  ambient = make_float3(0, 0, 0);
+// 	// auto c = make_float3(0, 0, 0);
+// 	if (hit.t < 99999)
+// 	{
+// 		auto c = make_float3(0, 0, 0);
+// 		c += rec.mat_ptr->emittedRadiance(rec.uvw, -ray.direction,rec.texp, rec.uv);
+// 		float3 v_out;
+// 		float3 R;
+// 		if (depth < 8 && rec.mat_ptr->scatterDirection(r.direction(),rec, sseed, R, dummy_bool, brdf_scale, v_out))
+// 		{
+// 			e= ambient * rec.mat_ptr->ambientResponse(rec.uvw, r.direction(), rec.p, rec.uv);
+// 			factor *= brdf_scale * R;
+// 			ray = Ray(rec.p, v_out);
+// 			
+//
+// 			c += brdf_scale * R * //color(ref, s, 0.01, FLT_MAX, time, sseed,rseed, depth + 1, 0, false, NULL);
+// 		}
+// 		return c + ambient * rec.mat_ptr->ambientResponse(rec.uvw, r.direction(),rec.p, rec.uv);
+//
+//
+//
+//
+// 		float3 random_in_unit_sphere;
+// 		do random_in_unit_sphere = 2.0 * make_float3(data.GetRandom(), data.GetRandom(), data.GetRandom()) - make_float3(1, 1, 1);
+// 		while (SquaredLength(random_in_unit_sphere) >= 1.0);
+// 		auto scattered = Ray();
+// 		float3 attenuation;
+// 		auto emitted = hit.mat_ptr->emitted(hit.uv.x, hit.uv.y, hit.p);
+// 		if (depth < 8 && hit.mat_ptr->scatter(ray, hit, attenuation, scattered, random_in_unit_sphere, data))
+// 		{
+// 			factor *= attenuation;
+// 			ray = scattered;
+// 			return make_float3(0, 0, 0);
+// 		}
+// 		else
+// 		{
+// 			_break = true;
+// 			return emitted * factor;
+// 		}
+// 	}
+// 	else return factor * data.SampleTexture(0, atan2(ray.direction.x, -ray.direction.z) / -M_PI * 0.5f, acos(ray.direction.y) / -M_PI);
+//
+// }
+//
 
 
 __global__ void IPRSampler(const int width, const int height, const int seed, const int spp,int Sampled, int mst, int root, float* output, curandState* const rngStates, Camera* camera,RTHostData host_data)
