@@ -6,7 +6,7 @@ Visual Studio 2019
 
 Cuda 10.1
 
-### Samples
+### Samples 
 
 ![01](GitHub/GPU.gif)
 
@@ -18,4 +18,4 @@ Cuda 10.1
 
 ![02](GitHub/picture2.png) 
  
-
+ 
